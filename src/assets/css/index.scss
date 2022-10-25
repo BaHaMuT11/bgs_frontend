@@ -1,0 +1,5 @@
+@use "modules/colors";
+
+#root {
+  background-color: colors.$body-background-color;
+}
