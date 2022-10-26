@@ -1,0 +1,13 @@
+@use "src/assets/css/modules/colors";
+@use "src/assets/css/modules/mixins";
+
+a:link, a:visited, a:active {
+  text-decoration:none;
+  color: white;
+}
+
+
+.active {
+  text-decoration:none;
+  color: red !important;
+}

@@ -17,7 +17,7 @@ const Hero = () => {
                     />
                     <Carousel.Caption>
                         <h3>Gotham Knights</h3>
-                        <p>Uno de los juegos más poleémicos actualmente. ¿Te unes?</p>
+                        <p>Uno de los juegos más polémicos actualmente. ¿Te unes?</p>
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
