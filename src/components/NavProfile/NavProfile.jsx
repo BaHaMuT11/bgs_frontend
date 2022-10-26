@@ -5,17 +5,17 @@ import {NavLink} from "react-router-dom";
 
 const NavProfile = () => {
     return (
-        <Row>
-            <Col className="col-xl-3">
+        <Row className="text-center">
+            <Col className="col-xl-3 my-2">
                 <NavLink className="display-6" to="/profile/mygames">Mis juegos</NavLink>
             </Col>
-            <Col className="col-xl-3">
+            <Col className="col-xl-3 my-2">
                 <NavLink className="display-6"  to="/profile/wishlist">Favoritos</NavLink>
             </Col>
-            <Col className="col-xl-3">
+            <Col className="col-xl-3 my-2">
                 <NavLink className="display-6" to="/profile/items">Publicaciones</NavLink>
             </Col>
-            <Col className="col-xl-3">
+            <Col className="col-xl-3 my-2">
                 <NavLink className="display-6" to="/profile/info">Perfil</NavLink>
             </Col>
         </Row>
