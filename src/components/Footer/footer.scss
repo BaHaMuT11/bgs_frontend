@@ -1,0 +1,30 @@
+@use "src/assets/css/modules/colors";
+@use "src/assets/css/modules/mixins";
+
+.footer-wrapper {
+
+  @include mixins.establecerFlex(column);
+  @include mixins.alinearComponentes();
+
+  background-color: colors.$navbar-background-color;
+
+  img {
+    border: 1px solid colors.$bahagames-star;
+  }
+
+  .social-bar-fb {
+    color: colors.$fb-color;
+  }
+
+  .social-bar-ig {
+    color: colors.$ig-color;
+  }
+
+  .social-bar-tt {
+    color: colors.$tt-color;
+  }
+
+  .social-bar-yt {
+    color: colors.$yt-color;
+  }
+}

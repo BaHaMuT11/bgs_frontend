@@ -33,7 +33,7 @@ const GameCard = (props) => {
                             <Card.Img variant="top" src={GodOfWar} />
                             <Card.Body>
                                 <Card.Title>God of War: Ragnarok</Card.Title>
-                                <Badge bg="secondary">PC</Badge>{' '}
+                                <Badge bg="secondary">PS5</Badge>{' '}
                                 <Badge bg="danger">Digital</Badge>{' '}
                                 <div className="py-3 text-center">
                                     <i className="fa-solid fa-2x fa-star star-filled"></i>

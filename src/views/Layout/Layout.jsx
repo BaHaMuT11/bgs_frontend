@@ -3,6 +3,7 @@ import {Col, Container, Row} from "react-bootstrap"
 import {Outlet} from "react-router-dom"
 import Navbar from "../../components/Navbar/Navbar.jsx"
 import "./layout.scss"
+import Footer from "../../components/Footer/Footer.jsx";
 
 const Layout = () => {
     return (
@@ -23,7 +24,7 @@ const Layout = () => {
                 <Row>
                     <Col>
                         <footer>
-
+                            <Footer />
                         </footer>
                     </Col>
                 </Row>
