@@ -2,4 +2,13 @@
 
 #root {
   background-color: colors.$body-background-color;
+
+  .btn-warning, .btn-primary:active, .btn-primary:visited {
+    background-color: colors.$bahagames-main !important;
+  }
+
+  .btn-warning:hover {
+    background-color: #ffc403 !important;
+  }
+
 }
