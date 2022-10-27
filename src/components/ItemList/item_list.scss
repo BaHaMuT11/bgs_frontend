@@ -1,0 +1,21 @@
+@use "src/assets/css/modules/colors";
+@use "src/assets/css/modules/mixins";
+
+.item-ops {
+  i {
+    cursor: pointer;
+  }
+
+  .delete{
+    color: colors.$delete-color;
+  }
+
+  .edit{
+    color: colors.$edit-color;
+  }
+
+  .inspect{
+    color: colors.$inspect-color
+  }
+
+}
