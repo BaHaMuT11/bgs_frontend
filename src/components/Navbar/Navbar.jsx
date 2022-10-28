@@ -26,7 +26,7 @@ const Navbar = () => {
                     </Form>
                 </div>
                 <div className="profile">
-                    <NavLink to="/profile/info">
+                    <NavLink to="/authenticate">
                         <span>Baha</span> &nbsp;
                         <i className="fa-solid fa-2x fa-user"></i>
                     </NavLink>

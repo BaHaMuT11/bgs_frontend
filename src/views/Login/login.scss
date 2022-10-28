@@ -1,0 +1,6 @@
+@use "src/assets/css/modules/colors";
+@use "src/assets/css/modules/mixins";
+
+.vr {
+  border-right: 3px dashed colors.$inspect-color;
+}

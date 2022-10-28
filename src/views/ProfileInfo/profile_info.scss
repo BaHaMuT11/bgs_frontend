@@ -1,0 +1,30 @@
+@use "src/assets/css/modules/colors";
+@use "src/assets/css/modules/mixins";
+
+.profile {
+
+  @include mixins.establecerFlex(column);
+  @include mixins.alinearComponentes();
+
+  img {
+    height: 200px;
+    width: 200px;
+  }
+
+}
+
+.profile-info {
+
+  font-size: x-large;
+
+  .descriptor {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
+  .info{
+    font-style: italic;
+    margin-left: 10px;
+  }
+
+}
