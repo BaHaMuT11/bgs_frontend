@@ -1,0 +1,7 @@
+@use "src/assets/css/modules/colors";
+@use "src/assets/css/modules/mixins";
+
+.calle-completa {
+  @include mixins.establecerFlex();
+  @include mixins.alinearComponentes(space-between);
+}
