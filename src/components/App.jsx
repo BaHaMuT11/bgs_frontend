@@ -1,12 +1,13 @@
-import React from 'react'
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Layout from "../views/Layout/Layout.jsx";
-import Products from "../views/Products/Products.jsx";
-import ProfileInfo from "../views/ProfileInfo/ProfileInfo.jsx";
-import ProfileMyGames from "../views/ProfileMyGames/ProfileMyGames.jsx";
-import ProfileItems from "../views/ProfileItems/ProfileItems.jsx";
-import ProfileWishlist from "../views/ProfileWishlist/ProfileWishlist.jsx";
-import Login from "../views/Login/Login.jsx";
+import React from "react"
+import {BrowserRouter, Route, Routes} from "react-router-dom"
+import Layout from "../views/Layout/Layout.jsx"
+import Products from "../views/Products/Products.jsx"
+import ProfileInfo from "../views/ProfileInfo/ProfileInfo.jsx"
+import ProfileMyGames from "../views/ProfileMyGames/ProfileMyGames.jsx"
+import ProfileItems from "../views/ProfileItems/ProfileItems.jsx"
+import ProfileWishlist from "../views/ProfileWishlist/ProfileWishlist.jsx"
+import Login from "../views/Login/Login.jsx"
+import ProductDetail from "../views/ProductDetail/ProductDetail.jsx"
 
 const App = () => {
     return (
@@ -22,6 +23,7 @@ const App = () => {
                     <Route path="profile/info" element={<ProfileInfo />} />
 
                     <Route path="authenticate" element={<Login />} />
+                    <Route path="detail/:id" element={<ProductDetail />} />
 
                 </Route>
             </Routes>

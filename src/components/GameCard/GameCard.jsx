@@ -1,10 +1,19 @@
-import React from 'react'
+import React from "react"
 import {Badge, Button, Card, Col} from "react-bootstrap"
 import "./game_card.scss"
 import EldenRing from "../../assets/img/elden_ring.png"
 import GodOfWar from "../../assets/img/gordo_ragnarok.png"
+import {useNavigate} from "react-router-dom"
 
 const GameCard = (props) => {
+
+    const navigate = useNavigate()
+
+    const handleClick = (id) => {
+        navigate(`/detail/${id}`)
+    }
+
+
     return (
         <>
             {
@@ -23,7 +32,9 @@ const GameCard = (props) => {
                                     <i className="fa-solid fa-2x fa-star star-filled"></i>
                                     <i className="fa-solid fa-2x fa-star star-filled"></i>
                                 </div>
-                                <Button className="w-100" variant="warning">$25.872 CLP</Button>
+                                <Button className="w-100" variant="warning" onClick={
+                                    ()=>{handleClick(1)}
+                                    }>$25.872 CLP</Button>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -42,7 +53,9 @@ const GameCard = (props) => {
                                     <i className="fa-solid fa-2x fa-star"></i>
                                     <i className="fa-solid fa-2x fa-star"></i>
                                 </div>
-                                <Button className="w-100" variant="warning">$80.000 CLP</Button>
+                                <Button className="w-100" variant="warning" onClick={
+                                    ()=>{handleClick(2)}
+                                }>$80.000 CLP</Button>
                             </Card.Body>
                         </Card>
                     </Col>
