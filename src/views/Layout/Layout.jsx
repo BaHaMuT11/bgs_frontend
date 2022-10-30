@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react"
 import {Col, Container, Row} from "react-bootstrap"
 import {Outlet} from "react-router-dom"
 import Navbar from "../../components/Navbar/Navbar.jsx"
 import "./layout.scss"
-import Footer from "../../components/Footer/Footer.jsx";
+import Footer from "../../components/Footer/Footer.jsx"
 
 const Layout = () => {
     return (
