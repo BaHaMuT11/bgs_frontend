@@ -5,6 +5,7 @@
 
   @include mixins.establecerFlex(column);
   @include mixins.alinearComponentes();
+  @include mixins.configurarMedidas(206px);
 
   background-color: colors.$navbar-background-color;
 
