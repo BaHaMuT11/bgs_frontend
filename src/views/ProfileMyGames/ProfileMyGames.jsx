@@ -4,6 +4,35 @@ import NavProfile from "../../components/NavProfile/NavProfile.jsx";
 import {Button, Table} from "react-bootstrap";
 
 const ProfileMyGames = () => {
+
+    const games = [
+        {
+            id: 1,
+            juego: "Elden Ring",
+            fechaCompra: "16-06-2022",
+            vendedor: "Loreto Bustos"
+        },
+        {
+            id: 2,
+            juego: "Final Fantasy VIII",
+            fechaCompra: "04-05-2022",
+            vendedor: "Ibar Rojas"
+        },
+        {
+            id: 3,
+            juego: "Resident Evil VII",
+            fechaCompra: "05-03-2020",
+            vendedor: "Soledad Fierro"
+        },
+        {
+            id: 4,
+            juego: "Amnesia",
+            fechaCompra: "25-12-2021",
+            vendedor: "Enzo Vidal"
+        }
+    ]
+
+
     return (
         <div>
             <NavProfile />
@@ -18,24 +47,19 @@ const ProfileMyGames = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Elden Ring</td>
-                        <td>10-06-2022</td>
-                        <td>Loreto Bustos</td>
-                        <td className="text-center">
-                            <Button variant="warning">Detalle</Button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Final Fantasy VIII</td>
-                        <td>04-05-2022</td>
-                        <td>Ibar Rojas</td>
-                        <td className="text-center">
-                            <Button variant="warning">Detalle</Button>
-                        </td>
-                    </tr>
+                {
+                    games.map(game => (
+                        <tr>
+                            <td>{game.id}</td>
+                            <td>{game.juego}</td>
+                            <td>{game.fechaCompra}</td>
+                            <td>{game.vendedor}</td>
+                            <td className="text-center">
+                                <Button variant="warning">Detalle</Button>
+                            </td>
+                        </tr>
+                    ))
+                }
                 </tbody>
             </Table>
         </div>
