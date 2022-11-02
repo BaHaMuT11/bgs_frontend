@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react"
+import React, {useContext, useEffect, useState} from "react"
 import "./sign_up.scss"
 import {Button, Col, FloatingLabel, Form} from "react-bootstrap"
 import {UserContext} from "../../context/UserProvider.jsx";
@@ -9,6 +9,13 @@ import {calcularEdad} from "../../util/calcularEdad.js";
 const SignUp = () => {
 
     const {regiones, setRegiones, comunas, setComunas, regForm, setRegForm, geoToogler, setGeoToogler} = useContext(UserContext)
+    const [emailSet, setEmailSet] = useState({emailDos: "",
+                                                            emailText:"",
+                                                            emailHidden: true})
+    const [passwordSet, setPasswordSet] = useState({ passwordDos: "",
+                                                                    passwordText: "",
+                                                                    passwordHidden: true})
+    const [submitDisabledStatus, setSubmitDisabledStatus] = useState(false)
 
     const handleChangeRegion = (valorSelect) => {
         setRegForm({...regForm, region: valorSelect})
@@ -17,6 +24,35 @@ const SignUp = () => {
 
     const handleChangeNacimiento = (valorFecha) => {
         setRegForm({...regForm, edad: calcularEdad(valorFecha).toString(), fechaNacimiento: valorFecha.toString()})
+    }
+
+    const handleChangePasswordDos = (pswDos) => {
+        if (pswDos != regForm.pass || pswDos.length < 7)  {
+            setPasswordSet({...passwordSet, passwordDos: pswDos,
+                                                    passwordText: "Ambas contraseñas deben ser iguales y tener 7 " +
+                                                        "o más caracteres",
+                                                    passwordHidden: false})
+            setSubmitDisabledStatus(true)
+        } else {
+            setPasswordSet({...passwordSet, passwordDos: pswDos,
+                passwordText: "Perfecto",
+                passwordHidden: true})
+            setSubmitDisabledStatus(false)
+        }
+    }
+
+    const handleChangeEmailDos = (emailDos) => {
+        if (emailDos != regForm.correo || emailDos.length < 5)  {
+            setEmailSet({...emailSet, emailDos: emailDos,
+                emailText: "Ambos correos deben ser iguales y tener 5 o más caracteres",
+                emailHidden: false})
+            setSubmitDisabledStatus(true)
+        } else {
+            setEmailSet({...emailSet, emailDos: emailDos,
+                emailText: "Perfecto",
+                emailHidden: true})
+            setSubmitDisabledStatus(false)
+        }
     }
 
 
@@ -151,13 +187,22 @@ const SignUp = () => {
                             <Form.Control type="password" placeholder="Contraseña"
                                           value={regForm.pass}
                                           onChange={e => setRegForm({...regForm, pass: e.target.value})} />
+                            <Form.Text className="text-danger" hidden={passwordSet.passwordHidden}>
+                                {passwordSet.passwordText}
+                            </Form.Text>
                         </FloatingLabel>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="regPswRepeat">
                         <Form.Label>Repita la contraseña:</Form.Label>
                         <FloatingLabel label="Repita la contraseña" controlId="floatingRegPswRepeat"
                                        className="text-dark mb-3">
-                            <Form.Control type="password" placeholder="Repita la contraseña" />
+                            <Form.Control type="password" placeholder="Repita la contraseña"
+                                          value={passwordSet.passwordDos}
+                                          onChange={e => handleChangePasswordDos(e.target.value)}
+                            />
+                            <Form.Text className="text-danger" hidden={passwordSet.passwordHidden}>
+                                {passwordSet.passwordText}
+                            </Form.Text>
                         </FloatingLabel>
                     </Form.Group>
                 </div>
@@ -169,16 +214,24 @@ const SignUp = () => {
                                           value={regForm.correo}
                                           onChange={e => setRegForm({...regForm, correo: e.target.value})}
                             />
+                            <Form.Text className="text-danger" hidden={emailSet.emailHidden}>
+                                {emailSet.emailText}
+                            </Form.Text>
                         </FloatingLabel>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="regEmailRepeat">
                         <Form.Label>Repita el correo:</Form.Label>
                         <FloatingLabel label="Ej.: nombre@dominio.cl" controlId="floatingRegEmailRepeat" className="text-dark mb-3">
-                            <Form.Control type="email" placeholder="Repita el email" />
+                            <Form.Control type="email" placeholder="Repita el email"
+                                          value={emailSet.emailDos}
+                                          onChange={e => handleChangeEmailDos(e.target.value)} />
+                            <Form.Text className="text-danger" hidden={emailSet.emailHidden}>
+                                {emailSet.emailText}
+                            </Form.Text>
                         </FloatingLabel>
                     </Form.Group>
                 </div>
-                <Button variant="warning" type="submit" className="w-100">Registrarse</Button>
+                <Button variant="warning" type="submit" className="w-100" disabled={submitDisabledStatus}>Registrarse</Button>
             </Form>
         </Col>
     )
