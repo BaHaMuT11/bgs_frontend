@@ -1,10 +1,11 @@
 import React from "react"
 import "./login.scss"
-import {Col, Row} from "react-bootstrap"
-import SignUp from "../../components/SingUp/SignUp.jsx";
-import SignIn from "../../components/SignIn/SignIn.jsx";
+import {Row} from "react-bootstrap"
+import SignUp from "../../components/SingUp/SignUp.jsx"
+import SignIn from "../../components/SignIn/SignIn.jsx"
 
 const Login = () => {
+
     return (
         <Row>
             <SignUp />
