@@ -1,10 +1,15 @@
-import React from "react"
+import React, {useContext} from "react"
 import "./navbar.scss"
 import BahaLogo from "../../assets/img/baha_logo.png"
 import {Button, Form} from "react-bootstrap"
 import {NavLink} from "react-router-dom"
+import {UserContext} from "../../context/UserProvider.jsx";
+
 
 const Navbar = () => {
+
+    const {loginText} = useContext(UserContext)
+
     return (
         <nav>
             <div className="nav-wrapper-desktop px-3">
@@ -27,7 +32,7 @@ const Navbar = () => {
                 </div>
                 <div className="profile">
                     <NavLink to="/authenticate">
-                        <span>Baha</span> &nbsp;
+                        <span>{loginText}</span> &nbsp;
                         <i className="fa-solid fa-2x fa-user"></i>
                     </NavLink>
                 </div>

@@ -1,0 +1,2 @@
+export const URL_AUTHENTICATE = "https://www.bahatech.cl:8443/baha_games_marketplace/authenticate"
+export const URL_REGISTRAR_USUARIO = "https://www.bahatech.cl:8443/baha_games_marketplace/usuarios/agregarUsuario"
