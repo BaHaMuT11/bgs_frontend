@@ -66,7 +66,16 @@ const SignUp = () => {
         if (!regForm.nombre.trim()) {
             Swal.fire(
                 'Whooooops',
-                "Debe ingresar todos los campos",
+                "Debe ingresar todos los campos obligatorios",
+                'error'
+            )
+            return
+        }
+
+        if (regForm.nombre.length < 3 || regForm.nombre.length > 50) {
+            Swal.fire(
+                'Whooooops',
+                "El nombre debe tener al menos 3 caracteres",
                 'error'
             )
             return
@@ -75,7 +84,16 @@ const SignUp = () => {
         if (!regForm.usuario.trim()) {
             Swal.fire(
                 'Whooooops',
-                "Debe ingresar todos los campos",
+                "Debe ingresar todos los campos obligatorios",
+                'error'
+            )
+            return
+        }
+
+        if (regForm.usuario.length < 4 || regForm.usuario.length > 7) {
+            Swal.fire(
+                'Whooooops',
+                "El login debe tener un mínimo de 4 caracteres y un máximo de 7",
                 'error'
             )
             return
@@ -84,25 +102,27 @@ const SignUp = () => {
         if (!regForm.fechaNacimiento.trim()) {
             Swal.fire(
                 'Whooooops',
-                "Debe ingresar todos los campos",
+                "Debe ingresar todos los campos obligatorios",
                 'error'
             )
+            return
+        }
+
+        if (regForm.edad < 18) {
+            Swal.fire(
+                'Whooooops',
+                "Debes ser mayor de edad para registrarte",
+                'error'
+            )
+            setRegForm({...regForm, correo: ""})
+            setEmailSet(({...emailSet, emailDos: "", emailText: ""}))
             return
         }
 
         if (!regForm.rut.trim()) {
             Swal.fire(
                 'Whooooops',
-                "Debe ingresar todos los campos",
-                'error'
-            )
-            return
-        }
-
-        if (!regForm.pass.trim()) {
-            Swal.fire(
-                'Whooooops',
-                "Debe ingresar todos los campos",
+                "Debe ingresar todos los campos obligatorios",
                 'error'
             )
             return
@@ -111,7 +131,7 @@ const SignUp = () => {
         if (!regForm.fono.trim()) {
             Swal.fire(
                 'Whooooops',
-                "Debe ingresar todos los campos",
+                "Debe ingresar todos los campos obligatorios",
                 'error'
             )
             return
@@ -119,7 +139,7 @@ const SignUp = () => {
         if (!regForm.calle.trim()) {
             Swal.fire(
                 'Whooooops',
-                "Debe ingresar todos los campos",
+                "Debe ingresar todos los campos obligatorios",
                 'error'
             )
             return
@@ -127,35 +147,52 @@ const SignUp = () => {
         if (!regForm.numero.trim()) {
             Swal.fire(
                 'Whooooops',
-                "Debe ingresar todos los campos",
+                "Debe ingresar todos los campos obligatorios",
                 'error'
             )
             return
         }
-        if (!regForm.casa.trim()) {
+
+        if (!regForm.pass.trim()) {
             Swal.fire(
                 'Whooooops',
-                "Debe ingresar todos los campos",
+                "Debe ingresar todos los campos obligatorios",
                 'error'
             )
             return
         }
+
+        if (regForm.pass != passwordSet.passwordDos) {
+            Swal.fire(
+                'Whooooops',
+                "Las contraseñas de ambos campos deben ser las mismas",
+                'error'
+            )
+            setRegForm({...regForm, pass: ""})
+            setPasswordSet(({...passwordSet, passwordDos: "", passwordText: ""}))
+            return
+        }
+
+        if (regForm.pass.length < 7) {
+            Swal.fire(
+                'Whooooops',
+                "La contraseña debe tene al menos 7 caracteres",
+                'error'
+            )
+            setRegForm({...regForm, pass: ""})
+            setPasswordSet(({...passwordSet, passwordDos: "", passwordText: ""}))
+            return
+        }
+
         if (!regForm.correo.trim()) {
             Swal.fire(
                 'Whooooops',
-                "Debe ingresar todos los campos",
+                "Debe ingresar todos los campos obligatorios",
                 'error'
             )
             return
         }
-        if (!regForm.estado.trim()) {
-            Swal.fire(
-                'Whooooops',
-                "Debe ingresar todos los campos",
-                'error'
-            )
-            return
-        }
+
         if (regForm.correo != emailSet.emailDos) {
             Swal.fire(
                 'Whooooops',
@@ -166,14 +203,15 @@ const SignUp = () => {
             setEmailSet(({...emailSet, emailDos: "", emailText: ""}))
             return
         }
-        if (regForm.pass != passwordSet.passwordDos) {
+
+        if (regForm.correo.length < 5) {
             Swal.fire(
                 'Whooooops',
-                "Las contraseñas de ambos campos deben ser las mismas",
+                "El correo debe tener un mínimo de 5 caracteres",
                 'error'
             )
-            setRegForm({...regForm, pass: ""})
-            setPasswordSet(({...passwordSet, passwordDos: "", passwordText: ""}))
+            setRegForm({...regForm, correo: ""})
+            setEmailSet(({...emailSet, emailDos: "", emailText: ""}))
             return
         }
 
@@ -273,30 +311,36 @@ const SignUp = () => {
             <h2 className="text-white text-center">REGISTRO</h2>
             <Form className="text-white" onSubmit={e => handleAddSubmit(e)}>
                 <Form.Group className="mb-3" controlId="regNombre">
-                    <Form.Label>Nombre:</Form.Label>
+                    <Form.Label>Nombre: <span className="text-danger">*</span></Form.Label>
                     <FloatingLabel label="Nombre completo" controlId="floatingRegNombre" className="text-dark mb-3">
                         <Form.Control type="text" placeholder="Nombre completo"
                                       value={regForm.nombre}
-                                      onChange={e => setRegForm({...regForm, nombre: e.target.value})}/>
+                                      onChange={e => setRegForm({...regForm, nombre: e.target.value})} />
+                        <Form.Text className="text-warning">
+                            Su nombre debe tener al menos 3 caracteres.
+                        </Form.Text>
                     </FloatingLabel>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="regLogin">
-                    <Form.Label>Login:</Form.Label>
+                    <Form.Label>Login: <span className="text-danger">*</span></Form.Label>
                     <FloatingLabel label="Login" controlId="floatingRegLogin" className="text-dark mb-3">
                         <Form.Control type="text" placeholder="Login"
                                       value={regForm.usuario}
                                       onChange={e => setRegForm({...regForm, usuario: e.target.value})}/>
+                        <Form.Text className="text-warning">
+                            Su login debe tener entre 4 y 7 caracteres.
+                        </Form.Text>
                     </FloatingLabel>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="regNacimiento">
-                    <Form.Label>Fecha de nacimiento:</Form.Label>
+                    <Form.Label>Fecha de nacimiento: <span className="text-danger">*</span></Form.Label>
                     <FloatingLabel controlId="floatingRegNacimiento" label="Fecha de nacimiento" className="text-dark">
                         <Form.Control type="date" placeholder="11-11-1985"
                                       onChange={e => handleChangeNacimiento(e.target.value)}/>
                     </FloatingLabel>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="regRUT">
-                    <Form.Label>RUT:</Form.Label>
+                    <Form.Label>RUT: <span className="text-danger">*</span></Form.Label>
                     <FloatingLabel label="Ej.: 16587231-K" controlId="floatingRegRUT" className="text-dark mb-3">
                         <Form.Control type="text" placeholder="16587231-K"
                                       value={regForm.rut}
@@ -305,7 +349,7 @@ const SignUp = () => {
                     </FloatingLabel>
                 </Form.Group>
                 <Form.Group className="mb-5" controlId="regFono">
-                    <Form.Label>Fono:</Form.Label>
+                    <Form.Label>Fono: <span className="text-danger">*</span></Form.Label>
                     <FloatingLabel label="Ej.: +56 9 4178 8523" controlId="floatingRegFono" className="text-dark mb-3">
                         <Form.Control type="text" placeholder="+56 9 4178 8523"
                                       value={regForm.fono}
@@ -314,7 +358,7 @@ const SignUp = () => {
                 </Form.Group>
                 <div className="calle-completa pt-5">
                     <Form.Group className="mb-3" controlId="regCalle">
-                        <Form.Label>Calle:</Form.Label>
+                        <Form.Label>Calle: <span className="text-danger">*</span></Form.Label>
                         <FloatingLabel label="Calle" controlId="floatingRegCalle" className="text-dark mb-3">
                             <Form.Control type="text" placeholder="Calle"
                                           value={regForm.calle}
@@ -322,7 +366,7 @@ const SignUp = () => {
                         </FloatingLabel>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="regNumero">
-                        <Form.Label>Número:</Form.Label>
+                        <Form.Label>Número: <span className="text-danger">*</span></Form.Label>
                         <FloatingLabel label="Número" controlId="floatingRegNumero"  className="text-dark mb-3">
                             <Form.Control type="text" placeholder="7880. 15-A"
                                           value={regForm.numero}
@@ -339,7 +383,7 @@ const SignUp = () => {
                     </Form.Group>
                 </div>
                 <Form.Group className="mb-3" controlId="regRegion">
-                    <Form.Label>Región:</Form.Label>
+                    <Form.Label>Región: <span className="text-danger">*</span></Form.Label>
                     <FloatingLabel controlId="floatingRegRegion" label="Región" className="text-dark">
                         <Form.Select aria-label="Regiones de Chile"
                                      value={regForm.region}
@@ -353,7 +397,7 @@ const SignUp = () => {
                     </FloatingLabel>
                 </Form.Group>
                 <Form.Group className="pb-5" controlId="regComuna">
-                    <Form.Label>Comuna:</Form.Label>
+                    <Form.Label>Comuna: <span className="text-danger">*</span></Form.Label>
                     <FloatingLabel controlId="floatingRegComuna" label="Comuna" className="text-dark">
                         <Form.Select aria-label="Comunas por región"
                                      value={regForm.comuna}
@@ -368,7 +412,7 @@ const SignUp = () => {
                 </Form.Group>
                 <div className="my-5">
                     <Form.Group className="mb-3" controlId="regPsw">
-                        <Form.Label>Contraseña:</Form.Label>
+                        <Form.Label>Contraseña: <span className="text-danger">*</span></Form.Label>
                         <FloatingLabel label="Contraseña" controlId="floatingRegPsw" className="text-dark mb-3">
                             <Form.Control type="password" placeholder="Contraseña"
                                           value={regForm.pass}
@@ -379,7 +423,7 @@ const SignUp = () => {
                         </FloatingLabel>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="regPswRepeat">
-                        <Form.Label>Repita la contraseña:</Form.Label>
+                        <Form.Label>Repita la contraseña: <span className="text-danger">*</span></Form.Label>
                         <FloatingLabel label="Repita la contraseña" controlId="floatingRegPswRepeat"
                                        className="text-dark mb-3">
                             <Form.Control type="password" placeholder="Repita la contraseña"
@@ -394,7 +438,7 @@ const SignUp = () => {
                 </div>
                 <div className="pb-3">
                     <Form.Group className="mb-3" controlId="regEmail">
-                        <Form.Label>Correo:</Form.Label>
+                        <Form.Label>Correo: <span className="text-danger">*</span></Form.Label>
                         <FloatingLabel label="Ej.: nombre@dominio.cl" controlId="floatingRegEmail" className="text-dark mb-3">
                             <Form.Control type="email" placeholder="Email"
                                           value={regForm.correo}
@@ -406,7 +450,7 @@ const SignUp = () => {
                         </FloatingLabel>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="regEmailRepeat">
-                        <Form.Label>Repita el correo:</Form.Label>
+                        <Form.Label>Repita el correo: <span className="text-danger">*</span></Form.Label>
                         <FloatingLabel label="Ej.: nombre@dominio.cl" controlId="floatingRegEmailRepeat" className="text-dark mb-3">
                             <Form.Control type="email" placeholder="Repita el email"
                                           value={emailSet.emailDos}
