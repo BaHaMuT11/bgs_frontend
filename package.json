@@ -16,8 +16,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "6.3.0",
     "react-spinners": "^0.13.6",
-    "sass": "^1.55.0",
-    "sweetalert2": "^11.6.5"
+    "sass": "^1.55.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",

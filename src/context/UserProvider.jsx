@@ -29,7 +29,7 @@ const UserProvider = (props) => {
     const [regiones, setRegiones] = useState([])
     const [comunas, setComunas] = useState([])
     const [geoToogler, setGeoToogler] = useState(false)
-    const [formError, setFormError] = useState("")
+
     return (
         <UserContext.Provider value={{
             ntk, setNtk,
@@ -37,8 +37,7 @@ const UserProvider = (props) => {
             regForm, setRegForm,
             regiones, setRegiones,
             comunas, setComunas,
-            geoToogler, setGeoToogler,
-            formError, setFormError
+            geoToogler, setGeoToogler
         }}>
             {props.children}
         </UserContext.Provider>
