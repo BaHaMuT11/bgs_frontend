@@ -3,7 +3,7 @@ import "./sign_up.scss"
 import {Button, Col, FloatingLabel, Form} from "react-bootstrap"
 import {UserContext} from "../../context/UserProvider.jsx"
 import axios from "axios"
-import {URL_OBTENER_INFO_GEOGRAFICA} from "../../services/auth.js"
+import {URL_OBTENER_INFO_GEOGRAFICA, URL_REGISTRAR_USUARIO} from "../../services/auth.js"
 import {calcularEdad} from "../../util/calcularEdad.js"
 import Swal from "sweetalert2"
 
@@ -177,11 +177,69 @@ const SignUp = () => {
             return
         }
 
-        Swal.fire(
-            'Excelente',
-            'Registro completado',
-            'success'
-        )
+        const registrarUsuario = async () => {
+            try {
+                let request = {
+                    usuario: regForm.usuario,
+                    nombre: regForm.nombre,
+                    pass: regForm.pass,
+                    fechaNacimiento: regForm.fechaNacimiento,
+                    edad: regForm.edad,
+                    rut: regForm.rut,
+                    fono: regForm.fono,
+                    calle: regForm.calle,
+                    numero: regForm.numero,
+                    casa: regForm.casa,
+                    region: regForm.region,
+                    comuna: regForm.comuna,
+                    correo: regForm.correo,
+                    estado: regForm.estado
+                }
+
+                const {data} = await axios.post(URL_REGISTRAR_USUARIO, request)
+
+                if (data.estado.codigo = "200") {
+                    Swal.fire(
+                        'Excelente',
+                        'Registro completado',
+                        'success'
+                    )
+                    setRegForm({ usuario: "",
+                        pass: "",
+                        nombre: "",
+                        fechaNacimiento: "",
+                        edad: "0",
+                        rut: "",
+                        fono: "",
+                        calle: "",
+                        numero: "",
+                        casa: "",
+                        region: "Región Metropolitana de Santiago",
+                        comuna: "Santiago",
+                        correo: "",
+                        estado: "ACTIVO"
+                    })
+                } else {
+                    setRegForm({...regForm, pass: ""})
+                    setPasswordSet(({...passwordSet, passwordDos: "", passwordText: ""}))
+                    Swal.fire(
+                        'Algo no salió bien',
+                        'Revise sus datos y realice la solicitud nuevamente',
+                        'error'
+                    )
+                }
+            }
+            catch (error) {
+                setRegForm({...regForm, pass: ""})
+                setPasswordSet(({...passwordSet, passwordDos: "", passwordText: ""}))
+                Swal.fire(
+                    'Qué mal',
+                    'No se pudo completar su solicitud',
+                    'error'
+                )
+            }
+        }
+        registrarUsuario()
     }
 
     useEffect( ()=>{
