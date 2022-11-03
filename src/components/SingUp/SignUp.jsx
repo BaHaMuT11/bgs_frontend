@@ -1,14 +1,18 @@
 import React, {useContext, useEffect, useState} from "react"
 import "./sign_up.scss"
 import {Button, Col, FloatingLabel, Form} from "react-bootstrap"
-import {UserContext} from "../../context/UserProvider.jsx";
-import axios from "axios";
-import {URL_OBTENER_INFO_GEOGRAFICA} from "../../services/auth.js";
-import {calcularEdad} from "../../util/calcularEdad.js";
+import {UserContext} from "../../context/UserProvider.jsx"
+import axios from "axios"
+import {URL_OBTENER_INFO_GEOGRAFICA} from "../../services/auth.js"
+import {calcularEdad} from "../../util/calcularEdad.js"
+import Swal from "sweetalert2"
 
 const SignUp = () => {
 
-    const {regiones, setRegiones, comunas, setComunas, regForm, setRegForm, geoToogler, setGeoToogler} = useContext(UserContext)
+    const {regiones, setRegiones, comunas, setComunas,
+           regForm, setRegForm, geoToogler, setGeoToogler,
+           formError, setFormError
+    } = useContext(UserContext)
     const [emailSet, setEmailSet] = useState({emailDos: "",
                                                             emailText:"",
                                                             emailHidden: true})
@@ -56,6 +60,133 @@ const SignUp = () => {
     }
 
 
+    const handleAddSubmit = (e) => {
+
+        e.preventDefault()
+
+        if (!regForm.nombre.trim()) {
+            Swal.fire(
+                'Whooooops',
+                "Debe ingresar todos los campos",
+                'error'
+            )
+            return
+        }
+
+        if (!regForm.usuario.trim()) {
+            Swal.fire(
+                'Whooooops',
+                "Debe ingresar todos los campos",
+                'error'
+            )
+            return
+        }
+
+        if (!regForm.fechaNacimiento.trim()) {
+            Swal.fire(
+                'Whooooops',
+                "Debe ingresar todos los campos",
+                'error'
+            )
+            return
+        }
+
+        if (!regForm.rut.trim()) {
+            Swal.fire(
+                'Whooooops',
+                "Debe ingresar todos los campos",
+                'error'
+            )
+            return
+        }
+
+        if (!regForm.pass.trim()) {
+            Swal.fire(
+                'Whooooops',
+                "Debe ingresar todos los campos",
+                'error'
+            )
+            return
+        }
+
+        if (!regForm.fono.trim()) {
+            Swal.fire(
+                'Whooooops',
+                "Debe ingresar todos los campos",
+                'error'
+            )
+            return
+        }
+        if (!regForm.calle.trim()) {
+            Swal.fire(
+                'Whooooops',
+                "Debe ingresar todos los campos",
+                'error'
+            )
+            return
+        }
+        if (!regForm.numero.trim()) {
+            Swal.fire(
+                'Whooooops',
+                "Debe ingresar todos los campos",
+                'error'
+            )
+            return
+        }
+        if (!regForm.casa.trim()) {
+            Swal.fire(
+                'Whooooops',
+                "Debe ingresar todos los campos",
+                'error'
+            )
+            return
+        }
+        if (!regForm.correo.trim()) {
+            Swal.fire(
+                'Whooooops',
+                "Debe ingresar todos los campos",
+                'error'
+            )
+            return
+        }
+        if (!regForm.estado.trim()) {
+            Swal.fire(
+                'Whooooops',
+                "Debe ingresar todos los campos",
+                'error'
+            )
+            return
+        }
+        if (regForm.correo != emailSet.emailDos) {
+            Swal.fire(
+                'Whooooops',
+                "Los correos de ambos campos deben ser los mismos",
+                'error'
+            )
+            setRegForm({...regForm, correo: ""})
+            setEmailSet(({...emailSet, emailDos: "", emailText: ""}))
+            return
+        }
+        if (regForm.pass != passwordSet.passwordDos) {
+            Swal.fire(
+                'Whooooops',
+                "Las contraseñas de ambos campos deben ser las mismas",
+                'error'
+            )
+            setRegForm({...regForm, pass: ""})
+            setPasswordSet(({...passwordSet, passwordDos: "", passwordText: ""}))
+            return
+        }
+
+        Swal.fire(
+            'Excelente',
+            'Registro completado',
+            'success'
+        )
+        setFormError("")
+
+    }
+
     useEffect( ()=>{
         const asignarInfoGeografica = async () => {
             const {data} = await axios.get(URL_OBTENER_INFO_GEOGRAFICA)
@@ -85,7 +216,10 @@ const SignUp = () => {
     return (
         <Col className="my-3">
             <h2 className="text-white text-center">REGISTRO</h2>
-            <Form className="text-white">
+            <Form className="text-white" onSubmit={e => handleAddSubmit(e)}>
+                <div className="bg-success text-white">
+                    {formError}
+                </div>
                 <Form.Group className="mb-3" controlId="regNombre">
                     <Form.Label>Nombre:</Form.Label>
                     <FloatingLabel label="Nombre completo" controlId="floatingRegNombre" className="text-dark mb-3">
