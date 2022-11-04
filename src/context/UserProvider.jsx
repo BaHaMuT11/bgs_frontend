@@ -24,12 +24,16 @@ const UserProvider = (props) => {
                       region: "Región Metropolitana de Santiago",
                       comuna: "Santiago",
                       correo: "",
-                      estado: "ACTIVO"
+                      estado: "ACTIVO",
+                      imagen: ""
                       }
     )
     const [regiones, setRegiones] = useState([])
     const [comunas, setComunas] = useState([])
     const [geoToogler, setGeoToogler] = useState(false)
+
+    //Mantención
+    const [mostrarEditUser, setMostrarEditUser] = useState(false)
 
 
 
@@ -41,7 +45,8 @@ const UserProvider = (props) => {
             comunas, setComunas,
             geoToogler, setGeoToogler,
             usuarioActivo, setUsuarioActivo,
-            autenticado, setAutenticado
+            autenticado, setAutenticado,
+            mostrarEditUser, setMostrarEditUser
         }}>
             {props.children}
         </UserContext.Provider>

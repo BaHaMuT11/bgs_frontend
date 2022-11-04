@@ -2,11 +2,12 @@ import React, {useContext} from "react"
 import "./profile_info.scss"
 import NavProfile from "../../components/NavProfile/NavProfile.jsx"
 import {Button, Image} from "react-bootstrap"
-import {UserContext} from "../../context/UserProvider.jsx";
+import {UserContext} from "../../context/UserProvider.jsx"
+import EditUser from "../../components/EditUser/EditUser.jsx"
 
 const ProfileInfo = () => {
 
-    const {usuarioActivo} = useContext(UserContext)
+    const {usuarioActivo, setMostrarEditUser, setRegForm} = useContext(UserContext)
 
     return (
         <div>
@@ -35,8 +36,28 @@ const ProfileInfo = () => {
                     <span className="info">{usuarioActivo.edad}</span>
                 </p>
                 <div className="text-center">
-                    <Button variant="warning">Editar info</Button>
+                    <Button variant="warning" onClick={ () => {
+                        setMostrarEditUser(true)
+                        setRegForm({
+                            usuario: usuarioActivo.usuario,
+                            pass: "",
+                            nombre: usuarioActivo.nombre,
+                            fechaNacimiento: usuarioActivo.fechaNacimiento,
+                            edad: usuarioActivo.edad,
+                            rut: usuarioActivo.rut,
+                            fono: usuarioActivo.fono,
+                            calle: usuarioActivo.calle,
+                            numero: usuarioActivo.numero,
+                            casa: usuarioActivo.casa,
+                            region: usuarioActivo.region,
+                            comuna: usuarioActivo.comuna,
+                            correo: "",
+                            estado: "ACTIVO",
+                            imagen: usuarioActivo.imagen
+                        })
+                    }}>Editar info</Button>
                 </div>
+                <EditUser />
             </div>
         </div>
     )

@@ -58,7 +58,6 @@ const SignIn = () => {
                             'error'
                         )
                     }
-                    console.log(data.usuario)
                 }
                 asignarUsuarioActivo()
 
