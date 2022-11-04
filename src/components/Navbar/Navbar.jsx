@@ -8,7 +8,7 @@ import {UserContext} from "../../context/UserProvider.jsx";
 
 const Navbar = () => {
 
-    const {loginText, usuarioActivo, autenticado} = useContext(UserContext)
+    const {usuarioActivo, autenticado} = useContext(UserContext)
 
     return (
         <nav>

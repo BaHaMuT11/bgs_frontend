@@ -6,7 +6,6 @@ const UserProvider = (props) => {
 
     //Autenticación
     const [ntk, setNtk] = useState("")
-    const [loginText, setLoginText] = useState("Login")
     const [usuarioActivo, setUsuarioActivo] = useState({})
     const [autenticado, setAutenticado] = useState(false)
 
