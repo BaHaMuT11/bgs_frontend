@@ -8,7 +8,7 @@ import {UserContext} from "../../context/UserProvider.jsx";
 
 const Navbar = () => {
 
-    const {loginText} = useContext(UserContext)
+    const {loginText, usuarioActivo, autenticado} = useContext(UserContext)
 
     return (
         <nav>
@@ -31,8 +31,13 @@ const Navbar = () => {
                     </Form>
                 </div>
                 <div className="profile">
-                    <NavLink to="/authenticate">
-                        <span>{loginText}</span> &nbsp;
+                    <NavLink to={autenticado?"/profile/info":"/authenticate"}>
+                        {
+                            autenticado ?
+                                <span>{usuarioActivo.usuario}</span>
+                                :
+                                <span>Login</span>
+                        } &nbsp;
                         <i className="fa-solid fa-2x fa-user"></i>
                     </NavLink>
                 </div>
@@ -46,8 +51,13 @@ const Navbar = () => {
                         </NavLink>
                     </div>
                     <div className="profile">
-                        <NavLink to="/authenticate">
-                            <span>Baha</span> &nbsp;
+                        <NavLink to={autenticado?"/profile/info":"/authenticate"}>
+                            {
+                                autenticado ?
+                                    <span>{usuarioActivo.usuario}</span>
+                                    :
+                                    <span>Login</span>
+                            } &nbsp;
                             <i className="fa-solid fa-2x fa-user"></i>
                         </NavLink>
                     </div>

@@ -7,6 +7,8 @@ const UserProvider = (props) => {
     //Autenticación
     const [ntk, setNtk] = useState("")
     const [loginText, setLoginText] = useState("Login")
+    const [usuarioActivo, setUsuarioActivo] = useState({})
+    const [autenticado, setAutenticado] = useState(false)
 
     //Registro
     const [regForm, setRegForm] = useState(
@@ -30,6 +32,8 @@ const UserProvider = (props) => {
     const [comunas, setComunas] = useState([])
     const [geoToogler, setGeoToogler] = useState(false)
 
+
+
     return (
         <UserContext.Provider value={{
             ntk, setNtk,
@@ -37,7 +41,9 @@ const UserProvider = (props) => {
             regForm, setRegForm,
             regiones, setRegiones,
             comunas, setComunas,
-            geoToogler, setGeoToogler
+            geoToogler, setGeoToogler,
+            usuarioActivo, setUsuarioActivo,
+            autenticado, setAutenticado
         }}>
             {props.children}
         </UserContext.Provider>
