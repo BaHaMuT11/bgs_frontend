@@ -36,7 +36,6 @@ const UserProvider = (props) => {
     return (
         <UserContext.Provider value={{
             ntk, setNtk,
-            loginText, setLoginText,
             regForm, setRegForm,
             regiones, setRegiones,
             comunas, setComunas,
