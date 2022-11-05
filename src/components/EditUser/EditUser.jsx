@@ -5,13 +5,22 @@ import {UserContext} from "../../context/UserProvider.jsx"
 import {calcularEdad} from "../../util/calcularEdad.js"
 import Swal from "sweetalert2"
 import axios from "axios"
-import {URL_OBTENER_INFO_GEOGRAFICA, URL_REGISTRAR_USUARIO} from "../../services/auth.js"
+import {
+    URL_BUSCAR_USUARIO_LOGIN,
+    URL_MODIFICAR_USUARIO,
+    URL_OBTENER_INFO_GEOGRAFICA,
+    URL_REGISTRAR_USUARIO
+} from "../../services/auth.js"
+import {useNavigate} from "react-router-dom";
 
 const EditUser = () => {
 
     const { regiones, setRegiones, comunas, setComunas,
             regForm, setRegForm, geoToogler, setGeoToogler,
-            mostrarEditUser, setMostrarEditUser} = useContext(UserContext)
+            mostrarEditUser, setMostrarEditUser, ntk,
+            setUsuarioActivo, setAutenticado} = useContext(UserContext)
+
+    const navigate = useNavigate()
 
     const handleChangeRegion = (valorSelect) => {
         setRegForm({...regForm, region: valorSelect})
@@ -44,28 +53,11 @@ const EditUser = () => {
             return
         }
 
-        if (!regForm.usuario.trim()) {
-            Swal.fire(
-                'Whooooops',
-                "Debe ingresar todos los campos obligatorios",
-                'error'
-            )
-            return
-        }
-
-        if (regForm.usuario.length < 4 || regForm.usuario.length > 7) {
-            Swal.fire(
-                'Whooooops',
-                "El login debe tener un mínimo de 4 caracteres y un máximo de 7",
-                'error'
-            )
-            return
-        }
 
         if (!regForm.fechaNacimiento.trim()) {
             Swal.fire(
                 'Whooooops',
-                "Debe ingresar todos los campos obligatorios",
+                "Debe ingresar todos los campos obligatorios del formulario",
                 'error'
             )
             return
@@ -74,7 +66,7 @@ const EditUser = () => {
         if (regForm.edad < 18) {
             Swal.fire(
                 'Whooooops',
-                "Debes ser mayor de edad para registrarte",
+                "Debes ser mayor de edad para hacer el registro",
                 'error'
             )
             setRegForm({...regForm, correo: ""})
@@ -116,76 +108,13 @@ const EditUser = () => {
             return
         }
 
-        if (!regForm.pass.trim()) {
-            Swal.fire(
-                'Whooooops',
-                "Debe ingresar todos los campos obligatorios",
-                'error'
-            )
-            return
-        }
-
-        if (regForm.pass != passwordSet.passwordDos) {
-            Swal.fire(
-                'Whooooops',
-                "Las contraseñas de ambos campos deben ser las mismas",
-                'error'
-            )
-            setRegForm({...regForm, pass: ""})
-            setPasswordSet(({...passwordSet, passwordDos: "", passwordText: ""}))
-            return
-        }
-
-        if (regForm.pass.length < 7) {
-            Swal.fire(
-                'Whooooops',
-                "La contraseña debe tene al menos 7 caracteres",
-                'error'
-            )
-            setRegForm({...regForm, pass: ""})
-            setPasswordSet(({...passwordSet, passwordDos: "", passwordText: ""}))
-            return
-        }
-
-        if (!regForm.correo.trim()) {
-            Swal.fire(
-                'Whooooops',
-                "Debe ingresar todos los campos obligatorios",
-                'error'
-            )
-            return
-        }
-
-        if (regForm.correo != emailSet.emailDos) {
-            Swal.fire(
-                'Whooooops',
-                "Los correos de ambos campos deben ser los mismos",
-                'error'
-            )
-            setRegForm({...regForm, correo: ""})
-            setEmailSet(({...emailSet, emailDos: "", emailText: ""}))
-            return
-        }
-
-        if (regForm.correo.length < 5) {
-            Swal.fire(
-                'Whooooops',
-                "El correo debe tener un mínimo de 5 caracteres",
-                'error'
-            )
-            setRegForm({...regForm, correo: ""})
-            setEmailSet(({...emailSet, emailDos: "", emailText: ""}))
-            return
-        }
-
-        const registrarUsuario = async () => {
+        const modificarUsuario = async () => {
             try {
                 let request = {
-                    usuario: regForm.usuario,
+                    login: regForm.usuario,
+                    imagen: !regForm.imagen.trim() ? "https://btl7.github.io/resources/img/interrogacion.png" : regForm.imagen,
                     nombre: regForm.nombre,
-                    pass: regForm.pass,
                     fechaNacimiento: regForm.fechaNacimiento,
-                    edad: regForm.edad,
                     rut: regForm.rut,
                     fono: regForm.fono,
                     calle: regForm.calle,
@@ -193,18 +122,50 @@ const EditUser = () => {
                     casa: regForm.casa,
                     region: regForm.region,
                     comuna: regForm.comuna,
-                    correo: regForm.correo,
-                    estado: regForm.estado
+                    edad: regForm.edad
                 }
 
-                const {data} = await axios.post(URL_REGISTRAR_USUARIO, request)
+                let configModUser = {
+                    headers: {
+                        "Content-Type": "Application/JSON",
+                        "Authorization": "Bearer " + ntk
+                    }
+                }
+
+                const {data} = await axios.put(URL_MODIFICAR_USUARIO, request, configModUser )
 
                 if (data.estado.codigo = "200") {
-                    Swal.fire(
-                        'Excelente',
-                        'Registro completado',
-                        'success'
-                    )
+
+                    const asignarUsuarioActivo = async() => {
+                        try {
+                            const configuracionUA = {
+                                headers: {
+                                    "Content-Type": "Application/JSON",
+                                    "Authorization": "Bearer " + ntk
+                                }
+                            }
+                            const {data} = await axios.get(URL_BUSCAR_USUARIO_LOGIN + request.login, configuracionUA)
+
+                            setUsuarioActivo(data.usuario)
+                            setAutenticado(true)
+
+                            Swal.fire(
+                                'Excelente',
+                                'Se modificó correctamente',
+                                'success'
+                            )
+                            setMostrarEditUser(false)
+                            navigate("/profile/info")
+                        }
+                        catch(error){
+                            Swal.fire(
+                                'Buaaa x.x',
+                                "Se modificó correctamente pero debes reiniciar sesión",
+                                'error'
+                            )
+                        }
+                    }
+                    asignarUsuarioActivo()
                     setRegForm({ usuario: "",
                         pass: "",
                         nombre: "",
@@ -218,11 +179,11 @@ const EditUser = () => {
                         region: "Región Metropolitana de Santiago",
                         comuna: "Santiago",
                         correo: "",
-                        estado: "ACTIVO"
+                        estado: "ACTIVO",
+                        imagen: ""
                     })
                 } else {
                     setRegForm({...regForm, pass: ""})
-                    setPasswordSet(({...passwordSet, passwordDos: "", passwordText: ""}))
                     Swal.fire(
                         'Algo no salió bien',
                         'Revise sus datos y realice la solicitud nuevamente',
@@ -231,8 +192,6 @@ const EditUser = () => {
                 }
             }
             catch (error) {
-                setRegForm({...regForm, pass: ""})
-                setPasswordSet(({...passwordSet, passwordDos: "", passwordText: ""}))
                 Swal.fire(
                     'Qué mal',
                     'No se pudo completar su solicitud',
@@ -240,7 +199,7 @@ const EditUser = () => {
                 )
             }
         }
-        registrarUsuario()
+        modificarUsuario()
     }
 
     useEffect( ()=>{
@@ -251,7 +210,7 @@ const EditUser = () => {
             setRegiones(regiones)
 
             for (const region of regiones) {
-                if (region.region === "Región Metropolitana de Santiago") {
+                if (region.region === regForm.region) {
                     setComunas(region.comunas)
                     break
                 }
