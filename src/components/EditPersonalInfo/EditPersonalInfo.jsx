@@ -16,7 +16,9 @@ const EditPersonalInfo = () => {
     const [passwordSet, setPasswordSet] = useState({ passwordDos: "",
         passwordText: "",
         passwordHidden: true})
-    const [submitDisabledStatus, setSubmitDisabledStatus] = useState(false)
+
+    const [submitDisabledStatus, setSubmitDisabledStatus] = useState(true)
+    const [chosenCredential, setChosenCredential] = useState("")
 
     const handleChangePasswordDos = (pswDos) => {
         if (pswDos != modCredenciales.pass || pswDos.length < 7)  {
@@ -49,96 +51,6 @@ const EditPersonalInfo = () => {
     const handleModInfoSubmit = (e) => {
 
         e.preventDefault()
-
-        if (!modCredenciales.nombre.trim()) {
-            Swal.fire(
-                'Whooooops',
-                "Debe ingresar todos los campos obligatorios",
-                'error'
-            )
-            return
-        }
-
-        if (modCredenciales.nombre.length < 3 || modCredenciales.nombre.length > 50) {
-            Swal.fire(
-                'Whooooops',
-                "El nombre debe tener al menos 3 caracteres",
-                'error'
-            )
-            return
-        }
-
-        if (!modCredenciales.usuario.trim()) {
-            Swal.fire(
-                'Whooooops',
-                "Debe ingresar todos los campos obligatorios",
-                'error'
-            )
-            return
-        }
-
-        if (modCredenciales.usuario.length < 4 || modCredenciales.usuario.length > 7) {
-            Swal.fire(
-                'Whooooops',
-                "El login debe tener un mínimo de 4 caracteres y un máximo de 7",
-                'error'
-            )
-            return
-        }
-
-        if (!modCredenciales.fechaNacimiento.trim()) {
-            Swal.fire(
-                'Whooooops',
-                "Debe ingresar todos los campos obligatorios",
-                'error'
-            )
-            return
-        }
-
-        if (modCredenciales.edad < 18) {
-            Swal.fire(
-                'Whooooops',
-                "Debes ser mayor de edad para registrarte",
-                'error'
-            )
-            setmodCredenciales({...modCredenciales, correo: ""})
-            setEmailSet(({...emailSet, emailDos: "", emailText: ""}))
-            return
-        }
-
-        if (!modCredenciales.rut.trim()) {
-            Swal.fire(
-                'Whooooops',
-                "Debe ingresar todos los campos obligatorios",
-                'error'
-            )
-            return
-        }
-
-        if (!modCredenciales.fono.trim()) {
-            Swal.fire(
-                'Whooooops',
-                "Debe ingresar todos los campos obligatorios",
-                'error'
-            )
-            return
-        }
-        if (!modCredenciales.calle.trim()) {
-            Swal.fire(
-                'Whooooops',
-                "Debe ingresar todos los campos obligatorios",
-                'error'
-            )
-            return
-        }
-        if (!modCredenciales.numero.trim()) {
-            Swal.fire(
-                'Whooooops',
-                "Debe ingresar todos los campos obligatorios",
-                'error'
-            )
-            return
-        }
 
         if (!modCredenciales.pass.trim()) {
             Swal.fire(
@@ -267,10 +179,79 @@ const EditPersonalInfo = () => {
         registrarUsuario()
     }
 
+    const type = "radio"
+    const renderForms = () => {
+        if (chosenCredential === "1") {
+            return (
+                <div className="password-fields">
+                    <Form.Group className="mb-3" controlId="regPsw">
+                        <Form.Label>Contraseña: <span className="text-danger">*</span></Form.Label>
+                        <FloatingLabel label="Contraseña" controlId="floatingRegPsw" className="text-dark mb-3">
+                            <Form.Control type="password" placeholder="Contraseña"
+                                          value={modCredenciales.pass}
+                                          onChange={e => setModCredenciales({...modCredenciales, pass: e.target.value})}
+                            />
+                            <Form.Text className="text-danger" hidden={passwordSet.passwordHidden}>
+                                {passwordSet.passwordText}
+                            </Form.Text>
+                        </FloatingLabel>
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="regPswRepeat">
+                        <Form.Label>Repita la contraseña: <span className="text-danger">*</span></Form.Label>
+                        <FloatingLabel label="Repita la contraseña" controlId="floatingRegPswRepeat"
+                                       className="text-dark mb-3">
+                            <Form.Control type="password" placeholder="Repita la contraseña"
+                                          value={passwordSet.passwordDos}
+                                          onChange={e => handleChangePasswordDos(e.target.value)}
+                            />
+                            <Form.Text className="text-danger" hidden={passwordSet.passwordHidden}>
+                                {passwordSet.passwordText}
+                            </Form.Text>
+                        </FloatingLabel>
+                    </Form.Group>
+                </div>
+            )
+        }
+        else if (chosenCredential === "2") {
+            return (
+                <div className="email-fields">
+                    <Form.Group className="mb-3" controlId="regEmail">
+                        <Form.Label>Correo: <span className="text-danger">*</span></Form.Label>
+                        <FloatingLabel label="Ej.: nombre@dominio.cl" controlId="floatingRegEmail" className="text-dark mb-3">
+                            <Form.Control type="email" placeholder="Email"
+                                          value={modCredenciales.correo}
+                                          onChange={e => setModCredenciales({...modCredenciales, correo: e.target.value})}
+                            />
+                            <Form.Text className="text-danger" hidden={emailSet.emailHidden}>
+                                {emailSet.emailText}
+                            </Form.Text>
+                        </FloatingLabel>
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="regEmailRepeat">
+                        <Form.Label>Repita el correo: <span className="text-danger">*</span></Form.Label>
+                        <FloatingLabel label="Ej.: nombre@dominio.cl" controlId="floatingRegEmailRepeat" className="text-dark mb-3">
+                            <Form.Control type="email" placeholder="Repita el email"
+                                          value={emailSet.emailDos}
+                                          onChange={e => handleChangeEmailDos(e.target.value)}
+                            />
+                            <Form.Text className="text-danger" hidden={emailSet.emailHidden}>
+                                {emailSet.emailText}
+                            </Form.Text>
+                        </FloatingLabel>
+                    </Form.Group>
+                </div>
+            )
+        } else {
+            return ("")
+        }
+    }
     return (
         <>
             <Modal show={mostrarEditInfoUser}
-                   onHide={() => setMostrarEditInfoUser(false)}
+                   onHide={() => {
+                       setMostrarEditInfoUser(false)
+                       setChosenCredential("")
+                   }}
                    centered
                    className="ec-style"
                    >
@@ -278,58 +259,30 @@ const EditPersonalInfo = () => {
                     <Modal.Title>Cambiar info de acceso</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="bg-dark text-white" >
+                    <div className="mb-3">
+                        <Form.Check
+                            inline
+                            label="Cambiar contraseña"
+                            name="grupoCredenciales"
+                            type={type}
+                            id={`inline-${type}-1`}
+                            className="text-white"
+                            value="1"
+                            onChange={ e => setChosenCredential(e.target.value)}
+                        />
+                        <Form.Check
+                            inline
+                            label="Cambiar correo"
+                            name="grupoCredenciales"
+                            type={type}
+                            id={`inline-${type}-2`}
+                            className="text-white"
+                            value="2"
+                            onChange={ e => setChosenCredential(e.target.value)}
+                        />
+                    </div>
                     <Form onSubmit={e => handleModInfoSubmit(e)}>
-                        <div className="my-5">
-                            <Form.Group className="mb-3" controlId="regPsw">
-                                <Form.Label>Contraseña: <span className="text-danger">*</span></Form.Label>
-                                <FloatingLabel label="Contraseña" controlId="floatingRegPsw" className="text-dark mb-3">
-                                    <Form.Control type="password" placeholder="Contraseña"
-                                                  value={modCredenciales.pass}
-                                                  onChange={e => setModCredenciales({...modCredenciales, pass: e.target.value})} />
-                                    <Form.Text className="text-danger" hidden={passwordSet.passwordHidden}>
-                                        {passwordSet.passwordText}
-                                    </Form.Text>
-                                </FloatingLabel>
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="regPswRepeat">
-                                <Form.Label>Repita la contraseña: <span className="text-danger">*</span></Form.Label>
-                                <FloatingLabel label="Repita la contraseña" controlId="floatingRegPswRepeat"
-                                               className="text-dark mb-3">
-                                    <Form.Control type="password" placeholder="Repita la contraseña"
-                                                  value={passwordSet.passwordDos}
-                                                  onChange={e => handleChangePasswordDos(e.target.value)}
-                                    />
-                                    <Form.Text className="text-danger" hidden={passwordSet.passwordHidden}>
-                                        {passwordSet.passwordText}
-                                    </Form.Text>
-                                </FloatingLabel>
-                            </Form.Group>
-                        </div>
-                        <div className="pb-3">
-                            <Form.Group className="mb-3" controlId="regEmail">
-                                <Form.Label>Correo: <span className="text-danger">*</span></Form.Label>
-                                <FloatingLabel label="Ej.: nombre@dominio.cl" controlId="floatingRegEmail" className="text-dark mb-3">
-                                    <Form.Control type="email" placeholder="Email"
-                                                  value={modCredenciales.correo}
-                                                  onChange={e => setModCredenciales({...modCredenciales, correo: e.target.value})}
-                                    />
-                                    <Form.Text className="text-danger" hidden={emailSet.emailHidden}>
-                                        {emailSet.emailText}
-                                    </Form.Text>
-                                </FloatingLabel>
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="regEmailRepeat">
-                                <Form.Label>Repita el correo: <span className="text-danger">*</span></Form.Label>
-                                <FloatingLabel label="Ej.: nombre@dominio.cl" controlId="floatingRegEmailRepeat" className="text-dark mb-3">
-                                    <Form.Control type="email" placeholder="Repita el email"
-                                                  value={emailSet.emailDos}
-                                                  onChange={e => handleChangeEmailDos(e.target.value)} />
-                                    <Form.Text className="text-danger" hidden={emailSet.emailHidden}>
-                                        {emailSet.emailText}
-                                    </Form.Text>
-                                </FloatingLabel>
-                            </Form.Group>
-                        </div>
+                        { renderForms() }
                         <Button variant="warning" type="submit" className="w-100" disabled={submitDisabledStatus}>Modificar</Button>
                     </Form>
                 </Modal.Body>
