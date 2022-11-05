@@ -1,17 +1,19 @@
+@use "src/assets/css/modules/colors";
+
 .eu-style {
   margin-top: 150px;
 
   .modal-dialog {
-    border: 1px solid salmon;
+    border: 2px solid colors.$modal-border-color;
     border-radius: 10px;
   }
 
   .modal-header {
-    border-bottom: 1px solid salmon !important;
+    border-bottom: 2px solid colors.$modal-border-color !important;
   }
 
   .btn-close {
-    background-color: goldenrod !important;
+    background-color: colors.$modal-border-color !important;
     opacity: 1 !important;
   }
 }

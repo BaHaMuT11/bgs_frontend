@@ -1,16 +1,18 @@
+@use "src/assets/css/modules/colors";
+
 .ec-style {
   .btn-close {
-    background-color: goldenrod !important;
+    background-color: colors.$bahagames-main !important;
     opacity: 1 !important;
     max-height: 100% !important;
   }
 
   .modal-header {
-    border-bottom: 1px solid salmon !important;
+    border-bottom: 2px solid colors.$modal-border-color !important;
   }
 
   .modal-content {
-    border: 2px solid salmon;
+    border: 2px solid colors.$modal-border-color;
     border-radius: 10px;
   }
 }
