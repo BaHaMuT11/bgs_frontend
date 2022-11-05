@@ -1,16 +1,16 @@
-import React, {useContext, useEffect, useState} from "react"
+import React, {useContext, useEffect} from "react"
 import {Button, FloatingLabel, Form, Modal} from "react-bootstrap"
 import "./edit_user.scss"
 import {UserContext} from "../../context/UserProvider.jsx"
-import {calcularEdad} from "../../util/calcularEdad.js";
-import Swal from "sweetalert2";
-import axios from "axios";
-import {URL_OBTENER_INFO_GEOGRAFICA, URL_REGISTRAR_USUARIO} from "../../services/auth.js";
+import {calcularEdad} from "../../util/calcularEdad.js"
+import Swal from "sweetalert2"
+import axios from "axios"
+import {URL_OBTENER_INFO_GEOGRAFICA, URL_REGISTRAR_USUARIO} from "../../services/auth.js"
 
 const EditUser = () => {
 
     const { regiones, setRegiones, comunas, setComunas,
-            regForm, setRegForm, geoToogler, setGeoToogler, usuarioActivo,
+            regForm, setRegForm, geoToogler, setGeoToogler,
             mostrarEditUser, setMostrarEditUser} = useContext(UserContext)
 
     const handleChangeRegion = (valorSelect) => {
@@ -286,111 +286,109 @@ const EditUser = () => {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="bg-dark text-white">
-                    <div>
-                        <Form onSubmit={e => handleModSubmit(e)}>
-                            <Form.Group className="mb-3" controlId="regFoto">
-                                <Form.Label>URL foto:</Form.Label>
-                                <FloatingLabel label="Ej.: http://www.fotos.cl/perfil.jpg" controlId="floatingRegNombre" className="text-dark mb-3">
-                                    <Form.Control type="text" placeholder="URL foto"
-                                                  value={regForm.imagen}
-                                                  onChange={e => setRegForm({...regForm, imagen: e.target.value})} />
+                    <Form onSubmit={e => handleModSubmit(e)}>
+                        <Form.Group className="mb-3" controlId="regFoto">
+                            <Form.Label>URL foto:</Form.Label>
+                            <FloatingLabel label="Ej.: http://www.fotos.cl/perfil.jpg" controlId="floatingRegNombre" className="text-dark mb-3">
+                                <Form.Control type="text" placeholder="URL foto"
+                                              value={regForm.imagen}
+                                              onChange={e => setRegForm({...regForm, imagen: e.target.value})} />
+                            </FloatingLabel>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="regNombre">
+                            <Form.Label>Nombre: <span className="text-danger">*</span></Form.Label>
+                            <FloatingLabel label="Nombre completo" controlId="floatingRegNombre" className="text-dark mb-3">
+                                <Form.Control type="text" placeholder="Nombre completo"
+                                              value={regForm.nombre}
+                                              onChange={e => setRegForm({...regForm, nombre: e.target.value})} />
+                                <Form.Text className="text-warning">
+                                    Su nombre debe tener al menos 3 caracteres.
+                                </Form.Text>
+                            </FloatingLabel>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="regNacimiento">
+                            <Form.Label>Fecha de nacimiento: <span className="text-danger">*</span></Form.Label>
+                            <FloatingLabel controlId="floatingRegNacimiento" label="Fecha de nacimiento" className="text-dark">
+                                <Form.Control type="date" placeholder="11-11-1985"
+                                              onChange={e => handleChangeNacimiento(e.target.value)}/>
+                                <Form.Text className="text-warning">
+                                    Su fecha de nacimiento actual es: {new Date(`${regForm.fechaNacimiento}`).toLocaleDateString()}
+                                </Form.Text>
+                            </FloatingLabel>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="regRUT">
+                            <Form.Label>RUT: <span className="text-danger">*</span></Form.Label>
+                            <FloatingLabel label="Ej.: 16587231-K" controlId="floatingRegRUT" className="text-dark mb-3">
+                                <Form.Control type="text" placeholder="16587231-K"
+                                              value={regForm.rut}
+                                              onChange={e => setRegForm({...regForm, rut: e.target.value})}
+                                />
+                            </FloatingLabel>
+                        </Form.Group>
+                        <Form.Group className="mb-5" controlId="regFono">
+                            <Form.Label>Fono: <span className="text-danger">*</span></Form.Label>
+                            <FloatingLabel label="Ej.: +56 9 4178 8523" controlId="floatingRegFono" className="text-dark mb-3">
+                                <Form.Control type="text" placeholder="+56 9 4178 8523"
+                                              value={regForm.fono}
+                                              onChange={e => setRegForm({...regForm, fono: e.target.value})}/>
+                            </FloatingLabel>
+                        </Form.Group>
+                        <div className="calle-completa pt-5">
+                            <Form.Group className="mb-3" controlId="regCalle">
+                                <Form.Label>Calle: <span className="text-danger">*</span></Form.Label>
+                                <FloatingLabel label="Calle" controlId="floatingRegCalle" className="text-dark mb-3">
+                                    <Form.Control type="text" placeholder="Calle"
+                                                  value={regForm.calle}
+                                                  onChange={e => setRegForm({...regForm, calle: e.target.value})} />
                                 </FloatingLabel>
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="regNombre">
-                                <Form.Label>Nombre: <span className="text-danger">*</span></Form.Label>
-                                <FloatingLabel label="Nombre completo" controlId="floatingRegNombre" className="text-dark mb-3">
-                                    <Form.Control type="text" placeholder="Nombre completo"
-                                                  value={regForm.nombre}
-                                                  onChange={e => setRegForm({...regForm, nombre: e.target.value})} />
-                                    <Form.Text className="text-warning">
-                                        Su nombre debe tener al menos 3 caracteres.
-                                    </Form.Text>
+                            <Form.Group className="mb-3" controlId="regNumero">
+                                <Form.Label>Número: <span className="text-danger">*</span></Form.Label>
+                                <FloatingLabel label="Número" controlId="floatingRegNumero"  className="text-dark mb-3">
+                                    <Form.Control type="text" placeholder="7880. 15-A"
+                                                  value={regForm.numero}
+                                                  onChange={e => setRegForm({...regForm, numero: e.target.value})} />
                                 </FloatingLabel>
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="regNacimiento">
-                                <Form.Label>Fecha de nacimiento: <span className="text-danger">*</span></Form.Label>
-                                <FloatingLabel controlId="floatingRegNacimiento" label="Fecha de nacimiento" className="text-dark">
-                                    <Form.Control type="date" placeholder="11-11-1985"
-                                                  onChange={e => handleChangeNacimiento(e.target.value)}/>
-                                    <Form.Text className="text-warning">
-                                        Su fecha de nacimiento actual es: {new Date(`${regForm.fechaNacimiento}`).toLocaleDateString()}
-                                    </Form.Text>
+                            <Form.Group className="mb-3" controlId="regCasa">
+                                <Form.Label>Casa/Block/Depto:</Form.Label>
+                                <FloatingLabel label="Ej.: 404, Block B" controlId="floatingRegCasa" className="text-dark mb-3">
+                                    <Form.Control type="text" placeholder="7880. 15-A"
+                                                  value={regForm.casa}
+                                                  onChange={e => setRegForm({...regForm, casa: e.target.value})} />
                                 </FloatingLabel>
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="regRUT">
-                                <Form.Label>RUT: <span className="text-danger">*</span></Form.Label>
-                                <FloatingLabel label="Ej.: 16587231-K" controlId="floatingRegRUT" className="text-dark mb-3">
-                                    <Form.Control type="text" placeholder="16587231-K"
-                                                  value={regForm.rut}
-                                                  onChange={e => setRegForm({...regForm, rut: e.target.value})}
-                                    />
-                                </FloatingLabel>
-                            </Form.Group>
-                            <Form.Group className="mb-5" controlId="regFono">
-                                <Form.Label>Fono: <span className="text-danger">*</span></Form.Label>
-                                <FloatingLabel label="Ej.: +56 9 4178 8523" controlId="floatingRegFono" className="text-dark mb-3">
-                                    <Form.Control type="text" placeholder="+56 9 4178 8523"
-                                                  value={regForm.fono}
-                                                  onChange={e => setRegForm({...regForm, fono: e.target.value})}/>
-                                </FloatingLabel>
-                            </Form.Group>
-                            <div className="calle-completa pt-5">
-                                <Form.Group className="mb-3" controlId="regCalle">
-                                    <Form.Label>Calle: <span className="text-danger">*</span></Form.Label>
-                                    <FloatingLabel label="Calle" controlId="floatingRegCalle" className="text-dark mb-3">
-                                        <Form.Control type="text" placeholder="Calle"
-                                                      value={regForm.calle}
-                                                      onChange={e => setRegForm({...regForm, calle: e.target.value})} />
-                                    </FloatingLabel>
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="regNumero">
-                                    <Form.Label>Número: <span className="text-danger">*</span></Form.Label>
-                                    <FloatingLabel label="Número" controlId="floatingRegNumero"  className="text-dark mb-3">
-                                        <Form.Control type="text" placeholder="7880. 15-A"
-                                                      value={regForm.numero}
-                                                      onChange={e => setRegForm({...regForm, numero: e.target.value})} />
-                                    </FloatingLabel>
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="regCasa">
-                                    <Form.Label>Casa/Block/Depto:</Form.Label>
-                                    <FloatingLabel label="Ej.: 404, Block B" controlId="floatingRegCasa" className="text-dark mb-3">
-                                        <Form.Control type="text" placeholder="7880. 15-A"
-                                                      value={regForm.casa}
-                                                      onChange={e => setRegForm({...regForm, casa: e.target.value})} />
-                                    </FloatingLabel>
-                                </Form.Group>
-                            </div>
-                            <Form.Group className="mb-3" controlId="regRegion">
-                                <Form.Label>Región: <span className="text-danger">*</span></Form.Label>
-                                <FloatingLabel controlId="floatingRegRegion" label="Región" className="text-dark">
-                                    <Form.Select aria-label="Regiones de Chile"
-                                                 value={regForm.region}
-                                                 onChange={e => handleChangeRegion(e.target.value)}>
-                                        {
-                                            regiones.map( region => (
-                                                <option key={region.region} value={region.region} >{region.region}</option>
-                                            ))
-                                        }
-                                    </Form.Select>
-                                </FloatingLabel>
-                            </Form.Group>
-                            <Form.Group className="pb-5" controlId="regComuna">
-                                <Form.Label>Comuna: <span className="text-danger">*</span></Form.Label>
-                                <FloatingLabel controlId="floatingRegComuna" label="Comuna" className="text-dark">
-                                    <Form.Select aria-label="Comunas por región"
-                                                 value={regForm.comuna}
-                                                 onChange={e => setRegForm({...regForm, comuna: e.target.value})}>
-                                        {
-                                            comunas.map( comuna => (
-                                                <option key={comuna} value={comuna}>{comuna}</option>
-                                            ))
-                                        }
-                                    </Form.Select>
-                                </FloatingLabel>
-                            </Form.Group>
-                            <Button variant="warning" type="submit" className="w-100">Modificar</Button>
-                        </Form>
-                    </div>
+                        </div>
+                        <Form.Group className="mb-3" controlId="regRegion">
+                            <Form.Label>Región: <span className="text-danger">*</span></Form.Label>
+                            <FloatingLabel controlId="floatingRegRegion" label="Región" className="text-dark">
+                                <Form.Select aria-label="Regiones de Chile"
+                                             value={regForm.region}
+                                             onChange={e => handleChangeRegion(e.target.value)}>
+                                    {
+                                        regiones.map( region => (
+                                            <option key={region.region} value={region.region} >{region.region}</option>
+                                        ))
+                                    }
+                                </Form.Select>
+                            </FloatingLabel>
+                        </Form.Group>
+                        <Form.Group className="pb-5" controlId="regComuna">
+                            <Form.Label>Comuna: <span className="text-danger">*</span></Form.Label>
+                            <FloatingLabel controlId="floatingRegComuna" label="Comuna" className="text-dark">
+                                <Form.Select aria-label="Comunas por región"
+                                             value={regForm.comuna}
+                                             onChange={e => setRegForm({...regForm, comuna: e.target.value})}>
+                                    {
+                                        comunas.map( comuna => (
+                                            <option key={comuna} value={comuna}>{comuna}</option>
+                                        ))
+                                    }
+                                </Form.Select>
+                            </FloatingLabel>
+                        </Form.Group>
+                        <Button variant="warning" type="submit" className="w-100">Modificar</Button>
+                    </Form>
                 </Modal.Body>
             </Modal>
         </>

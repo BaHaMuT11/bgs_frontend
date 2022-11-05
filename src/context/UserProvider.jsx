@@ -34,8 +34,8 @@ const UserProvider = (props) => {
 
     //Mantención
     const [mostrarEditUser, setMostrarEditUser] = useState(false)
-
-
+    const [mostrarEditInfoUser, setMostrarEditInfoUser] = useState(false)
+    const [modCredenciales, setModCredenciales] = useState({})
 
     return (
         <UserContext.Provider value={{
@@ -46,7 +46,9 @@ const UserProvider = (props) => {
             geoToogler, setGeoToogler,
             usuarioActivo, setUsuarioActivo,
             autenticado, setAutenticado,
-            mostrarEditUser, setMostrarEditUser
+            mostrarEditUser, setMostrarEditUser,
+            mostrarEditInfoUser, setMostrarEditInfoUser,
+            modCredenciales, setModCredenciales
         }}>
             {props.children}
         </UserContext.Provider>

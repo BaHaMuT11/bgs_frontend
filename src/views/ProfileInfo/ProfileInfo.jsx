@@ -1,13 +1,15 @@
 import React, {useContext} from "react"
 import "./profile_info.scss"
 import NavProfile from "../../components/NavProfile/NavProfile.jsx"
-import {Button, Image} from "react-bootstrap"
+import {Button, Image, Modal} from "react-bootstrap"
 import {UserContext} from "../../context/UserProvider.jsx"
 import EditUser from "../../components/EditUser/EditUser.jsx"
+import EditPersonalInfo from "../../components/EditPersonalInfo/EditPersonalInfo.jsx"
 
 const ProfileInfo = () => {
 
-    const {usuarioActivo, setMostrarEditUser, setRegForm} = useContext(UserContext)
+    const { usuarioActivo, setMostrarEditUser, setRegForm,
+            setModCredenciales, setMostrarEditInfoUser} = useContext(UserContext)
 
     return (
         <div>
@@ -55,9 +57,17 @@ const ProfileInfo = () => {
                             estado: "ACTIVO",
                             imagen: usuarioActivo.imagen
                         })
-                    }}>Editar info</Button>
+                    }}>Editar info</Button> &nbsp;
+                    <Button variant="danger"  onClick={ () => {
+                        setMostrarEditInfoUser(true)
+                        setModCredenciales({
+                            correo: usuarioActivo.correo,
+                            pass: ""
+                        })
+                    }}>Modificar credenciales</Button>
                 </div>
                 <EditUser />
+                <EditPersonalInfo />
             </div>
         </div>
     )
