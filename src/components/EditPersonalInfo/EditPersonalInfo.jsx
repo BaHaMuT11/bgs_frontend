@@ -4,11 +4,13 @@ import {UserContext} from "../../context/UserProvider.jsx"
 import Swal from "sweetalert2"
 import axios from "axios"
 import "./edit_personal_info.scss"
-import {URL_REGISTRAR_USUARIO} from "../../services/auth.js"
+import {URL_MODIFICAR_CREDENCIALES, URL_REGISTRAR_USUARIO} from "../../services/auth.js"
+import {useNavigate} from "react-router-dom";
 
 const EditPersonalInfo = () => {
 
-    const {modCredenciales, setModCredenciales, mostrarEditInfoUser, setMostrarEditInfoUser} = useContext(UserContext)
+    const { modCredenciales, setModCredenciales, mostrarEditInfoUser,
+            setMostrarEditInfoUser, ntk, setAutenticado} = useContext(UserContext)
 
     const [emailSet, setEmailSet] = useState({emailDos: "",
         emailText:"",
@@ -19,6 +21,8 @@ const EditPersonalInfo = () => {
 
     const [submitDisabledStatus, setSubmitDisabledStatus] = useState(true)
     const [chosenCredential, setChosenCredential] = useState("")
+
+    const navigate = useNavigate()
 
     const handleChangePasswordDos = (pswDos) => {
         if (pswDos != modCredenciales.pass || pswDos.length < 7)  {
@@ -52,131 +56,180 @@ const EditPersonalInfo = () => {
 
         e.preventDefault()
 
-        if (!modCredenciales.pass.trim()) {
-            Swal.fire(
-                'Whooooops',
-                "Debe ingresar todos los campos obligatorios",
-                'error'
-            )
-            return
-        }
+        if (chosenCredential === "1") {
+            if (!modCredenciales.pass.trim()) {
+                Swal.fire(
+                    'Whooooops',
+                    "Debe ingresar todos los campos obligatorios",
+                    'error'
+                )
+                return
+            }
 
-        if (modCredenciales.pass != passwordSet.passwordDos) {
-            Swal.fire(
-                'Whooooops',
-                "Las contraseñas de ambos campos deben ser las mismas",
-                'error'
-            )
-            setModCredenciales({...modCredenciales, pass: ""})
-            setPasswordSet(({...passwordSet, passwordDos: "", passwordText: ""}))
-            return
-        }
+            if (modCredenciales.pass != passwordSet.passwordDos) {
+                Swal.fire(
+                    'Whooooops',
+                    "Las contraseñas de ambos campos deben ser las mismas",
+                    'error'
+                )
+                setModCredenciales({...modCredenciales, pass: ""})
+                setPasswordSet(({...passwordSet, passwordDos: "", passwordText: ""}))
+                return
+            }
 
-        if (modCredenciales.pass.length < 7) {
-            Swal.fire(
-                'Whooooops',
-                "La contraseña debe tene al menos 7 caracteres",
-                'error'
-            )
-            setModCredenciales({...modCredenciales, pass: ""})
-            setPasswordSet(({...passwordSet, passwordDos: "", passwordText: ""}))
-            return
-        }
+            if (modCredenciales.pass.length < 7) {
+                Swal.fire(
+                    'Whooooops',
+                    "La contraseña debe tene al menos 7 caracteres",
+                    'error'
+                )
+                setModCredenciales({...modCredenciales, pass: ""})
+                setPasswordSet(({...passwordSet, passwordDos: "", passwordText: ""}))
+                return
+            }
 
-        if (!modCredenciales.correo.trim()) {
-            Swal.fire(
-                'Whooooops',
-                "Debe ingresar todos los campos obligatorios",
-                'error'
-            )
-            return
-        }
-
-        if (modCredenciales.correo != emailSet.emailDos) {
-            Swal.fire(
-                'Whooooops',
-                "Los correos de ambos campos deben ser los mismos",
-                'error'
-            )
-            setModCredenciales({...modCredenciales, correo: ""})
-            setEmailSet(({...emailSet, emailDos: "", emailText: ""}))
-            return
-        }
-
-        if (modCredenciales.correo.length < 5) {
-            Swal.fire(
-                'Whooooops',
-                "El correo debe tener un mínimo de 5 caracteres",
-                'error'
-            )
-            setModCredenciales({...modCredenciales, correo: ""})
-            setEmailSet(({...emailSet, emailDos: "", emailText: ""}))
-            return
-        }
-
-        const registrarUsuario = async () => {
-            try {
-                let request = {
-                    usuario: modCredenciales.usuario,
-                    nombre: modCredenciales.nombre,
-                    pass: modCredenciales.pass,
-                    fechaNacimiento: modCredenciales.fechaNacimiento,
-                    edad: modCredenciales.edad,
-                    rut: modCredenciales.rut,
-                    fono: modCredenciales.fono,
-                    calle: modCredenciales.calle,
-                    numero: modCredenciales.numero,
-                    casa: modCredenciales.casa,
-                    region: modCredenciales.region,
-                    comuna: modCredenciales.comuna,
-                    correo: modCredenciales.correo,
-                    estado: modCredenciales.estado
-                }
-
-                const {data} = await axios.post(URL_REGISTRAR_USUARIO, request)
-
-                if (data.estado.codigo = "200") {
-                    Swal.fire(
-                        'Excelente',
-                        'Registro completado',
-                        'success'
-                    )
-                    setModCredenciales({ usuario: "",
-                        pass: "",
-                        nombre: "",
-                        fechaNacimiento: "",
-                        edad: "0",
-                        rut: "",
-                        fono: "",
-                        calle: "",
-                        numero: "",
-                        casa: "",
-                        region: "Región Metropolitana de Santiago",
-                        comuna: "Santiago",
+            const modificarPass = async () => {
+                try {
+                    let request = {
+                        login: modCredenciales.login,
                         correo: "",
-                        estado: "ACTIVO"
-                    })
-                } else {
+                        pass: modCredenciales.pass,
+                    }
+
+                    const configuracionModCredenciales = {
+                        headers: {
+                            "Content-Type": "Application/JSON",
+                            "Authorization": "Bearer " + ntk
+                        }
+                    }
+                    const {data} = await axios.put(URL_MODIFICAR_CREDENCIALES, request, configuracionModCredenciales)
+
+                    if (data.estado.codigo = "200") {
+                        Swal.fire(
+                            'Excelente',
+                            'Modificación realizada',
+                            'success'
+                        )
+                        setModCredenciales({
+                            login: "",
+                            pass: "",
+                            correo: ""
+                        })
+                        setAutenticado(false)
+                        setMostrarEditInfoUser(false)
+                        navigate("/authenticate")
+                    } else {
+                        setModCredenciales({...modCredenciales, pass: ""})
+                        setPasswordSet(({...passwordSet, passwordDos: "", passwordText: ""}))
+                        Swal.fire(
+                            'Algo no salió bien',
+                            'Revise sus datos y realice la solicitud nuevamente',
+                            'error'
+                        )
+                    }
+                }
+                catch (error) {
                     setModCredenciales({...modCredenciales, pass: ""})
                     setPasswordSet(({...passwordSet, passwordDos: "", passwordText: ""}))
                     Swal.fire(
-                        'Algo no salió bien',
-                        'Revise sus datos y realice la solicitud nuevamente',
+                        'Qué mal :(',
+                        'No se pudo completar su solicitud',
                         'error'
                     )
                 }
             }
-            catch (error) {
-                setModCredenciales({...modCredenciales, pass: ""})
-                setPasswordSet(({...passwordSet, passwordDos: "", passwordText: ""}))
+            modificarPass()
+        } else if (chosenCredential === "2") {
+            if (!modCredenciales.correo.trim()) {
                 Swal.fire(
-                    'Qué mal',
-                    'No se pudo completar su solicitud',
+                    'Whooooops',
+                    "Debe ingresar todos los campos obligatorios",
                     'error'
                 )
+                return
             }
+
+            if (modCredenciales.correo != emailSet.emailDos) {
+                Swal.fire(
+                    'Whooooops',
+                    "Los correos de ambos campos deben ser los mismos",
+                    'error'
+                )
+                setModCredenciales({...modCredenciales, correo: ""})
+                setEmailSet(({...emailSet, emailDos: "", emailText: ""}))
+                return
+            }
+
+            if (modCredenciales.correo.length < 5) {
+                Swal.fire(
+                    'Whooooops',
+                    "El correo debe tener un mínimo de 5 caracteres",
+                    'error'
+                )
+                setModCredenciales({...modCredenciales, correo: ""})
+                setEmailSet(({...emailSet, emailDos: "", emailText: ""}))
+                return
+            }
+
+            const modificarCorreo = async () => {
+                try {
+                    let request = {
+                        login: modCredenciales.login,
+                        correo: modCredenciales.correo,
+                        pass: "",
+                    }
+
+                    const configuracionModCredenciales = {
+                        headers: {
+                            "Content-Type": "Application/JSON",
+                            "Authorization": "Bearer " + ntk
+                        }
+                    }
+                    const {data} = await axios.put(URL_MODIFICAR_CREDENCIALES, request, configuracionModCredenciales)
+
+                    if (data.estado.codigo = "200") {
+                        Swal.fire(
+                            'Excelente',
+                            'Modificación realizada',
+                            'success'
+                        )
+                        setModCredenciales({
+                            login: "",
+                            pass: "",
+                            correo: ""
+                        })
+                        setAutenticado(false)
+                        setMostrarEditInfoUser(false)
+                        navigate("/authenticate")
+                    } else {
+                        setModCredenciales({...modCredenciales, correo: ""})
+                        setEmailSet(({...emailSet, emailDos: "", emailText: ""}))
+                        Swal.fire(
+                            'Algo no salió bien',
+                            'Revise sus datos y realice la solicitud nuevamente',
+                            'error'
+                        )
+                    }
+                }
+                catch (error) {
+                    setModCredenciales({...modCredenciales, correo: ""})
+                    setEmailSet(({...emailSet, emailDos: "", emailText: ""}))
+                    Swal.fire(
+                        'Qué mal :(',
+                        'No se pudo completar su solicitud',
+                        'error'
+                    )
+                }
+            }
+            modificarCorreo()
+        } else {
+            Swal.fire(
+                'Pero qué pasó !',
+                'Elija una opción válida: correo o contraseña. Inténtelo nuevamente',
+                'error'
+            )
+            return
         }
-        registrarUsuario()
     }
 
     const type = "radio"

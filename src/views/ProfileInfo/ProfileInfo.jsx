@@ -61,6 +61,7 @@ const ProfileInfo = () => {
                     <Button variant="danger"  onClick={ () => {
                         setMostrarEditInfoUser(true)
                         setModCredenciales({
+                            login: usuarioActivo.usuario,
                             correo: usuarioActivo.correo,
                             pass: ""
                         })
