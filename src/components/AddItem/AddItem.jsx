@@ -1,6 +1,7 @@
-import React from 'react'
+import React from "react"
 import "./add_item.scss"
-import {Button, FloatingLabel, Form} from "react-bootstrap";
+import {Button, FloatingLabel, Form} from "react-bootstrap"
+import ItemTxa from "../ItemTxa/ItemTxa.jsx";
 
 const AddItem = () => {
     return (
@@ -21,7 +22,7 @@ const AddItem = () => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="descripcion">
                     <Form.Label>Descripción:</Form.Label>
-                    <Form.Control as="textarea" rows={5} />
+                    <ItemTxa />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="precio">
                     <Form.Label>Precio:</Form.Label>

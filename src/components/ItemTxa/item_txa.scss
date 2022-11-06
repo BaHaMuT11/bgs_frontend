@@ -1,0 +1,9 @@
+@use "src/assets/css/modules/colors";
+
+.txa-height {
+  height: 700px;
+}
+
+.ql-toolbar {
+  background-color: colors.$txa-toolbar-background-color;
+}
