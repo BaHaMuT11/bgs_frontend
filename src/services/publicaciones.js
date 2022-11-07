@@ -1,0 +1,1 @@
+export const URL_AGREGAR_PUBLICACION = "https://www.bahatech.cl:8443/baha_games_marketplace/publicacion/agregar"

@@ -236,7 +236,7 @@ const SignUp = () => {
 
                 const {data} = await axios.post(URL_REGISTRAR_USUARIO, request)
 
-                if (data.estado.codigo = "200") {
+                if (data.estado.codigo == "200") {
                     Swal.fire(
                         'Excelente',
                         'Registro completado',
