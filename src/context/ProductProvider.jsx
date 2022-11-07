@@ -12,13 +12,21 @@ const ProductProvider = (props) => {
     const [addPlataforma, setAddPlataforma] = useState("")
     const [addFormato, setAddFormato] = useState("")
 
+    //GetPublicaciones
+    const [publicaciones, setPublicaciones] = useState([])
+
+    const [publicacionesUsuario, setPublicacionesUsuario] = useState([])
+
     return (
         <ProductContext.Provider value={{ addDescripcion, setAddDescripcion,
                                           addJuego, setAddJuego,
                                           addImagen, setAddImagen,
                                           addPrecio, setAddPrecio,
                                           addPlataforma, setAddPlataforma,
-                                          addFormato, setAddFormato}}>
+                                          addFormato, setAddFormato,
+                                          publicaciones, setPublicaciones,
+                                          publicacionesUsuario, setPublicacionesUsuario
+        }}>
             {props.children}
         </ProductContext.Provider>
     )
