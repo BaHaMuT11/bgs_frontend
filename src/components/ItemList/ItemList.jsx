@@ -1,7 +1,7 @@
 import React, {useContext, useEffect} from "react"
 import "./item_list.scss"
 import {Table} from "react-bootstrap"
-import {URL_OBTENER_PUBLICACIONES} from "../../services/publicaciones.js";
+import {URL_DESHABILITAR_PUBLICACION, URL_OBTENER_PUBLICACIONES} from "../../services/publicaciones.js";
 import {UserContext} from "../../context/UserProvider.jsx";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -10,57 +10,115 @@ import {ProductContext} from "../../context/ProductProvider.jsx";
 const ItemList = () => {
 
     const {ntk, usuarioActivo} = useContext(UserContext)
-    const {setPublicaciones, publicacionesUsuario, setPublicacionesUsuario} = useContext(ProductContext)
+    const {publicacionesUsuario, setPublicacionesUsuario} = useContext(ProductContext)
 
-    useEffect( () => {
-
-        const asignarPublicaciones = async () => {
-            const configsItemList = {
-                headers: {
-                    "Content-Type": "Application/JSON",
-                    "Authorization": "Bearer " + ntk
-                }
+    const asignarPublicaciones = async () => {
+        const configsItemList = {
+            headers: {
+                "Content-Type": "Application/JSON",
+                "Authorization": "Bearer " + ntk
             }
+        }
 
-            try {
-                const {data} = await axios.get(URL_OBTENER_PUBLICACIONES, configsItemList)
+        try {
+            const {data} = await axios.get(URL_OBTENER_PUBLICACIONES, configsItemList)
 
-                if (data.estado.codigo == "200") {
+            if (data.estado.codigo == "200") {
 
-                    const items = data.publicaciones
-                    setPublicaciones(items)
+                const items = data.publicaciones
 
-                    const asignarPublicacionesUsuario = () => {
-                        let publis = []
-                        for (const publicacion of items) {
-                            if (publicacion.usuario == usuarioActivo.id && publicacion.estado != "DESACTIVADO") {
-                                publis = [...publis, publicacion]
-                            }
+                const asignarPublicacionesUsuario = () => {
+                    let publis = []
+                    for (const publicacion of items) {
+                        if (publicacion.usuario == usuarioActivo.id && publicacion.estado != "DESACTIVADO") {
+                            publis = [...publis, publicacion]
                         }
-                        setPublicacionesUsuario(publis)
                     }
-                    asignarPublicacionesUsuario()
-
-                } else {
-                    Swal.fire(
-                        'Whooooops',
-                        "No se pueden obtener tus publicaciones",
-                        'error'
-                    )
+                    setPublicacionesUsuario(publis)
                 }
-            }
-            catch (error) {
+                asignarPublicacionesUsuario()
+
+            } else {
                 Swal.fire(
                     'Whooooops',
-                    "Hubo un error de conexión con el servidor",
+                    "No se pueden obtener tus publicaciones",
                     'error'
                 )
             }
-
         }
-        asignarPublicaciones()
+        catch (error) {
+            Swal.fire(
+                'Whooooops',
+                "Hubo un error de conexión con el servidor",
+                'error'
+            )
+        }
 
+    }
+
+    useEffect( () => {
+        asignarPublicaciones()
     }, [])
+
+    const handleDelete = (id) => {
+
+        Swal.fire({
+            title: 'Esta seguro que desea eliminar esta publicación?',
+            text: "Esta acción es irreversible",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: 'd33',
+            cancelButtonColor: '#3085d6#',
+            confirmButtonText: 'Procede y bórrala',
+            cancelButtonText: 'Devolvámonos !'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const eliminarPublicacion = async () => {
+
+                    const reqDeshabilitarPublicacion = {
+                        id: id
+                    }
+                    const configsItemList = {
+                        headers: {
+                            "Content-Type": "Application/JSON",
+                            "Authorization": "Bearer " + ntk
+                        }
+                    }
+
+                    try {
+                        const {data} = await axios.put(URL_DESHABILITAR_PUBLICACION, reqDeshabilitarPublicacion, configsItemList)
+
+                        if (data.estado.codigo == "200") {
+
+                            asignarPublicaciones()
+
+                            Swal.fire(
+                                'SÚPER',
+                                "Eliminaste tu publicación",
+                                'success'
+                            )
+                        } else {
+                            Swal.fire(
+                                'Oh no !',
+                                "No pudimos eliminar tu publicación. Reintenta más tarde",
+                                'error'
+                            )
+                        }
+                    }
+                    catch (error) {
+                        Swal.fire(
+                            'Whooooops',
+                            "Error de conexión con el servidor",
+                            'error'
+                        )
+                    }
+
+                }
+                eliminarPublicacion()
+            }
+        })
+
+    }
 
     return (
         <>
@@ -86,7 +144,8 @@ const ItemList = () => {
                                     <td>{new Date(publicacion.fechaCreacion).toLocaleDateString()}</td>
                                     <td>{publicacion.estado}</td>
                                     <td className="text-center item-ops">
-                                        <i className="fa-solid fa-2x fa-trash delete"></i> &nbsp;
+                                        <i className="fa-solid fa-2x fa-trash delete"
+                                           onClick={ () => handleDelete(publicacion.id)}></i> &nbsp;
                                         <i className="fa-solid fa-2x fa-pen-to-square edit"></i> &nbsp;
                                         <i className="fa-solid fa-2x fa-eye inspect"></i>
                                     </td>
