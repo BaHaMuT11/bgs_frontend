@@ -37,6 +37,9 @@ const UserProvider = (props) => {
     const [mostrarEditInfoUser, setMostrarEditInfoUser] = useState(false)
     const [modCredenciales, setModCredenciales] = useState({})
 
+    //Obtencion genérica
+    const [vendedor, setVendedor] = useState({})
+
     return (
         <UserContext.Provider value={{
             ntk, setNtk,
@@ -48,7 +51,8 @@ const UserProvider = (props) => {
             autenticado, setAutenticado,
             mostrarEditUser, setMostrarEditUser,
             mostrarEditInfoUser, setMostrarEditInfoUser,
-            modCredenciales, setModCredenciales
+            modCredenciales, setModCredenciales,
+            vendedor, setVendedor
         }}>
             {props.children}
         </UserContext.Provider>

@@ -393,9 +393,9 @@ const GameCard = (props) => {
                                         renderStars(props.rating)
                                     }
                                 </div>
-                                <div className="text-center text-white">
-                                    {`${obtenerCLP(props.precio)} CLP`}
-                                </div>
+                                <Button className="w-100" variant="info" onClick={
+                                    ()=>{handleClick(props.idPublicacion)}
+                                }>{`${obtenerCLP(props.precio)} CLP`}</Button>
                             </Card.Body>
                         </Card>
                     </Col>

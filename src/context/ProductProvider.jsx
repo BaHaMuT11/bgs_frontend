@@ -14,8 +14,8 @@ const ProductProvider = (props) => {
 
     //GetPublicaciones
     const [publicaciones, setPublicaciones] = useState([])
-
     const [publicacionesUsuario, setPublicacionesUsuario] = useState([])
+    const [publicacionActiva, setPublicacionActiva] = useState({})
 
     return (
         <ProductContext.Provider value={{ addDescripcion, setAddDescripcion,
@@ -25,7 +25,8 @@ const ProductProvider = (props) => {
                                           addPlataforma, setAddPlataforma,
                                           addFormato, setAddFormato,
                                           publicaciones, setPublicaciones,
-                                          publicacionesUsuario, setPublicacionesUsuario
+                                          publicacionesUsuario, setPublicacionesUsuario,
+                                          publicacionActiva, setPublicacionActiva
         }}>
             {props.children}
         </ProductContext.Provider>
