@@ -16,7 +16,6 @@ const Products = () => {
 
     const [populares, setPopulares] = useState([])
 
-
     const asignarPublicaciones = async () => {
         const configsItemList = {
             headers: {
@@ -97,6 +96,8 @@ const Products = () => {
                                   rating={publicacion.rating}
                                   precio={publicacion.precio}
                                   imagen={publicacion.imagen}
+                                  idPublicacion={publicacion.id}
+                                  actualizar={asignarPublicaciones}
                                   key={publicacion.id}
                         />
                     ))
@@ -113,6 +114,8 @@ const Products = () => {
                                   rating={publicacion.rating}
                                   precio={publicacion.precio}
                                   imagen={publicacion.imagen}
+                                  idPublicacion={publicacion.id}
+                                  actualizar={asignarPublicaciones}
                                   key={publicacion.id}
                         />
                     ))

@@ -1,35 +1,171 @@
-import React from "react"
+import React, {useContext} from "react"
 import {Badge, Button, Card, Col} from "react-bootstrap"
 import "./game_card.scss"
 import {useNavigate} from "react-router-dom"
 import {obtenerCLP} from "../../util/clp_parser.js";
+import {UserContext} from "../../context/UserProvider.jsx";
+import axios from "axios";
+import {URL_CALIFICAR_PUBLICACION} from "../../services/publicaciones.js";
+import Swal from "sweetalert2";
 
 const GameCard = (props) => {
 
     const navigate = useNavigate()
+    const {ntk, usuarioActivo} = useContext(UserContext)
 
     const handleClick = (id) => {
         navigate(`/detail/${id}`)
     }
 
-    const voteOneStar = () => {
 
+    const calificarJuego = async (req) => {
+        const configVotingHeaders = {
+            headers: {
+                "Content-Type": "Application/JSON",
+                "Authorization": "Bearer " + ntk
+            }
+        }
+        try {
+            const {data} = await axios.post(URL_CALIFICAR_PUBLICACION, req, configVotingHeaders)
+
+            if (data.estado.codigo == "200") {
+
+                Swal.fire(
+                    'Súper !',
+                    "Valoraste este juego correctamente",
+                    'success'
+                )
+                props.actualizar()
+            } else {
+                Swal.fire(
+                    'Whooooops',
+                    "Problemas de conexión, intente más adelante",
+                    'error'
+                )
+            }
+        }
+        catch(error){
+            Swal.fire(
+                'Whooooops',
+                "No puedes valorar este juego nuevamente",
+                'error'
+            )
+        }
     }
 
-    const voteTwoStar = () => {
+    const voteOneStar = (id) => {
+        let request = {
+            usuario: usuarioActivo.id,
+            publicacion: id,
+            estrellas: 1
+        }
 
+        Swal.fire({
+            title: `Deseas calificar esta publicación con un ${request.estrellas}?`,
+            text: "No podrás valorala nuevamente",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Adelante capitán !',
+            cancelButtonText: 'Mejor me lo pienso ;)'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                calificarJuego(request)
+            }
+        })
     }
 
-    const voteThreeStar = () => {
+    const voteTwoStar = (id) => {
+        let request = {
+            usuario: usuarioActivo.id,
+            publicacion: id,
+            estrellas: 2
+        }
 
+        Swal.fire({
+            title: `Deseas calificar esta publicación con un ${request.estrellas}?`,
+            text: "No podrás valorala nuevamente",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Adelante capitán !',
+            cancelButtonText: 'Mejor me lo pienso ;)'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                calificarJuego(request)
+            }
+        })
     }
 
-    const voteFourStar = () => {
+    const voteThreeStar = (id) => {
+        let request = {
+            usuario: usuarioActivo.id,
+            publicacion: id,
+            estrellas: 3
+        }
 
+        Swal.fire({
+            title: `Deseas calificar esta publicación con un ${request.estrellas}?`,
+            text: "No podrás valorala nuevamente",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Adelante capitán !',
+            cancelButtonText: 'Mejor me lo pienso ;)'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                calificarJuego(request)
+            }
+        })
     }
 
-    const voteFiveStar = () => {
+    const voteFourStar = (id) => {
+        let request = {
+            usuario: usuarioActivo.id,
+            publicacion: id,
+            estrellas: 4
+        }
 
+        Swal.fire({
+            title: `Deseas calificar esta publicación con un ${request.estrellas}?`,
+            text: "No podrás valorala nuevamente",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Adelante capitán !',
+            cancelButtonText: 'Mejor me lo pienso ;)'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                calificarJuego(request)
+            }
+        })
+    }
+
+    const voteFiveStar = (id) => {
+        let request = {
+            usuario: usuarioActivo.id,
+            publicacion: id,
+            estrellas: 5
+        }
+
+        Swal.fire({
+            title: `Deseas calificar esta publicación con un ${request.estrellas}?`,
+            text: "No podrás valorala nuevamente",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Adelante capitán !',
+            cancelButtonText: 'Mejor me lo pienso ;)'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                calificarJuego(request)
+            }
+        })
     }
 
     const renderStars = (estrellas) => {
@@ -37,19 +173,19 @@ const GameCard = (props) => {
             return (
                 <>
                     <i className="fa-solid fa-2x star-authenticated fa-star"
-                       onClick={ () => voteOneStar()}
+                       onClick={ () => voteOneStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star"
-                       onClick={ () => voteTwoStar()}
+                       onClick={ () => voteTwoStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star"
-                       onClick={ () => voteThreeStar()}
+                       onClick={ () => voteThreeStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star"
-                       onClick={ () => voteFourStar()}
+                       onClick={ () => voteFourStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star"
-                       onClick={ () => voteFiveStar()}
+                       onClick={ () => voteFiveStar(props.idPublicacion)}
                     ></i>
                 </>
             )
@@ -58,19 +194,19 @@ const GameCard = (props) => {
             return (
                 <>
                     <i className="fa-solid fa-2x star-authenticated fa-star star-filled"
-                       onClick={ () => voteOneStar()}
+                       onClick={ () => voteOneStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star"
-                       onClick={ () => voteTwoStar()}
+                       onClick={ () => voteTwoStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star"
-                       onClick={ () => voteThreeStar()}
+                       onClick={ () => voteThreeStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star"
-                       onClick={ () => voteFourStar()}
+                       onClick={ () => voteFourStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star"
-                       onClick={ () => voteFiveStar()}
+                       onClick={ () => voteFiveStar(props.idPublicacion)}
                     ></i>
                 </>
             )
@@ -79,19 +215,19 @@ const GameCard = (props) => {
             return (
                 <>
                     <i className="fa-solid fa-2x star-authenticated fa-star star-filled"
-                       onClick={ () => voteOneStar()}
+                       onClick={ () => voteOneStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star star-filled"
-                       onClick={ () => voteTwoStar()}
+                       onClick={ () => voteTwoStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star"
-                       onClick={ () => voteThreeStar()}
+                       onClick={ () => voteThreeStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star"
-                       onClick={ () => voteFourStar()}
+                       onClick={ () => voteFourStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star"
-                       onClick={ () => voteFiveStar()}
+                       onClick={ () => voteFiveStar(props.idPublicacion)}
                     ></i>
                 </>
             )
@@ -100,19 +236,19 @@ const GameCard = (props) => {
             return (
                 <>
                     <i className="fa-solid fa-2x star-authenticated fa-star star-filled"
-                       onClick={ () => voteOneStar()}
+                       onClick={ () => voteOneStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star star-filled"
-                       onClick={ () => voteTwoStar()}
+                       onClick={ () => voteTwoStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star star-filled"
-                       onClick={ () => voteThreeStar()}
+                       onClick={ () => voteThreeStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star"
-                       onClick={ () => voteFourStar()}
+                       onClick={ () => voteFourStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star"
-                       onClick={ () => voteFiveStar()}
+                       onClick={ () => voteFiveStar(props.idPublicacion)}
                     ></i>
                 </>
             )
@@ -121,19 +257,19 @@ const GameCard = (props) => {
             return (
                 <>
                     <i className="fa-solid fa-2x star-authenticated fa-star star-filled"
-                       onClick={ () => voteOneStar()}
+                       onClick={ () => voteOneStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star star-filled"
-                       onClick={ () => voteTwoStar()}
+                       onClick={ () => voteTwoStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star star-filled"
-                       onClick={ () => voteThreeStar()}
+                       onClick={ () => voteThreeStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star star-filled"
-                       onClick={ () => voteFourStar()}
+                       onClick={ () => voteFourStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star"
-                       onClick={ () => voteFiveStar()}
+                       onClick={ () => voteFiveStar(props.idPublicacion)}
                     ></i>
                 </>
             )
@@ -142,19 +278,19 @@ const GameCard = (props) => {
             return (
                 <>
                     <i className="fa-solid fa-2x star-authenticated fa-star star-filled"
-                       onClick={ () => voteOneStar()}
+                       onClick={ () => voteOneStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star star-filled"
-                       onClick={ () => voteTwoStar()}
+                       onClick={ () => voteTwoStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star star-filled"
-                       onClick={ () => voteThreeStar()}
+                       onClick={ () => voteThreeStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star star-filled"
-                       onClick={ () => voteFourStar()}
+                       onClick={ () => voteFourStar(props.idPublicacion)}
                     ></i> &nbsp;
                     <i className="fa-solid fa-2x star-authenticated fa-star star-filled"
-                       onClick={ () => voteFiveStar()}
+                       onClick={ () => voteFiveStar(props.idPublicacion)}
                     ></i>
                 </>
             )
@@ -239,7 +375,7 @@ const GameCard = (props) => {
                                     }
                                 </div>
                                 <Button className="w-100" variant="warning" onClick={
-                                    ()=>{handleClick(1)}
+                                    ()=>{handleClick(props.idPublicacion)}
                                 }>{`${obtenerCLP(props.precio)} CLP`}</Button>
                             </Card.Body>
                         </Card>
