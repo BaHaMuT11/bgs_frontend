@@ -1,14 +1,15 @@
 import React, {useContext, useEffect} from "react"
 import {Accordion} from "react-bootstrap"
 import "./item_accordion.scss"
-import {Link, useParams} from "react-router-dom";
-import {UserContext} from "../../context/UserProvider.jsx";
-import {ProductContext} from "../../context/ProductProvider.jsx";
-import axios from "axios";
-import {URL_BUSCAR_PUBLICACION_ID} from "../../services/publicaciones.js";
-import Swal from "sweetalert2";
-import {URL_BUSCAR_USUARIO_ID} from "../../services/auth.js";
-import {obtenerCLP} from "../../util/clp_parser.js";
+import {Link, useParams} from "react-router-dom"
+import {UserContext} from "../../context/UserProvider.jsx"
+import {ProductContext} from "../../context/ProductProvider.jsx"
+import axios from "axios"
+import {URL_BUSCAR_PUBLICACION_ID} from "../../services/publicaciones.js"
+import Swal from "sweetalert2"
+import {URL_BUSCAR_USUARIO_ID} from "../../services/auth.js"
+import {obtenerCLP} from "../../util/clp_parser.js"
+import {URL_AGREGAR_FAVORITO} from "../../services/favoritos.js"
 
 const ItemAccordion = () => {
 
@@ -67,6 +68,48 @@ const ItemAccordion = () => {
         }
         obtenerPublicacionActiva()
     }, [])
+
+    const handleAddFavorite = () => {
+        const agregarFavorito = async () => {
+
+            const configAddFav = {
+                headers: {
+                    "Content-Type": "Application/JSON",
+                    "Authorization": "Bearer " + ntk
+                }
+            }
+            const reqAddFav = {
+                usuario: usuarioActivo.id,
+                publicacion: publicacionActiva.id
+            }
+
+            try {
+                const {data} = await axios.post(URL_AGREGAR_FAVORITO, reqAddFav, configAddFav)
+
+                if (data.estado.codigo == "200") {
+                    Swal.fire(
+                        'Excelente',
+                        "Agregaste la publicación a tus favoritos",
+                        'success'
+                    )
+                } else {
+                    Swal.fire(
+                        'Epaa',
+                        "El servidor no responde, inténtalo más tarde",
+                        'error'
+                    )
+                }
+            }
+            catch(error) {
+                Swal.fire(
+                    'Oye !',
+                    "Esta publicación ya estaba en tus favoritos o hay problemas de conexión",
+                    'error'
+                )
+            }
+        }
+        agregarFavorito()
+    }
 
     return (
         <Accordion defaultActiveKey="0">
@@ -127,6 +170,20 @@ const ItemAccordion = () => {
                                                 <span className="info">{usuarioActivo.region}</span>
                                             </p>
                                         </div>
+                                }
+                                {
+                                    usuarioActivo.id == publicacionActiva.usuario ?
+                                        ""
+                                        :
+                                        <div className="text-center mt-4">
+                                            <button className="btn btn-danger" onClick={ () => handleAddFavorite()}>
+                                                <i className="fa-solid fa-star"></i> Agregar a favoritos
+                                            </button> &nbsp; &nbsp;
+                                            <button className="btn btn-warning">
+                                                <i className="fa-solid fa-id-card"></i> Mostrar interés
+                                            </button>
+                                        </div>
+
                                 }
                             </>
                             :
