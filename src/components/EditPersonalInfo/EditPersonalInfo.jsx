@@ -4,8 +4,8 @@ import {UserContext} from "../../context/UserProvider.jsx"
 import Swal from "sweetalert2"
 import axios from "axios"
 import "./edit_personal_info.scss"
-import {URL_MODIFICAR_CREDENCIALES, URL_REGISTRAR_USUARIO} from "../../services/auth.js"
-import {useNavigate} from "react-router-dom";
+import {URL_MODIFICAR_CREDENCIALES} from "../../services/auth.js"
+import {useNavigate} from "react-router-dom"
 
 const EditPersonalInfo = () => {
 

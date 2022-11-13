@@ -1,7 +1,7 @@
 import React, {useContext, useEffect} from "react"
 import {Accordion} from "react-bootstrap"
 import "./item_accordion.scss"
-import {Link, useParams} from "react-router-dom"
+import {Link, useNavigate, useParams} from "react-router-dom"
 import {UserContext} from "../../context/UserProvider.jsx"
 import {ProductContext} from "../../context/ProductProvider.jsx"
 import axios from "axios"
@@ -10,6 +10,7 @@ import Swal from "sweetalert2"
 import {URL_BUSCAR_USUARIO_ID} from "../../services/auth.js"
 import {obtenerCLP} from "../../util/clp_parser.js"
 import {URL_AGREGAR_FAVORITO} from "../../services/favoritos.js"
+import {URL_MOSTRAR_INTERES} from "../../services/interesados.js"
 
 const ItemAccordion = () => {
 
@@ -110,6 +111,47 @@ const ItemAccordion = () => {
         }
         agregarFavorito()
     }
+    const handleShowInterest = () => {
+        const mostrarInteres = async () => {
+
+            const configMostrarInteres = {
+                headers: {
+                    "Content-Type": "Application/JSON",
+                    "Authorization": "Bearer " + ntk
+                }
+            }
+            const reqMostrarInteres = {
+                usuario: usuarioActivo.id,
+                publicacion: publicacionActiva.id
+            }
+
+            try {
+                const {data} = await axios.post(URL_MOSTRAR_INTERES, reqMostrarInteres, configMostrarInteres)
+
+                if (data.estado.codigo == "200") {
+                    Swal.fire(
+                        'Excelente decisión !',
+                        "Suerte con la compra",
+                        'success'
+                    )
+                } else {
+                    Swal.fire(
+                        'Epaa',
+                        "El servidor no responde, inténtalo más tarde",
+                        'error'
+                    )
+                }
+            }
+            catch(error) {
+                Swal.fire(
+                    'Qué ansiedad !',
+                    "Ya mostraste interés en esta publicación",
+                    'error'
+                )
+            }
+        }
+        mostrarInteres()
+    }
 
     return (
         <Accordion defaultActiveKey="0">
@@ -179,7 +221,7 @@ const ItemAccordion = () => {
                                             <button className="btn btn-danger" onClick={ () => handleAddFavorite()}>
                                                 <i className="fa-solid fa-star"></i> Agregar a favoritos
                                             </button> &nbsp; &nbsp;
-                                            <button className="btn btn-warning">
+                                            <button className="btn btn-warning" onClick={ () => handleShowInterest()}>
                                                 <i className="fa-solid fa-id-card"></i> Mostrar interés
                                             </button>
                                         </div>

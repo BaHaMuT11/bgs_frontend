@@ -6,11 +6,14 @@ import {UserContext} from "../../context/UserProvider.jsx";
 import Swal from "sweetalert2";
 import axios from "axios";
 import {ProductContext} from "../../context/ProductProvider.jsx";
+import InterestedPeople from "../InterestedPeople/InterestedPeople.jsx";
+import {URL_OBTENER_INTERESADOS} from "../../services/interesados.js";
 
 const ItemList = () => {
 
     const {ntk, usuarioActivo} = useContext(UserContext)
-    const {publicacionesUsuario, setPublicacionesUsuario} = useContext(ProductContext)
+    const { publicacionesUsuario, setPublicacionesUsuario, setMostrarInteresados,
+            setInteresados} = useContext(ProductContext)
 
     const asignarPublicaciones = async () => {
         const configsItemList = {
@@ -119,6 +122,49 @@ const ItemList = () => {
         })
 
     }
+    const handleInspect = (idInteresado) => {
+        const asignarInteresados = async () => {
+            let configGetInterested= {
+                headers: {
+                    "Content-Type": "Application/JSON",
+                    "Authorization": "Bearer " + ntk
+                }
+            }
+            try {
+                const {data} = await axios.get(URL_OBTENER_INTERESADOS + idInteresado, configGetInterested)
+
+                if (data.estado.codigo == "200") {
+                    const listaInteresados = data.interesados
+
+                    if (listaInteresados.length > 0) {
+                        setInteresados(listaInteresados)
+                        setMostrarInteresados(true)
+                    } else {
+                        Swal.fire(
+                            'Espera !',
+                            "Tu publicación aun no tiene interesados",
+                            'error'
+                        )
+                    }
+                } else {
+                    Swal.fire(
+                        'Whooooops',
+                        "No se pudieron obtener los interesados, error de conexión",
+                        'error'
+                    )
+                }
+            }
+            catch(error) {
+                Swal.fire(
+                    'Whooooops',
+                    "No se pudieron obtener los interesados, error de conexión",
+                    'error'
+                )
+            }
+        }
+        asignarInteresados()
+    }
+
 
     return (
         <>
@@ -147,7 +193,8 @@ const ItemList = () => {
                                         <i className="fa-solid fa-2x fa-trash delete"
                                            onClick={ () => handleDelete(publicacion.id)}></i> &nbsp;
                                         <i className="fa-solid fa-2x fa-pen-to-square edit"></i> &nbsp;
-                                        <i className="fa-solid fa-2x fa-eye inspect"></i>
+                                        <i  onClick={ () => handleInspect(publicacion.id)}
+                                            className="fa-solid fa-2x fa-eye inspect"></i>
                                     </td>
                                 </tr>
                             ))
@@ -159,8 +206,7 @@ const ItemList = () => {
                         <p>No tienes publicaicones aun</p>
                     </div>
             }
-
-
+            <InterestedPeople />
         </>
     )
 }

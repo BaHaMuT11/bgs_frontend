@@ -1,0 +1,21 @@
+@use "src/assets/css/modules/colors";
+
+.si-style {
+
+  margin-top: 150px;
+
+  .btn-close {
+    background-color: colors.$modal-border-color !important;
+    opacity: 1 !important;
+    max-height: 100% !important;
+  }
+
+  .modal-header {
+    border-bottom: 2px solid colors.$modal-border-color !important;
+  }
+
+  .modal-content {
+    border: 2px solid colors.$modal-border-color;
+    border-radius: 10px;
+  }
+}

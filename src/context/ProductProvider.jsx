@@ -20,6 +20,10 @@ const ProductProvider = (props) => {
     //Favoritos
     const [favoritos, setFavoritos] = useState([])
 
+    //Interesados
+    const [mostrarInteresados, setMostrarInteresados] = useState(false)
+    const [interesados, setInteresados] = useState([])
+
     return (
         <ProductContext.Provider value={{ addDescripcion, setAddDescripcion,
                                           addJuego, setAddJuego,
@@ -30,7 +34,9 @@ const ProductProvider = (props) => {
                                           publicaciones, setPublicaciones,
                                           publicacionesUsuario, setPublicacionesUsuario,
                                           publicacionActiva, setPublicacionActiva,
-                                          favoritos, setFavoritos
+                                          favoritos, setFavoritos,
+                                          mostrarInteresados, setMostrarInteresados,
+                                          interesados, setInteresados
         }}>
             {props.children}
         </ProductContext.Provider>

@@ -1,0 +1,2 @@
+export const URL_MOSTRAR_INTERES = "https://www.bahatech.cl:8443/baha_games_marketplace/publicacion/mostrar_interes"
+export const URL_OBTENER_INTERESADOS = "https://www.bahatech.cl:8443/baha_games_marketplace/publicacion/interesados/"
