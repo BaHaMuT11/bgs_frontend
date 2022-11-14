@@ -1,13 +1,13 @@
 import React, {useContext, useEffect} from "react"
 import "./item_list.scss"
 import {Table} from "react-bootstrap"
-import {URL_DESHABILITAR_PUBLICACION, URL_OBTENER_PUBLICACIONES} from "../../services/publicaciones.js";
-import {UserContext} from "../../context/UserProvider.jsx";
-import Swal from "sweetalert2";
-import axios from "axios";
-import {ProductContext} from "../../context/ProductProvider.jsx";
-import InterestedPeople from "../InterestedPeople/InterestedPeople.jsx";
-import {URL_OBTENER_INTERESADOS} from "../../services/interesados.js";
+import {URL_DESHABILITAR_PUBLICACION, URL_OBTENER_PUBLICACIONES} from "../../services/publicaciones.js"
+import {UserContext} from "../../context/UserProvider.jsx"
+import Swal from "sweetalert2"
+import axios from "axios"
+import {ProductContext} from "../../context/ProductProvider.jsx"
+import InterestedPeople from "../InterestedPeople/InterestedPeople.jsx"
+import {URL_CERRAR_VENTA, URL_OBTENER_GANADOR, URL_OBTENER_INTERESADOS} from "../../services/interesados.js"
 
 const ItemList = () => {
 
@@ -57,6 +57,39 @@ const ItemList = () => {
             )
         }
 
+    }
+
+    const hayGanador = async (idPublicacion) => {
+        let configWinnerExists = {
+            headers: {
+                "Content-Type": "Application/JSON",
+                "Authorization": "Bearer " + ntk
+            }
+        }
+        try {
+            const {data} = await axios.get(URL_OBTENER_GANADOR + idPublicacion, configWinnerExists)
+
+            if (data.estado.codigo == "200") {
+                if (!data.ganador) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                Swal.fire(
+                    'Whooooops',
+                    "No se pudiron revisar los ganadores, problemas de conexión",
+                    'error'
+                )
+            }
+        }
+        catch(error){
+            Swal.fire(
+                'Whooooops',
+                "No se pudiron revisar los ganadores, problemas de conexión",
+                'error'
+            )
+        }
     }
 
     useEffect( () => {
@@ -122,7 +155,7 @@ const ItemList = () => {
         })
 
     }
-    const handleInspect = (idInteresado) => {
+    const handleInspect = async (idPublicacion) => {
         const asignarInteresados = async () => {
             let configGetInterested= {
                 headers: {
@@ -131,7 +164,7 @@ const ItemList = () => {
                 }
             }
             try {
-                const {data} = await axios.get(URL_OBTENER_INTERESADOS + idInteresado, configGetInterested)
+                const {data} = await axios.get(URL_OBTENER_INTERESADOS + idPublicacion, configGetInterested)
 
                 if (data.estado.codigo == "200") {
                     const listaInteresados = data.interesados
@@ -161,6 +194,16 @@ const ItemList = () => {
                     'error'
                 )
             }
+        }
+        const ganador = await hayGanador(idPublicacion)
+
+        if (ganador) {
+            Swal.fire(
+                'Espera !',
+                "Tu artículo ya fue vendido",
+                'error'
+            )
+            return
         }
         asignarInteresados()
     }
@@ -206,7 +249,7 @@ const ItemList = () => {
                         <p>No tienes publicaicones aun</p>
                     </div>
             }
-            <InterestedPeople />
+            <InterestedPeople actualizarPublicaciones={asignarPublicaciones} />
         </>
     )
 }
