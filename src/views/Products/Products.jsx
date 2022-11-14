@@ -35,11 +35,12 @@ const Products = () => {
                     let publis = []
 
                     for (let publicacion of items) {
+
                         if (publicacion.estado != "DESACTIVADO" && publicacion.estado != "VENDIDO") {
                             publis = [...publis, publicacion]
                         }
                     }
-                    setPublicaciones(items)
+                    setPublicaciones(publis)
                 }
                 asignarPublicaciones()
 
