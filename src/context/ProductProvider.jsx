@@ -9,8 +9,8 @@ const ProductProvider = (props) => {
     const [addJuego, setAddJuego] = useState("")
     const [addImagen, setAddImagen] = useState("")
     const [addPrecio, setAddPrecio] = useState(2000)
-    const [addPlataforma, setAddPlataforma] = useState("")
-    const [addFormato, setAddFormato] = useState("")
+    const [addPlataforma, setAddPlataforma] = useState("PC")
+    const [addFormato, setAddFormato] = useState("Digital")
 
     //GetPublicaciones
     const [publicaciones, setPublicaciones] = useState([])
@@ -24,6 +24,13 @@ const ProductProvider = (props) => {
     const [mostrarInteresados, setMostrarInteresados] = useState(false)
     const [interesados, setInteresados] = useState([])
 
+    //ModForm
+    const [mostrarEditItem, setMostrarEditItem] = useState(false)
+    const [modPlataforma, setModPlataforma] = useState("PC")
+    const [modFormato, setModFormato] = useState("Digital")
+    const [modPublicacionActiva, setModPublicacionActiva] = useState({})
+
+
     return (
         <ProductContext.Provider value={{ addDescripcion, setAddDescripcion,
                                           addJuego, setAddJuego,
@@ -36,7 +43,11 @@ const ProductProvider = (props) => {
                                           publicacionActiva, setPublicacionActiva,
                                           favoritos, setFavoritos,
                                           mostrarInteresados, setMostrarInteresados,
-                                          interesados, setInteresados
+                                          interesados, setInteresados,
+                                          mostrarEditItem, setMostrarEditItem,
+                                          modPlataforma, setModPlataforma,
+                                          modFormato, setModFormato,
+                                          modPublicacionActiva, setModPublicacionActiva
         }}>
             {props.children}
         </ProductContext.Provider>

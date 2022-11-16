@@ -3,3 +3,5 @@ export const URL_OBTENER_PUBLICACIONES = "https://www.bahatech.cl:8443/baha_game
 export const URL_DESHABILITAR_PUBLICACION = "https://www.bahatech.cl:8443/baha_games_marketplace/publicacion/deshabilitar"
 export const URL_CALIFICAR_PUBLICACION = "https://www.bahatech.cl:8443/baha_games_marketplace/publicacion/calificar"
 export const URL_BUSCAR_PUBLICACION_ID = "https://www.bahatech.cl:8443/baha_games_marketplace/publicacion/get/"
+export const URL_MODIFICAR_PUBLICACION = "https://www.bahatech.cl:8443/baha_games_marketplace/item/modificar"
+export const URL_OBTENER_ADQUISICIONES = "https://www.bahatech.cl:8443/baha_games_marketplace/publicacion/adquisiciones/"

@@ -7,13 +7,14 @@ import Swal from "sweetalert2"
 import axios from "axios"
 import {ProductContext} from "../../context/ProductProvider.jsx"
 import InterestedPeople from "../InterestedPeople/InterestedPeople.jsx"
-import {URL_CERRAR_VENTA, URL_OBTENER_GANADOR, URL_OBTENER_INTERESADOS} from "../../services/interesados.js"
+import {URL_OBTENER_GANADOR, URL_OBTENER_INTERESADOS} from "../../services/interesados.js"
+import EditItem from "../EditItem/EditItem.jsx"
 
 const ItemList = () => {
 
     const {ntk, usuarioActivo} = useContext(UserContext)
     const { publicacionesUsuario, setPublicacionesUsuario, setMostrarInteresados,
-            setInteresados} = useContext(ProductContext)
+            setInteresados, setMostrarEditItem, setModPublicacionActiva, setModFormato, setModPlataforma} = useContext(ProductContext)
 
     const asignarPublicaciones = async () => {
         const configsItemList = {
@@ -90,6 +91,13 @@ const ItemList = () => {
                 'error'
             )
         }
+    }
+
+    const handleEdit = (publi) => {
+        setMostrarEditItem(true)
+        setModPublicacionActiva(publi)
+        setModPlataforma(publi.plataforma)
+        setModFormato(publi.formato)
     }
 
     useEffect( () => {
@@ -235,7 +243,8 @@ const ItemList = () => {
                                     <td className="text-center item-ops">
                                         <i className="fa-solid fa-2x fa-trash delete"
                                            onClick={ () => handleDelete(publicacion.id)}></i> &nbsp;
-                                        <i className="fa-solid fa-2x fa-pen-to-square edit"></i> &nbsp;
+                                        <i className="fa-solid fa-2x fa-pen-to-square edit"
+                                           onClick={ () => handleEdit(publicacion)}></i> &nbsp;
                                         <i  onClick={ () => handleInspect(publicacion.id)}
                                             className="fa-solid fa-2x fa-eye inspect"></i>
                                     </td>
@@ -249,6 +258,7 @@ const ItemList = () => {
                         <p>No tienes publicaicones aun</p>
                     </div>
             }
+            <EditItem actualizarPublicaciones={asignarPublicaciones} />
             <InterestedPeople actualizarPublicaciones={asignarPublicaciones} />
         </>
     )

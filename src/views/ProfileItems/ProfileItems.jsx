@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react"
 import "./profile_items.scss"
 import NavProfile from "../../components/NavProfile/NavProfile.jsx"
 import AddItem from "../../components/AddItem/AddItem.jsx"
 import {Col, Row} from "react-bootstrap"
-import ItemList from "../../components/ItemList/ItemList.jsx";
+import ItemList from "../../components/ItemList/ItemList.jsx"
 
 const ProfileItems = () => {
     return (
