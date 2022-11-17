@@ -7,11 +7,14 @@ import EditUser from "../../components/EditUser/EditUser.jsx"
 import EditPersonalInfo from "../../components/EditPersonalInfo/EditPersonalInfo.jsx"
 import axios from "axios";
 import {URL_OBTENER_INFO_GEOGRAFICA} from "../../services/auth.js"
+import {useNavigate} from "react-router-dom";
 
 const ProfileInfo = () => {
 
     const { usuarioActivo, setMostrarEditUser, setRegForm,
-            setModCredenciales, setMostrarEditInfoUser, setComunas, setRegiones, regForm} = useContext(UserContext)
+            setModCredenciales, setMostrarEditInfoUser, setComunas, setRegiones, regForm, setAutenticado} = useContext(UserContext)
+
+    const navigate = useNavigate()
 
     const asignarInfoGeografica = async () => {
         const {data} = await axios.get(URL_OBTENER_INFO_GEOGRAFICA)
@@ -25,6 +28,11 @@ const ProfileInfo = () => {
                 break
             }
         }
+    }
+
+    const handleKillSession = () => {
+        setAutenticado(false)
+        navigate("/authenticate")
     }
 
     useEffect( () => {
@@ -53,6 +61,10 @@ const ProfileInfo = () => {
             <div className="profile">
                 <Image src={usuarioActivo.imagen} roundedCircle={true} />
                 <h2 className="display-5 text-white">{usuarioActivo.nombre}</h2>
+                <i className="fa-solid fa-2x fa-right-from-bracket text-danger kira"
+                   title="Cierra tu sesión"
+                   onClick={ () => handleKillSession()}
+                ></i>
             </div>
             <div className="profile-info text-white pb-3">
                 <p>
