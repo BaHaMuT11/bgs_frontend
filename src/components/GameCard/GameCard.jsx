@@ -364,7 +364,7 @@ const GameCard = (props) => {
                 props.estadoAutenticacion ?
                     <Col className="col-12 col-md-6 col-lg-4 col-xl-3 py-2 game-card">
                         <Card bg={"dark"} text={"light"} className="game-box">
-                            <Card.Img variant="top" src={props.imagen} />
+                            <Card.Img variant="top" src={props.imagen} alt={props.juego} />
                             <Card.Body>
                                 <Card.Title>{props.juego}</Card.Title>
                                 <Badge bg="secondary">{props.plataforma}</Badge>{' '}
@@ -383,7 +383,7 @@ const GameCard = (props) => {
                     :
                     <Col className="col-12 col-md-6 col-lg-4 col-xl-3 py-2 game-card">
                         <Card bg={"dark"} text={"light"} className="game-box">
-                            <Card.Img variant="top" src={props.imagen} />
+                            <Card.Img variant="top" src={props.imagen} alt={props.juego} />
                             <Card.Body>
                                 <Card.Title>{props.juego}</Card.Title>
                                 <Badge bg="secondary">{props.plataforma}</Badge>{' '}

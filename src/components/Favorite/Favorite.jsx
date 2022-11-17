@@ -74,7 +74,7 @@ const Favorite = (props) => {
     return (
         <Col className="col-12 col-md-6 col-lg-4 col-xl-3 py-2 game-card">
             <Card bg={"dark"} text={"light"} className="game-box">
-                <Card.Img variant="top" src={props.url} onClick={() => handleInspect()} className="img-pointer" />
+                <Card.Img variant="top" src={props.url} alt={props.nombre} onClick={() => handleInspect()} className="img-pointer" />
                 <Card.Body>
                     <div className="text-center">
                         <Card.Title>{props.nombre}</Card.Title>
