@@ -238,7 +238,7 @@ const ItemList = () => {
                                 <tr key={publicacion.id}>
                                     <td>{publicacion.id}</td>
                                     <td>{publicacion.juego}</td>
-                                    <td>{new Date(publicacion.fechaCreacion).toLocaleDateString()}</td>
+                                    <td>{new Date(publicacion.fechaCreacion).toLocaleDateString("es-CL")}</td>
                                     <td>{publicacion.estado}</td>
                                     <td className="text-center item-ops">
                                         <i className="fa-solid fa-2x fa-trash delete"

@@ -4,8 +4,8 @@ import {Button, Card, Col} from "react-bootstrap"
 import {useNavigate} from "react-router-dom"
 import {UserContext} from "../../context/UserProvider.jsx"
 import axios from "axios";
-import {URL_ELIMINAR_FAVORITO, URL_OBTENER_FAVORITOS_USUARIO} from "../../services/favoritos.js";
-import Swal from "sweetalert2";
+import {URL_ELIMINAR_FAVORITO} from "../../services/favoritos.js"
+import Swal from "sweetalert2"
 
 
 const Favorite = (props) => {

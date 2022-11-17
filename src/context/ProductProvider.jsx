@@ -30,6 +30,10 @@ const ProductProvider = (props) => {
     const [modFormato, setModFormato] = useState("Digital")
     const [modPublicacionActiva, setModPublicacionActiva] = useState({})
 
+    //GetAdquisiciones
+    const [adquisiciones, setAdquisiciones] = useState([])
+
+
 
     return (
         <ProductContext.Provider value={{ addDescripcion, setAddDescripcion,
@@ -47,7 +51,8 @@ const ProductProvider = (props) => {
                                           mostrarEditItem, setMostrarEditItem,
                                           modPlataforma, setModPlataforma,
                                           modFormato, setModFormato,
-                                          modPublicacionActiva, setModPublicacionActiva
+                                          modPublicacionActiva, setModPublicacionActiva,
+                                          adquisiciones, setAdquisiciones
         }}>
             {props.children}
         </ProductContext.Provider>

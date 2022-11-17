@@ -271,7 +271,7 @@ const EditUser = () => {
                                 <Form.Control type="date" placeholder="11-11-1985"
                                               onChange={e => handleChangeNacimiento(e.target.value)}/>
                                 <Form.Text className="text-warning">
-                                    Su fecha de nacimiento actual es: {new Date(`${regForm.fechaNacimiento}`).toLocaleDateString()}
+                                    Su fecha de nacimiento actual es: {new Date(`${regForm.fechaNacimiento}`).toLocaleDateString("es-CL")}
                                 </Form.Text>
                             </FloatingLabel>
                         </Form.Group>
