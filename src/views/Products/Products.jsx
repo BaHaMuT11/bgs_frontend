@@ -40,19 +40,26 @@ const Products = () => {
                             publis = [...publis, publicacion]
                         }
                     }
+                    publis.sort((a, b) => (b.id - a.id))
                     setPublicaciones(publis)
                 }
                 asignarPublicaciones()
 
                 const asignarPopulares = () => {
+
+                    let orderedItems = [...items]
+                    orderedItems.sort((a, b) => (b.rating - a.rating))
+
                     let popus = []
 
-                    items.forEach( (publicacion, index) => {
-                        if (index < 3 && (publicacion.estado != "DESACTIVADO" && publicacion.estado != "VENDIDO") ) {
+                    let i = 0
+
+                    for (let publicacion of orderedItems) {
+                        if (i < 4 && (publicacion.estado != "DESACTIVADO" && publicacion.estado != "VENDIDO") ) {
                             popus = [...popus, publicacion]
+                            i++
                         }
-                    })
-                    popus.sort((a, b) => (b.rating - a.rating))
+                    }
                     setPopulares(popus)
                 }
                 asignarPopulares()

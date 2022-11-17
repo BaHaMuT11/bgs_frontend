@@ -114,7 +114,7 @@ const AddItem = () => {
                         'success'
                     )
 
-                    navigate("/profile/items")
+                    navigate("/")
 
                 } else {
                     Swal.fire(
@@ -124,7 +124,7 @@ const AddItem = () => {
                     )
                 }
             }
-            catch {
+            catch (error) {
                 Swal.fire(
                     'Whooooops',
                     "No pudimos publicar tu item, reintenta más tarde",
