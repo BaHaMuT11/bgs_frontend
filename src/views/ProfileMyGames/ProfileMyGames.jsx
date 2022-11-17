@@ -1,4 +1,4 @@
-import React, {useContext} from "react"
+import React, {useContext, useEffect} from "react"
 import "./profile_my_games.scss"
 import NavProfile from "../../components/NavProfile/NavProfile.jsx"
 import {Button, Table} from "react-bootstrap"
@@ -15,36 +15,38 @@ const ProfileMyGames = () => {
     const {adquisiciones, setAdquisiciones} = useContext(ProductContext)
     const navigate = useNavigate()
 
-    const asignarAdquisiciones = async () => {
+    useEffect( () => {
+        const asignarAdquisiciones = async () => {
 
-        const configGetAdquisiciones= {
-            headers: {
-                "Content-Type": "Application/JSON",
-                "Authorization": "Bearer " + ntk
+            const configGetAdquisiciones= {
+                headers: {
+                    "Content-Type": "Application/JSON",
+                    "Authorization": "Bearer " + ntk
+                }
             }
-        }
-        try {
-            const {data} = await axios.get(URL_OBTENER_ADQUISICIONES + usuarioActivo.id, configGetAdquisiciones)
-            if (data.estado.codigo == "200") {
-                setAdquisiciones(data.adquisiciones)
-            } else {
+            try {
+                const {data} = await axios.get(URL_OBTENER_ADQUISICIONES + usuarioActivo.id, configGetAdquisiciones)
+                if (data.estado.codigo == "200") {
+                    setAdquisiciones(data.adquisiciones)
+                } else {
+                    Swal.fire(
+                        'Whooooops',
+                        "No pudimos obtener tus aduisiciones, error de conexión",
+                        'error'
+                    )
+                }
+            }
+            catch(error) {
                 Swal.fire(
                     'Whooooops',
                     "No pudimos obtener tus aduisiciones, error de conexión",
                     'error'
                 )
             }
-        }
-        catch(error) {
-            Swal.fire(
-                'Whooooops',
-                "No pudimos obtener tus aduisiciones, error de conexión",
-                'error'
-            )
-        }
 
-    }
-    asignarAdquisiciones()
+        }
+        asignarAdquisiciones()
+    }, [])
 
     return (
         <div>
