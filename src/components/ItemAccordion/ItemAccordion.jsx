@@ -191,7 +191,12 @@ const ItemAccordion = () => {
                                     </p>
                                     <p>
                                         <span className="descriptor">Valoración:</span>
-                                        <span className="info">{vendedor.sellerRating}</span>
+                                        {
+                                            vendedor.sellerRating > 0 ?
+                                                <span className="info">{vendedor.sellerRating}</span>
+                                                :
+                                                <span className="info">Sin valoración</span>
+                                        }
                                     </p>
                                 </div>
                                 {
