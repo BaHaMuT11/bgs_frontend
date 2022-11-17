@@ -49,7 +49,7 @@ const ProfileMyGames = () => {
     }, [])
 
     return (
-        <div>
+        <div className="mygames-wrapper">
             <NavProfile />
             {
                 adquisiciones.length > 0 ?

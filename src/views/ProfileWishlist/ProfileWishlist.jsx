@@ -48,29 +48,31 @@ const ProfileWishlist = () => {
     },[])
 
     return (
-        <div>
+        <div className="wishlist-wrapper">
             <NavProfile />
-            {
-                favoritos.length > 0 ?
-                    <Row>
-                        {
-                            favoritos.map( favorito => (
-                                <Favorite url={favorito.imagen}
-                                          nombre={favorito.juego}
-                                          idUsuario={favorito.usuario}
-                                          idPublicacion={favorito.publicacion}
-                                          actualizarFavoritos={asignarFavoritos}
-                                          key={favorito.publicacion} />
-                            ))
-                        }
-                    </Row>
-                    :
-                    <Row>
-                        <div className="text-warning text-center my-5">
-                            <p>No tienes favoritos aún</p>
-                        </div>
-                    </Row>
-            }
+            <div className="mx-2">
+                {
+                    favoritos.length > 0 ?
+                        <Row>
+                            {
+                                favoritos.map( favorito => (
+                                    <Favorite url={favorito.imagen}
+                                              nombre={favorito.juego}
+                                              idUsuario={favorito.usuario}
+                                              idPublicacion={favorito.publicacion}
+                                              actualizarFavoritos={asignarFavoritos}
+                                              key={favorito.publicacion} />
+                                ))
+                            }
+                        </Row>
+                        :
+                        <Row>
+                            <div className="text-warning text-center my-5">
+                                <p>No tienes favoritos aún</p>
+                            </div>
+                        </Row>
+                }
+            </div>
         </div>
     )
 }

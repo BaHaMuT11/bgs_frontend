@@ -1,10 +1,11 @@
 import React from "react"
 import {Col, Row} from "react-bootstrap";
-import ItemAccordion from "../../components/ItemAccordion/ItemAccordion.jsx";
+import ItemAccordion from "../../components/ItemAccordion/ItemAccordion.jsx"
+import "./product_detail.scss"
 
 const ProductDetail = () => {
     return (
-        <Row className="py-3">
+        <Row className="detail-wrapper py-3">
             <Col>
                 <ItemAccordion />
             </Col>
