@@ -1,15 +1,51 @@
-import React, {useContext} from "react"
+import React, {useContext, useEffect} from "react"
 import "./profile_info.scss"
 import NavProfile from "../../components/NavProfile/NavProfile.jsx"
 import {Button, Image, Modal} from "react-bootstrap"
 import {UserContext} from "../../context/UserProvider.jsx"
 import EditUser from "../../components/EditUser/EditUser.jsx"
 import EditPersonalInfo from "../../components/EditPersonalInfo/EditPersonalInfo.jsx"
+import axios from "axios";
+import {URL_OBTENER_INFO_GEOGRAFICA} from "../../services/auth.js"
 
 const ProfileInfo = () => {
 
     const { usuarioActivo, setMostrarEditUser, setRegForm,
-            setModCredenciales, setMostrarEditInfoUser} = useContext(UserContext)
+            setModCredenciales, setMostrarEditInfoUser, setComunas, setRegiones, regForm} = useContext(UserContext)
+
+    const asignarInfoGeografica = async () => {
+        const {data} = await axios.get(URL_OBTENER_INFO_GEOGRAFICA)
+        const regiones = data.regiones
+
+        setRegiones(regiones)
+
+        for (const region of regiones) {
+            if (region.region === regForm.region) {
+                setComunas(region.comunas)
+                break
+            }
+        }
+    }
+
+    useEffect( () => {
+        setRegForm({
+            usuario: usuarioActivo.usuario,
+            pass: "",
+            nombre: usuarioActivo.nombre,
+            fechaNacimiento: usuarioActivo.fechaNacimiento,
+            edad: usuarioActivo.edad,
+            rut: usuarioActivo.rut,
+            fono: usuarioActivo.fono,
+            calle: usuarioActivo.calle,
+            numero: usuarioActivo.numero,
+            casa: usuarioActivo.casa,
+            region: usuarioActivo.region,
+            comuna: usuarioActivo.comuna,
+            correo: "",
+            estado: "ACTIVO",
+            imagen: usuarioActivo.imagen
+        })
+    }, [])
 
     return (
         <div>
@@ -39,24 +75,8 @@ const ProfileInfo = () => {
                 </p>
                 <div className="text-center">
                     <Button variant="warning" onClick={ () => {
+                        asignarInfoGeografica()
                         setMostrarEditUser(true)
-                        setRegForm({
-                            usuario: usuarioActivo.usuario,
-                            pass: "",
-                            nombre: usuarioActivo.nombre,
-                            fechaNacimiento: usuarioActivo.fechaNacimiento,
-                            edad: usuarioActivo.edad,
-                            rut: usuarioActivo.rut,
-                            fono: usuarioActivo.fono,
-                            calle: usuarioActivo.calle,
-                            numero: usuarioActivo.numero,
-                            casa: usuarioActivo.casa,
-                            region: usuarioActivo.region,
-                            comuna: usuarioActivo.comuna,
-                            correo: "",
-                            estado: "ACTIVO",
-                            imagen: usuarioActivo.imagen
-                        })
                     }}>Editar info</Button> &nbsp;
                     <Button variant="danger"  onClick={ () => {
                         setMostrarEditInfoUser(true)

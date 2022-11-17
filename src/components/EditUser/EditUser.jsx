@@ -5,17 +5,12 @@ import {UserContext} from "../../context/UserProvider.jsx"
 import {calcularEdad} from "../../util/calcularEdad.js"
 import Swal from "sweetalert2"
 import axios from "axios"
-import {
-    URL_BUSCAR_USUARIO_LOGIN,
-    URL_MODIFICAR_USUARIO,
-    URL_OBTENER_INFO_GEOGRAFICA,
-    URL_REGISTRAR_USUARIO
-} from "../../services/auth.js"
-import {useNavigate} from "react-router-dom";
+import {URL_BUSCAR_USUARIO_LOGIN, URL_MODIFICAR_USUARIO} from "../../services/auth.js"
+import {useNavigate} from "react-router-dom"
 
 const EditUser = () => {
 
-    const { regiones, setRegiones, comunas, setComunas,
+    const { regiones, comunas, setComunas,
             regForm, setRegForm, geoToogler, setGeoToogler,
             mostrarEditUser, setMostrarEditUser, ntk,
             setUsuarioActivo, setAutenticado} = useContext(UserContext)
@@ -134,7 +129,7 @@ const EditUser = () => {
 
                 const {data} = await axios.put(URL_MODIFICAR_USUARIO, request, configModUser )
 
-                if (data.estado.codigo = "200") {
+                if (data.estado.codigo == "200") {
 
                     const asignarUsuarioActivo = async() => {
                         try {
@@ -145,7 +140,7 @@ const EditUser = () => {
                                 }
                             }
                             const {data} = await axios.get(URL_BUSCAR_USUARIO_LOGIN + request.login, configuracionUA)
-
+                            console.log(data.usuario)
                             setUsuarioActivo(data.usuario)
                             setAutenticado(true)
 
@@ -166,22 +161,6 @@ const EditUser = () => {
                         }
                     }
                     asignarUsuarioActivo()
-                    setRegForm({ usuario: "",
-                        pass: "",
-                        nombre: "",
-                        fechaNacimiento: "",
-                        edad: "0",
-                        rut: "",
-                        fono: "",
-                        calle: "",
-                        numero: "",
-                        casa: "",
-                        region: "Región Metropolitana de Santiago",
-                        comuna: "Santiago",
-                        correo: "",
-                        estado: "ACTIVO",
-                        imagen: ""
-                    })
                 } else {
                     setRegForm({...regForm, pass: ""})
                     Swal.fire(
@@ -201,23 +180,6 @@ const EditUser = () => {
         }
         modificarUsuario()
     }
-
-    useEffect( ()=>{
-        const asignarInfoGeografica = async () => {
-            const {data} = await axios.get(URL_OBTENER_INFO_GEOGRAFICA)
-            const regiones = data.regiones
-
-            setRegiones(regiones)
-
-            for (const region of regiones) {
-                if (region.region === regForm.region) {
-                    setComunas(region.comunas)
-                    break
-                }
-            }
-        }
-        asignarInfoGeografica()
-    }, [])
 
     useEffect(()=>{
         for (const region of regiones) {
