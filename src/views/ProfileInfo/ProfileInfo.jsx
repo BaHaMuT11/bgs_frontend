@@ -56,7 +56,7 @@ const ProfileInfo = () => {
     }, [])
 
     return (
-        <div>
+        <div className="profile-wrapper">
             <NavProfile />
             <div className="profile">
                 <Image src={usuarioActivo.imagen} roundedCircle={true} />
@@ -84,6 +84,14 @@ const ProfileInfo = () => {
                 <p>
                     <span className="descriptor">Edad:</span>
                     <span className="info">{usuarioActivo.edad}</span>
+                </p>
+                <p>
+                    <span className="descriptor">Correo:</span>
+                    <span className="info">{usuarioActivo.correo}</span>
+                </p>
+                <p>
+                    <span className="descriptor">Rut:</span>
+                    <span className="info">{usuarioActivo.rut}</span>
                 </p>
                 <div className="text-center">
                     <Button variant="warning" onClick={ () => {

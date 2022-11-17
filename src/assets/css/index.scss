@@ -1,5 +1,9 @@
 @use "modules/colors";
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 #root {
   background-color: colors.$body-background-color;
 

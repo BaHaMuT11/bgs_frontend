@@ -1,34 +1,82 @@
 @use "src/assets/css/modules/colors";
 @use "src/assets/css/modules/mixins";
 
-.profile {
+@media (max-width: 991px){
+  .profile-wrapper {
 
-  @include mixins.establecerFlex(column);
-  @include mixins.alinearComponentes();
+    height: calc(100vh - 346px);
+    overflow-y: auto;
 
-  img {
-    height: 200px;
-    width: 200px;
+    .profile {
+
+      @include mixins.establecerFlex(column);
+      @include mixins.alinearComponentes();
+
+      img {
+        height: 200px;
+        width: 200px;
+      }
+
+      .kira {
+        cursor: pointer;
+      }
+
+    }
+
+    .profile-info {
+
+      font-size: x-large;
+
+      .descriptor {
+        font-weight: bold;
+        text-decoration: underline;
+      }
+
+      .info{
+        font-style: italic;
+        margin-left: 10px;
+      }
+
+    }
   }
-
-  .kira {
-    cursor: pointer;
-  }
-
 }
 
-.profile-info {
+@media (min-width: 991px){
+  .profile-wrapper {
 
-  font-size: x-large;
+    height: calc(100vh - 280px);
+    overflow-y: auto;
 
-  .descriptor {
-    font-weight: bold;
-    text-decoration: underline;
+    .profile {
+
+      @include mixins.establecerFlex(column);
+      @include mixins.alinearComponentes();
+
+      img {
+        height: 200px;
+        width: 200px;
+      }
+
+      .kira {
+        cursor: pointer;
+      }
+
+    }
+
+    .profile-info {
+
+      font-size: x-large;
+
+      .descriptor {
+        font-weight: bold;
+        text-decoration: underline;
+      }
+
+      .info{
+        font-style: italic;
+        margin-left: 10px;
+      }
+
+    }
   }
-
-  .info{
-    font-style: italic;
-    margin-left: 10px;
-  }
-
 }

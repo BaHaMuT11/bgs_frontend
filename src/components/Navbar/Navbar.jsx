@@ -3,7 +3,7 @@ import "./navbar.scss"
 import BahaLogo from "../../assets/img/baha_logo.png"
 import {Button, Form} from "react-bootstrap"
 import {NavLink} from "react-router-dom"
-import {UserContext} from "../../context/UserProvider.jsx";
+import {UserContext} from "../../context/UserProvider.jsx"
 
 
 const Navbar = () => {
