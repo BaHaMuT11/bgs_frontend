@@ -14,22 +14,18 @@ const Pagination = (props) => {
             <ul className="pagination">
                 {
                     pageNumbers.map(number => (
-                    <>
+                    <React.Fragment key={number}>
                         {
                             props.actual == number ?
-                                <li key={number} className='page-item'>
-                                    <li onClick={() => props.paginate(number)} className="page-item">
-                                        <a className="page-link active bg-dark" href="#pagi">{number}</a>
-                                    </li>
+                                <li onClick={() => props.paginate(number)} className="page-item">
+                                    <a className="page-link active bg-dark" href="#pagi">{number}</a>
                                 </li>
                                 :
-                                <li key={number} className='page-item'>
-                                    <li onClick={() => props.paginate(number)} className="page-item">
-                                        <a className="page-link bg-dark" href="#pagi">{number}</a>
-                                    </li>
+                                <li onClick={() => props.paginate(number)} className="page-item">
+                                    <a className="page-link bg-dark" href="#pagi">{number}</a>
                                 </li>
                         }
-                    </>
+                    </React.Fragment>
                 ))}
 
             </ul>

@@ -68,17 +68,18 @@ const MostVoted = () => {
         <>
             {
                 populares.map(publicacion => (
-                    <GameCard estadoAutenticacion={autenticado}
-                              juego={publicacion.juego}
-                              plataforma={publicacion.plataforma}
-                              formato={publicacion.formato}
-                              rating={publicacion.rating}
-                              precio={publicacion.precio}
-                              imagen={publicacion.imagen}
-                              idPublicacion={publicacion.id}
-                              actualizar={asignarPublicaciones}
-                              key={publicacion.id}
-                    />
+                    <React.Fragment key={publicacion.id}>
+                        <GameCard estadoAutenticacion={autenticado}
+                                  juego={publicacion.juego}
+                                  plataforma={publicacion.plataforma}
+                                  formato={publicacion.formato}
+                                  rating={publicacion.rating}
+                                  precio={publicacion.precio}
+                                  imagen={publicacion.imagen}
+                                  idPublicacion={publicacion.id}
+                                  actualizar={asignarPublicaciones}
+                        />
+                    </React.Fragment>
                 ))
             }
         </>

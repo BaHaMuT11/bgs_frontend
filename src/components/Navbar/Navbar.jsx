@@ -1,14 +1,19 @@
-import React, {useContext} from "react"
+import React, {useContext, useEffect} from "react"
 import "./navbar.scss"
 import BahaLogo from "../../assets/img/baha_logo.png"
 import {Button, Form} from "react-bootstrap"
-import {NavLink} from "react-router-dom"
+import {NavLink, useLocation} from "react-router-dom"
 import {UserContext} from "../../context/UserProvider.jsx"
 
 
 const Navbar = () => {
 
     const {usuarioActivo, autenticado} = useContext(UserContext)
+    let history = useLocation()
+
+    useEffect( () => {
+        console.log(history.pathname)
+    })
 
     return (
         <nav>
