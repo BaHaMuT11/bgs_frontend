@@ -15,7 +15,7 @@ const Hero = () => {
                         src={GotamKnights}
                         alt="Gotam Knights"
                     />
-                    <Carousel.Caption>
+                    <Carousel.Caption className="mobile-caption">
                         <h3>Gotham Knights</h3>
                         <p>Uno de los juegos más polémicos actualmente. ¿Te unes?</p>
                     </Carousel.Caption>
@@ -26,7 +26,7 @@ const Hero = () => {
                         src={SackboyAdventures}
                         alt="Sackboy Adventures"
                     />
-                    <Carousel.Caption>
+                    <Carousel.Caption className="mobile-caption">
                         <h3>Sackboy</h3>
                         <p>Las aventuras de sackboy, ahora disponible para plataformas de última generación</p>
                     </Carousel.Caption>
@@ -37,7 +37,7 @@ const Hero = () => {
                         src={JurassicPark}
                         alt="Jurassic Park"
                     />
-                    <Carousel.Caption>
+                    <Carousel.Caption className="mobile-caption">
                         <h3>Parque Jurásico</h3>
                         <p>El parque en su versión renovada. ¿Quieres entrar?</p>
                     </Carousel.Caption>
