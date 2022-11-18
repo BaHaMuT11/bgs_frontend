@@ -104,7 +104,7 @@ const EditPersonalInfo = () => {
                     }
                     const {data} = await axios.put(URL_MODIFICAR_CREDENCIALES, request, configuracionModCredenciales)
 
-                    if (data.estado.codigo = "200") {
+                    if (data.estado.codigo == "200") {
                         Swal.fire(
                             'Excelente',
                             'Modificación realizada',
@@ -187,7 +187,7 @@ const EditPersonalInfo = () => {
                     }
                     const {data} = await axios.put(URL_MODIFICAR_CREDENCIALES, request, configuracionModCredenciales)
 
-                    if (data.estado.codigo = "200") {
+                    if (data.estado.codigo == "200") {
                         Swal.fire(
                             'Excelente',
                             'Modificación realizada',
