@@ -1,14 +1,14 @@
-import React from 'react'
+import React from "react"
 import "./hero.scss"
-import {Carousel} from "react-bootstrap";
-import GotamKnights from "../../assets/img/gotamknights.jpg";
-import JurassicPark from "../../assets/img/dino.jpg";
-import SackboyAdventures from "../../assets/img/sackboy.jpg";
+import {Carousel} from "react-bootstrap"
+import GotamKnights from "../../assets/img/gotamknights.jpg"
+import JurassicPark from "../../assets/img/dino.jpg"
+import SackboyAdventures from "../../assets/img/sackboy.jpg"
 
 const Hero = () => {
     return (
         <>
-            <Carousel>
+            <Carousel className="mobile-display">
                 <Carousel.Item>
                     <img
                         className="d-block w-100"

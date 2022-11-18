@@ -1,7 +1,7 @@
 @use "src/assets/css/modules/colors";
 @use "src/assets/css/modules/mixins";
 
-@media (max-width: 991px){
+@media (max-width: 991px) {
   nav {
     .nav-wrapper-desktop {
       display: none;
@@ -56,12 +56,39 @@
         box-shadow: 0 0 5px colors.$bahagames-main;
       }
     }
+
+    .nav-wrapper-middle {
+      @include mixins.configurarMedidas(70px, 100%);
+      @include mixins.establecerFlex(row, wrap);
+      @include mixins.alinearComponentes(space-between);
+      box-shadow: 0 0 5px colors.$bahagames-main;
+
+      background-color: colors.$navbar-background-color;
+      position: fixed;
+      z-index: 1500;
+
+      .logo-text{
+        font-weight: bolder;
+        font-size: large;
+      }
+
+      i {
+        color: colors.$bahagames-main;
+      }
+
+      span {
+        color: white;
+      }
+
+      img {
+        border: 1px solid colors.$bahagames-main;
+      }
+    }
   }
 }
 
-@media (min-width: 991px){
+@media (min-width: 991px) {
   nav {
-
     .nav-wrapper-mobile {
       display: none;
     }
@@ -92,6 +119,10 @@
       img {
         border: 1px solid colors.$bahagames-main;
       }
+    }
+
+    .nav-wrapper-middle {
+      display: none;
     }
   }
 }
