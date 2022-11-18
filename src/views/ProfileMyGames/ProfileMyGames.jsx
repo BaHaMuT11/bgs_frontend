@@ -48,6 +48,10 @@ const ProfileMyGames = () => {
         asignarAdquisiciones()
     }, [])
 
+    const handleRedirect = (id) => {
+        navigate(`/detail/${id}`)
+    }
+
     return (
         <div className="mygames-wrapper">
             <NavProfile />
@@ -72,7 +76,8 @@ const ProfileMyGames = () => {
                                     <td>{new Date(game.fechaCompra).toLocaleDateString("es-CL")}</td>
                                     <td>{game.vendedor}</td>
                                     <td className="text-center">
-                                        <Button variant="warning">Detalle</Button>
+                                        <Button variant="warning"
+                                                onClick={() => handleRedirect(game.idPublicacion)}>Detalle</Button>
                                     </td>
                                 </tr>
                             ))
