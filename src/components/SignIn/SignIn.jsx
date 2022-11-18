@@ -1,10 +1,10 @@
-import React, {useContext, useState} from 'react'
-import {Button, Col, FloatingLabel, Form} from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
-import {UserContext} from "../../context/UserProvider.jsx";
-import axios from "axios";
-import {URL_AUTHENTICATE, URL_BUSCAR_USUARIO_LOGIN} from "../../services/auth.js";
-import Swal from "sweetalert2";
+import React, {useContext, useState} from "react"
+import {Button, Col, FloatingLabel, Form} from "react-bootstrap"
+import {useNavigate} from "react-router-dom"
+import {UserContext} from "../../context/UserProvider.jsx"
+import axios from "axios"
+import {URL_AUTHENTICATE, URL_BUSCAR_USUARIO_LOGIN} from "../../services/auth.js"
+import Swal from "sweetalert2"
 
 const SignIn = () => {
 
