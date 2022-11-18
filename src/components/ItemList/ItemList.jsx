@@ -241,12 +241,21 @@ const ItemList = () => {
                                     <td>{new Date(publicacion.fechaCreacion).toLocaleDateString("es-CL")}</td>
                                     <td>{publicacion.estado}</td>
                                     <td className="text-center item-ops">
-                                        <i className="fa-solid fa-2x fa-trash delete"
-                                           onClick={ () => handleDelete(publicacion.id)}></i> &nbsp;
-                                        <i className="fa-solid fa-2x fa-pen-to-square edit"
-                                           onClick={ () => handleEdit(publicacion)}></i> &nbsp;
-                                        <i  onClick={ () => handleInspect(publicacion.id)}
-                                            className="fa-solid fa-2x fa-eye inspect"></i>
+                                        <>
+                                            {
+                                                publicacion.estado === "VENDIDO" ?
+                                                    <p className="text-danger">Sin operaciones disponibles</p>
+                                                :
+                                                <>
+                                                    <i  className="fa-solid fa-2x fa-trash delete"
+                                                        onClick={ () => handleDelete(publicacion.id)}></i> &nbsp;
+                                                    <i  className="fa-solid fa-2x fa-pen-to-square edit"
+                                                        onClick={ () => handleEdit(publicacion)}></i> &nbsp;
+                                                    <i  onClick={ () => handleInspect(publicacion.id)}
+                                                        className="fa-solid fa-2x fa-eye inspect"></i>
+                                                </>
+                                            }
+                                        </>
                                     </td>
                                 </tr>
                             ))
