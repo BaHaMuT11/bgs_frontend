@@ -1,15 +1,23 @@
-import React, {useContext, useEffect} from "react"
+import React, {useContext, useEffect, useState} from "react"
 import {UserContext} from "../../context/UserProvider.jsx"
 import {ProductContext} from "../../context/ProductProvider.jsx"
 import axios from "axios"
 import {URL_OBTENER_PUBLICACIONES} from "../../services/publicaciones.js"
 import Swal from "sweetalert2"
 import GameCard from "../GameCard/GameCard.jsx"
+import Pagination from "../../util/Pagination/Pagination.jsx";
 
 const Catalog = () => {
 
     const {ntk, autenticado} = useContext(UserContext)
     const {setPublicaciones, publicaciones} = useContext(ProductContext)
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(4);
+
+    const indexOfLastItem= currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const publicacionesActuales = publicaciones.slice(indexOfFirstItem, indexOfLastItem);
 
     const asignarPublicaciones = async () => {
         const configsItemList = {
@@ -58,6 +66,8 @@ const Catalog = () => {
 
     }
 
+    const handlePaginate = pageNumber => setCurrentPage(pageNumber);
+
     useEffect( () => {
         asignarPublicaciones()
     }, [])
@@ -65,7 +75,7 @@ const Catalog = () => {
     return (
         <>
             {
-                publicaciones.map(publicacion => (
+                publicacionesActuales.map(publicacion => (
                     <GameCard estadoAutenticacion={autenticado}
                               juego={publicacion.juego}
                               plataforma={publicacion.plataforma}
@@ -79,6 +89,9 @@ const Catalog = () => {
                     />
                 ))
             }
+            <div className="d-flex justify-content-center">
+                <Pagination itemsPerPage={itemsPerPage} totalItems={publicaciones.length} paginate={handlePaginate} actual={currentPage} />
+            </div>
         </>
     )
 }

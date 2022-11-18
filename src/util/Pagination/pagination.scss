@@ -1,0 +1,14 @@
+@use "src/assets/css/modules/colors";
+
+.pagination {
+
+  a:hover {
+    color: colors.$bahagames-main;
+  }
+
+  .active {
+    color: colors.$bahagames-main !important;
+    border: 2px solid colors.$bahagames-main !important;
+  }
+
+}
