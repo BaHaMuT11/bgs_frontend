@@ -1,10 +1,13 @@
 @use "src/assets/css/modules/colors";
 @use "src/assets/css/modules/mixins";
 
+.profile-wrapper {
+  height: calc(100vh - 280px);
+}
+
 @media (max-width: 991px){
   .profile-wrapper {
 
-    height: calc(100vh - 346px);
     overflow-y: auto;
 
     .profile {
@@ -44,7 +47,6 @@
 @media (min-width: 991px){
   .profile-wrapper {
 
-    height: calc(100vh - 280px);
     overflow-y: auto;
 
     .profile {

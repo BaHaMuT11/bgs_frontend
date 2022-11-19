@@ -1,5 +1,5 @@
-import React from "react"
-import {BrowserRouter, Route, Routes} from "react-router-dom"
+import React, {useContext} from "react"
+import {Navigate, Route, Routes} from "react-router-dom"
 import Layout from "../views/Layout/Layout.jsx"
 import Products from "../views/Products/Products.jsx"
 import ProfileInfo from "../views/ProfileInfo/ProfileInfo.jsx"
@@ -8,26 +8,28 @@ import ProfileItems from "../views/ProfileItems/ProfileItems.jsx"
 import ProfileWishlist from "../views/ProfileWishlist/ProfileWishlist.jsx"
 import Login from "../views/Login/Login.jsx"
 import ProductDetail from "../views/ProductDetail/ProductDetail.jsx"
+import {UserContext} from "../context/UserProvider.jsx"
 
 const App = () => {
+
+    const {autenticado} = useContext(UserContext)
+
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Layout />}>
+        <Routes>
+            <Route path="/" element={<Layout />}>
 
-                    <Route index element={<Products />} />
+                <Route index element={<Products />} />
 
-                    <Route path="profile/mygames" element={<ProfileMyGames />} />
-                    <Route path="profile/wishlist" element={<ProfileWishlist />} />
-                    <Route path="profile/items" element={<ProfileItems />} />
-                    <Route path="profile/info" element={<ProfileInfo />} />
+                <Route path="profile/mygames" element= {!autenticado ? <Navigate to="/" />: <ProfileMyGames />} />
+                <Route path="profile/wishlist" element={!autenticado ? <Navigate to="/" />: <ProfileWishlist />} />
+                <Route path="profile/items" element={!autenticado ? <Navigate to="/" />: <ProfileItems />} />
+                <Route path="profile/info" element={!autenticado ? <Navigate to="/" />: <ProfileInfo />} />
 
-                    <Route path="authenticate" element={<Login />} />
-                    <Route path="detail/:id" element={<ProductDetail />} />
+                <Route path="authenticate" element={<Login />} />
+                <Route path="detail/:id" element={<ProductDetail />} />
 
-                </Route>
-            </Routes>
-        </BrowserRouter>
+            </Route>
+        </Routes>
     )
 }
 
