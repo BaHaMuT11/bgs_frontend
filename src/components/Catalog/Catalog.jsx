@@ -5,19 +5,19 @@ import axios from "axios"
 import {URL_OBTENER_PUBLICACIONES} from "../../services/publicaciones.js"
 import Swal from "sweetalert2"
 import GameCard from "../GameCard/GameCard.jsx"
-import Pagination from "../../util/Pagination/Pagination.jsx";
+import Pagination from "../../util/Pagination/Pagination.jsx"
 
 const Catalog = () => {
 
     const {ntk, autenticado} = useContext(UserContext)
     const {setPublicaciones, publicaciones} = useContext(ProductContext)
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(4);
+    const [currentPage, setCurrentPage] = useState(1)
+    const [itemsPerPage] = useState(4)
 
-    const indexOfLastItem= currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const publicacionesActuales = publicaciones.slice(indexOfFirstItem, indexOfLastItem);
+    const indexOfLastItem= currentPage * itemsPerPage
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage
+    const publicacionesActuales = publicaciones.slice(indexOfFirstItem, indexOfLastItem)
 
     const asignarPublicaciones = async () => {
         const configsItemList = {
@@ -34,7 +34,7 @@ const Catalog = () => {
 
                 const items = data.publicaciones
 
-                const asignarPublicaciones = () => {
+                const procesarPublicaciones = () => {
                     let publis = []
 
                     for (let publicacion of items) {
@@ -46,7 +46,7 @@ const Catalog = () => {
                     publis.sort((a, b) => (b.id - a.id))
                     setPublicaciones(publis)
                 }
-                asignarPublicaciones()
+                procesarPublicaciones()
 
             } else {
                 Swal.fire(
@@ -63,7 +63,6 @@ const Catalog = () => {
                 'error'
             )
         }
-
     }
 
     const handlePaginate = pageNumber => setCurrentPage(pageNumber);

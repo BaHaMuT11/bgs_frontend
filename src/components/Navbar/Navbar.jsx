@@ -4,6 +4,7 @@ import BahaLogo from "../../assets/img/baha_logo.png"
 import {Button, Form} from "react-bootstrap"
 import {NavLink, useLocation} from "react-router-dom"
 import {UserContext} from "../../context/UserProvider.jsx"
+import BusquedaPrincipal from "../BusquedaPrincipal/BusquedaPrincipal.jsx"
 
 
 const Navbar = () => {
@@ -19,7 +20,7 @@ const Navbar = () => {
     return (
         <nav>
             {
-                pathName == "/" ?
+                pathName === "/" ?
                     <>
                         <div className="nav-wrapper-desktop px-3">
                             <div className="logo">
@@ -29,14 +30,7 @@ const Navbar = () => {
                                 </NavLink>
                             </div>
                             <div className="search-bar">
-                                <Form className="d-flex">
-                                    <Form.Control
-                                        type="search"
-                                        placeholder="Busca tu juego"
-                                        className="me-1"
-                                        aria-label="Search"
-                                    />
-                                </Form>
+                                <BusquedaPrincipal />
                             </div>
                             <div className="profile">
                                 <NavLink to={autenticado?"/profile/info":"/authenticate"}>
@@ -71,14 +65,7 @@ const Navbar = () => {
                                 </div>
                             </div>
                             <div className="search-bar">
-                                <Form className="d-flex">
-                                    <Form.Control
-                                        type="search"
-                                        placeholder="Busca tu juego"
-                                        className="me-1"
-                                        aria-label="Search"
-                                    />
-                                </Form>
+                                <BusquedaPrincipal />
                             </div>
                         </div>
                     </>

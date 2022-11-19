@@ -33,6 +33,10 @@ const ProductProvider = (props) => {
     //GetAdquisiciones
     const [adquisiciones, setAdquisiciones] = useState([])
 
+    //Filtro
+    const [inputFiltro, setInputFiltro] = useState("")
+    const [estadoFiltro, setEstadoFiltro] = useState(false)
+
 
 
     return (
@@ -52,7 +56,9 @@ const ProductProvider = (props) => {
                                           modPlataforma, setModPlataforma,
                                           modFormato, setModFormato,
                                           modPublicacionActiva, setModPublicacionActiva,
-                                          adquisiciones, setAdquisiciones
+                                          adquisiciones, setAdquisiciones,
+                                          inputFiltro, setInputFiltro,
+                                          estadoFiltro, setEstadoFiltro
         }}>
             {props.children}
         </ProductContext.Provider>

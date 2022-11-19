@@ -24,7 +24,7 @@ const MostVoted = () => {
 
                 const items = data.publicaciones
 
-                const asignarPopulares = () => {
+                const procesarPopulares = () => {
 
                     let orderedItems = [...items]
                     orderedItems.sort((a, b) => (b.rating - a.rating))
@@ -41,7 +41,7 @@ const MostVoted = () => {
                     }
                     setPopulares(popus)
                 }
-                asignarPopulares()
+                procesarPopulares()
 
             } else {
                 Swal.fire(
