@@ -257,6 +257,12 @@ const SignUp = () => {
                         correo: "",
                         estado: "ACTIVO"
                     })
+                    setEmailSet({emailDos: "",
+                        emailText:"",
+                        emailHidden: true})
+                    setPasswordSet({ passwordDos: "",
+                        passwordText: "",
+                        passwordHidden: true})
                 } else {
                     setRegForm({...regForm, pass: ""})
                     setPasswordSet(({...passwordSet, passwordDos: "", passwordText: ""}))
