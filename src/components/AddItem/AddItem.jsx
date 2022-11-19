@@ -1,7 +1,6 @@
 import React, {useContext} from "react"
 import "./add_item.scss"
 import {Button, FloatingLabel, Form} from "react-bootstrap"
-import ItemTxa from "../ItemTxa/ItemTxa.jsx"
 import {ProductContext} from "../../context/ProductProvider.jsx"
 import {UserContext} from "../../context/UserProvider.jsx"
 import Swal from "sweetalert2"
@@ -158,7 +157,8 @@ const AddItem = () => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="descripcion">
                     <Form.Label>Descripción:</Form.Label>
-                    <ItemTxa />
+
+
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="precio">
                     <Form.Label>Precio:</Form.Label>
