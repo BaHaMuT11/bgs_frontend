@@ -1,4 +1,4 @@
-import React, {useContext} from "react"
+import React, {useContext, useRef} from "react"
 import "./add_item.scss"
 import {Button, FloatingLabel, Form} from "react-bootstrap"
 import {ProductContext} from "../../context/ProductProvider.jsx"
@@ -7,8 +7,11 @@ import Swal from "sweetalert2"
 import axios from "axios"
 import {URL_AGREGAR_PUBLICACION} from "../../services/publicaciones.js"
 import {useNavigate} from "react-router-dom"
+import JoditEditor from "jodit-react";
 
 const AddItem = () => {
+
+    const editor = useRef(null)
 
     const { addDescripcion,setAddDescripcion, addJuego, setAddJuego,
             addImagen, setAddImagen, addPrecio, setAddPrecio,
@@ -157,8 +160,14 @@ const AddItem = () => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="descripcion">
                     <Form.Label>Descripción:</Form.Label>
-
-
+                    <div className="text-dark">
+                        <JoditEditor
+                            ref={editor}
+                            value={addDescripcion}
+                            tabIndex={1}
+                            onBlur={newContent => setAddDescripcion(newContent)}
+                        />
+                    </div>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="precio">
                     <Form.Label>Precio:</Form.Label>
