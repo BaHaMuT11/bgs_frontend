@@ -37,7 +37,8 @@ const ProductProvider = (props) => {
     const [inputFiltro, setInputFiltro] = useState("")
     const [estadoFiltro, setEstadoFiltro] = useState(false)
 
-
+    //Ordenamiento principal
+    const [seleccionOrden, setSeleccionOrden] = useState("nuevas")
 
     return (
         <ProductContext.Provider value={{ addDescripcion, setAddDescripcion,
@@ -58,7 +59,8 @@ const ProductProvider = (props) => {
                                           modPublicacionActiva, setModPublicacionActiva,
                                           adquisiciones, setAdquisiciones,
                                           inputFiltro, setInputFiltro,
-                                          estadoFiltro, setEstadoFiltro
+                                          estadoFiltro, setEstadoFiltro,
+                                          seleccionOrden, setSeleccionOrden
         }}>
             {props.children}
         </ProductContext.Provider>

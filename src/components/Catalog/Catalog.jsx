@@ -6,11 +6,12 @@ import {URL_OBTENER_PUBLICACIONES} from "../../services/publicaciones.js"
 import Swal from "sweetalert2"
 import GameCard from "../GameCard/GameCard.jsx"
 import Pagination from "../../util/Pagination/Pagination.jsx"
+import {Form} from "react-bootstrap"
 
 const Catalog = () => {
 
     const {ntk, autenticado} = useContext(UserContext)
-    const {setPublicaciones, publicaciones, estadoFiltro} = useContext(ProductContext)
+    const {setPublicaciones, publicaciones, estadoFiltro, seleccionOrden, setSeleccionOrden} = useContext(ProductContext)
 
     const [currentPage, setCurrentPage] = useState(1)
     const [itemsPerPage] = useState(4)
@@ -67,6 +68,25 @@ const Catalog = () => {
 
     const handlePaginate = pageNumber => setCurrentPage(pageNumber)
 
+    useEffect( () => {
+
+        if (seleccionOrden === "nuevas") {
+
+            let genDesc = [...publicaciones]
+            genDesc.sort((a, b) => (b.id - a.id))
+            setPublicaciones(genDesc)
+        }
+
+        if (seleccionOrden === "antiguas") {
+
+            let genAsc = [...publicaciones]
+            genAsc.sort((a, b) => (a.id - b.id))
+            setPublicaciones(genAsc)
+        }
+
+    }, [seleccionOrden])
+
+
     const renderizarPublicaciones= () => {
         if ( publicaciones.length === 0 && !estadoFiltro ) {
             return (
@@ -85,6 +105,15 @@ const Catalog = () => {
         else {
             return (
                 <>
+                    <div className="text-white py-2">
+                        <span>Ordenar:</span>
+                        <Form.Select aria-label="Seleccione ordenamiento de productos"
+                        value={seleccionOrden}
+                        onChange={ e => setSeleccionOrden(e.target.value)}>
+                            <option value="nuevas">Publicaciones más nuevas</option>
+                            <option value="antiguas">Publicaciones más antiguas</option>
+                        </Form.Select>
+                    </div>
                     {
                         publicacionesActuales.map(publicacion => (
                             <React.Fragment key={publicacion.id}>
