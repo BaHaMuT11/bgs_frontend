@@ -125,7 +125,6 @@ const Catalog = () => {
                                           precio={publicacion.precio}
                                           imagen={publicacion.imagen}
                                           idPublicacion={publicacion.id}
-                                          actualizar={asignarPublicaciones}
                                 />
                             </React.Fragment>
                         ))

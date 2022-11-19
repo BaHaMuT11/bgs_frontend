@@ -14,6 +14,7 @@ const ProductProvider = (props) => {
 
     //GetPublicaciones
     const [publicaciones, setPublicaciones] = useState([])
+    const [populares, setPopulares] = useState([])
     const [publicacionesUsuario, setPublicacionesUsuario] = useState([])
     const [publicacionActiva, setPublicacionActiva] = useState({})
 
@@ -60,7 +61,8 @@ const ProductProvider = (props) => {
                                           adquisiciones, setAdquisiciones,
                                           inputFiltro, setInputFiltro,
                                           estadoFiltro, setEstadoFiltro,
-                                          seleccionOrden, setSeleccionOrden
+                                          seleccionOrden, setSeleccionOrden,
+                                          populares, setPopulares
         }}>
             {props.children}
         </ProductContext.Provider>

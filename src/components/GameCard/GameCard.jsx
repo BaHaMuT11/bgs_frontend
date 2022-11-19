@@ -2,21 +2,89 @@ import React, {useContext} from "react"
 import {Badge, Button, Card, Col} from "react-bootstrap"
 import "./game_card.scss"
 import {useNavigate} from "react-router-dom"
-import {obtenerCLP} from "../../util/clp_parser.js";
-import {UserContext} from "../../context/UserProvider.jsx";
-import axios from "axios";
-import {URL_CALIFICAR_PUBLICACION} from "../../services/publicaciones.js";
-import Swal from "sweetalert2";
+import {obtenerCLP} from "../../util/clp_parser.js"
+import {UserContext} from "../../context/UserProvider.jsx"
+import axios from "axios"
+import {URL_CALIFICAR_PUBLICACION, URL_OBTENER_PUBLICACIONES} from "../../services/publicaciones.js"
+import Swal from "sweetalert2"
+import {ProductContext} from "../../context/ProductProvider.jsx"
 
 const GameCard = (props) => {
 
     const navigate = useNavigate()
     const {ntk, usuarioActivo} = useContext(UserContext)
+    const {setPublicaciones, setPopulares} = useContext(ProductContext)
 
     const handleClick = (id) => {
         navigate(`/detail/${id}`)
     }
 
+
+    const asignarPublicacionesTotales = async () => {
+        const configsItemList = {
+            headers: {
+                "Content-Type": "Application/JSON",
+                "Authorization": "Bearer " + ntk
+            }
+        }
+        try {
+            const {data} = await axios.get(URL_OBTENER_PUBLICACIONES, configsItemList)
+
+            if (data.estado.codigo == "200") {
+
+                const items = data.publicaciones
+
+                const procesarPopulares = () => {
+
+                    let orderedItems = [...items]
+                    orderedItems.sort((a, b) => (b.rating - a.rating))
+
+                    let popus = []
+
+                    let i = 0
+
+                    for (let publicacion of orderedItems) {
+                        if (i < 4 && (publicacion.estado != "DESACTIVADO" && publicacion.estado != "VENDIDO") ) {
+                            popus = [...popus, publicacion]
+                            i++
+                        }
+                    }
+                    setPopulares(popus)
+                }
+                procesarPopulares()
+
+                const procesarPublicaciones = () => {
+                    let publis = []
+
+                    for (let publicacion of items) {
+
+                        if (publicacion.estado != "DESACTIVADO" && publicacion.estado != "VENDIDO") {
+                            publis = [...publis, publicacion]
+                        }
+                    }
+                    publis.sort((a, b) => (b.id - a.id))
+                    setPublicaciones(publis)
+                }
+                procesarPublicaciones()
+
+            } else {
+                console.log(error)
+                Swal.fire(
+                    'Whooooops',
+                    "No se pueden obtener las publicaciones",
+                    'error'
+                )
+            }
+        }
+        catch (error) {
+            console.log(error)
+            Swal.fire(
+                'Whooooops',
+                "Hubo un error de conexión con el servidor",
+                'error'
+            )
+        }
+    }
 
     const calificarJuego = async (req) => {
         const configVotingHeaders = {
@@ -35,7 +103,7 @@ const GameCard = (props) => {
                     "Valoraste este juego correctamente",
                     'success'
                 )
-                props.actualizar()
+                asignarPublicacionesTotales()
             } else {
                 Swal.fire(
                     'Whooooops',

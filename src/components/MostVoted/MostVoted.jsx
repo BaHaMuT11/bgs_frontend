@@ -4,11 +4,12 @@ import {UserContext} from "../../context/UserProvider.jsx"
 import axios from "axios"
 import {URL_OBTENER_PUBLICACIONES} from "../../services/publicaciones.js"
 import Swal from "sweetalert2"
+import {ProductContext} from "../../context/ProductProvider.jsx";
 
 const MostVoted = () => {
 
     const {ntk, autenticado} = useContext(UserContext)
-    const [populares, setPopulares] = useState([])
+    const {populares, setPopulares} = useContext(ProductContext)
 
     const asignarPublicaciones= async () => {
         const configsItemList = {
@@ -77,7 +78,6 @@ const MostVoted = () => {
                                   precio={publicacion.precio}
                                   imagen={publicacion.imagen}
                                   idPublicacion={publicacion.id}
-                                  actualizar={asignarPublicaciones}
                         />
                     </React.Fragment>
                 ))
