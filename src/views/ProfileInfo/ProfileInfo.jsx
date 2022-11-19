@@ -32,6 +32,22 @@ const ProfileInfo = () => {
 
     const handleKillSession = () => {
         setAutenticado(false)
+        setRegForm({usuario: "",
+            pass: "",
+            nombre: "",
+            fechaNacimiento: "",
+            edad: "0",
+            rut: "",
+            fono: "",
+            calle: "",
+            numero: "",
+            casa: "",
+            region: "Región Metropolitana de Santiago",
+            comuna: "Santiago",
+            correo: "",
+            estado: "ACTIVO",
+            imagen: ""
+        })
         navigate("/authenticate")
     }
 

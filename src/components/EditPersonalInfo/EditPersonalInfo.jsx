@@ -10,7 +10,7 @@ import {useNavigate} from "react-router-dom"
 const EditPersonalInfo = () => {
 
     const { modCredenciales, setModCredenciales, mostrarEditInfoUser,
-            setMostrarEditInfoUser, ntk, setAutenticado} = useContext(UserContext)
+            setMostrarEditInfoUser, ntk, setAutenticado, setRegForm} = useContext(UserContext)
 
     const [emailSet, setEmailSet] = useState({emailDos: "",
         emailText:"",
@@ -116,6 +116,22 @@ const EditPersonalInfo = () => {
                             correo: ""
                         })
                         setAutenticado(false)
+                        setRegForm({usuario: "",
+                            pass: "",
+                            nombre: "",
+                            fechaNacimiento: "",
+                            edad: "0",
+                            rut: "",
+                            fono: "",
+                            calle: "",
+                            numero: "",
+                            casa: "",
+                            region: "Región Metropolitana de Santiago",
+                            comuna: "Santiago",
+                            correo: "",
+                            estado: "ACTIVO",
+                            imagen: ""
+                        })
                         setMostrarEditInfoUser(false)
                         navigate("/authenticate")
                     } else {
