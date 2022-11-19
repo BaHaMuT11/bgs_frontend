@@ -9,6 +9,7 @@ import ProfileWishlist from "../views/ProfileWishlist/ProfileWishlist.jsx"
 import Login from "../views/Login/Login.jsx"
 import ProductDetail from "../views/ProductDetail/ProductDetail.jsx"
 import {UserContext} from "../context/UserProvider.jsx"
+import NotFound from "../views/NotFound/NotFound.jsx"
 
 const App = () => {
 
@@ -19,6 +20,8 @@ const App = () => {
             <Route path="/" element={<Layout />}>
 
                 <Route index element={<Products />} />
+
+                <Route path='*' element={<NotFound />} />
 
                 <Route path="profile/mygames" element= {!autenticado ? <Navigate to="/" />: <ProfileMyGames />} />
                 <Route path="profile/wishlist" element={!autenticado ? <Navigate to="/" />: <ProfileWishlist />} />
