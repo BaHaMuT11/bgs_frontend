@@ -154,7 +154,7 @@ const ItemAccordion = () => {
     }
 
     return (
-        <>
+        <div className="accordion-wrapper">
             {
                 publicacionActiva.estado !== "DESACTIVADO" ?
                     <Accordion defaultActiveKey="0">
@@ -266,7 +266,7 @@ const ItemAccordion = () => {
                         <p>Esta publicación fue eliminada</p>
                     </div>
             }
-        </>
+        </div>
     )
 }
 

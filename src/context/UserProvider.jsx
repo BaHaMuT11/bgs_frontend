@@ -40,6 +40,9 @@ const UserProvider = (props) => {
     //Obtencion genérica
     const [vendedor, setVendedor] = useState({})
 
+    //Ruta activa
+    const [pathName, setPathname] = useState("")
+
     return (
         <UserContext.Provider value={{
             ntk, setNtk,
@@ -52,7 +55,8 @@ const UserProvider = (props) => {
             mostrarEditUser, setMostrarEditUser,
             mostrarEditInfoUser, setMostrarEditInfoUser,
             modCredenciales, setModCredenciales,
-            vendedor, setVendedor
+            vendedor, setVendedor,
+            pathName, setPathname
         }}>
             {props.children}
         </UserContext.Provider>

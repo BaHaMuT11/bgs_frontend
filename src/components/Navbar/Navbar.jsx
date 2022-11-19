@@ -9,8 +9,7 @@ import BusquedaPrincipal from "../BusquedaPrincipal/BusquedaPrincipal.jsx"
 
 const Navbar = () => {
 
-    const {usuarioActivo, autenticado} = useContext(UserContext)
-    const [pathName, setPathname] = useState("")
+    const {usuarioActivo, autenticado,pathName, setPathname} = useContext(UserContext)
     let location = useLocation()
 
     useEffect( () => {

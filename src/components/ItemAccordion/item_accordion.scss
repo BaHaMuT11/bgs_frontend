@@ -1,40 +1,44 @@
 @use "src/assets/css/modules/colors";
 @use "src/assets/css/modules/mixins";
 
-.accordion-item {
-  border: 1px solid colors.$inspect-color !important;
-}
+.accordion-wrapper {
 
-.accordion-button {
-  background: colors.$navbar-background-color !important;
-  color: colors.$bahagames-main !important;
-  font-weight: bolder;
-  font-size: large !important;
-}
-
-.product-hero {
-  @include mixins.establecerFlex(column);
-  @include mixins.alinearComponentes();
-
-  img {
-    max-height: 300px;
-    max-width: 300px;
+  .accordion-item {
+    border: 1px solid colors.$inspect-color !important;
   }
 
-}
+  .accordion-button {
+    background: colors.$navbar-background-color !important;
+    color: colors.$bahagames-main !important;
+    font-weight: bolder;
+    font-size: large !important;
+  }
 
-.descriptor {
-  font-weight: bold;
-  text-decoration: underline;
-  font-size: x-large;
-}
+  .product-hero {
+    @include mixins.establecerFlex(column);
+    @include mixins.alinearComponentes();
 
-.info{
-  font-style: italic;
-  margin-left: 10px;
-  font-size: x-large;
-}
+    img {
+      max-height: 300px;
+      max-width: 300px;
+    }
 
-.detail-precio {
-  color: colors.$bahagames-main;
+  }
+
+  .descriptor {
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: x-large;
+  }
+
+  .info{
+    font-style: italic;
+    margin-left: 10px;
+    font-size: x-large;
+  }
+
+  .detail-precio {
+    color: colors.$bahagames-main;
+  }
+
 }
