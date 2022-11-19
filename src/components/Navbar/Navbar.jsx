@@ -23,7 +23,7 @@ const Navbar = () => {
                         <div className="nav-wrapper-desktop px-3">
                             <div className="logo">
                                 <NavLink to="/">
-                                    <img src={BahaLogo} alt="Imagen logo" height="50px" width="90px"/> &nbsp;
+                                    <img src={BahaLogo} alt="Imagen logo" className="baha-logo"/> &nbsp;
                                     <span className="logo-text">BaHaGames</span>
                                 </NavLink>
                             </div>
@@ -46,7 +46,7 @@ const Navbar = () => {
                             <div className="main-bar">
                                 <div className="logo">
                                     <NavLink to="/">
-                                        <img src={BahaLogo} alt="Imagen logo" height="50px" width="90px"/> &nbsp;
+                                        <img src={BahaLogo} alt="Imagen logo" className="baha-logo"/> &nbsp;
                                         <span className="logo-text">BaHaGames</span>
                                     </NavLink>
                                 </div>
@@ -72,7 +72,7 @@ const Navbar = () => {
                         <div className="nav-wrapper-desktop px-3">
                             <div className="logo">
                                 <NavLink to="/">
-                                    <img src={BahaLogo} alt="Imagen logo" height="50px" width="90px"/> &nbsp;
+                                    <img src={BahaLogo} alt="Imagen logo" className="baha-logo"/> &nbsp;
                                     <span className="logo-text">BaHaGames</span>
                                 </NavLink>
                             </div>
@@ -91,7 +91,7 @@ const Navbar = () => {
                         <div className="nav-wrapper-middle px-3">
                             <div className="logo">
                                 <NavLink to="/">
-                                    <img src={BahaLogo} alt="Imagen logo" height="50px" width="90px"/> &nbsp;
+                                    <img src={BahaLogo} alt="Imagen logo" className="baha-logo"/> &nbsp;
                                     <span className="logo-text">BaHaGames</span>
                                 </NavLink>
                             </div>

@@ -1,6 +1,10 @@
 @use "src/assets/css/modules/colors";
 @use "src/assets/css/modules/mixins";
 
+.baha-logo {
+  height: 50px;
+  width: 90px;
+}
 @media (max-width: 991px) {
   nav {
     .nav-wrapper-desktop {
