@@ -143,7 +143,7 @@ const AddItem = () => {
             <h2 className="text-white">Nueva publicación</h2>
             <Form className="text-white" onSubmit={ e => handleAddProduct(e)}>
                 <Form.Group className="mb-3" controlId="juego">
-                    <Form.Label>Juego a vender:</Form.Label>
+                    <Form.Label>Juego a vender: <span className="text-danger">*</span></Form.Label>
                     <FloatingLabel label="Ej.: Súper Mario World" controlId="floatingJuego" className="text-dark mb-3">
                         <Form.Control type="text" placeholder="Súper Mario World"
                         value = {addJuego}
@@ -151,7 +151,7 @@ const AddItem = () => {
                     </FloatingLabel>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="url">
-                    <Form.Label>URL de imágen:</Form.Label>
+                    <Form.Label>URL de imágen: <span className="text-danger">*</span> </Form.Label>
                     <FloatingLabel label="Ej.: http://www.nintendo.cl/mario.jpg" controlId="floatingImagen" className="text-dark mb-3">
                         <Form.Control type="text" placeholder="http://www.nintendo.cl/mario.jpg"
                         value = {addImagen}
@@ -159,7 +159,7 @@ const AddItem = () => {
                     </FloatingLabel>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="descripcion">
-                    <Form.Label>Descripción:</Form.Label>
+                    <Form.Label>Descripción: <span className="text-danger">*</span> </Form.Label>
                     <div className="text-dark">
                         <JoditEditor
                             ref={editor}
@@ -170,7 +170,7 @@ const AddItem = () => {
                     </div>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="precio">
-                    <Form.Label>Precio:</Form.Label>
+                    <Form.Label>Precio: <span className="text-danger">*</span></Form.Label>
                     <FloatingLabel label="Ej.: 35000" controlId="floatingPrecio" className="text-dark mb-3">
                         <Form.Control type="number" placeholder="35000" min="0"
                         value = {addPrecio}
@@ -178,7 +178,7 @@ const AddItem = () => {
                     </FloatingLabel>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="plataforma">
-                    <Form.Label>Plataforma:</Form.Label>
+                    <Form.Label>Plataforma: <span className="text-danger">*</span> </Form.Label>
                     <FloatingLabel controlId="floatingPlataforma" label="PC, Playstation, etc" className="text-dark">
                         <Form.Select aria-label="Seleccione una plataforma como PC o Playstation"
                         value = {addPlataforma}  onChange={e => setAddPlataforma(e.target.value)} >
@@ -191,7 +191,7 @@ const AddItem = () => {
                     </FloatingLabel>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formato">
-                    <Form.Label>Formato:</Form.Label>
+                    <Form.Label>Formato: <span className="text-danger">*</span></Form.Label>
                     <FloatingLabel controlId="floatingFormato" label="Formato de entrega" className="text-dark">
                         <Form.Select aria-label="Seleccione formato de entrega, físico o digital"
                                      value = {addFormato}  onChange={e => setAddFormato(e.target.value)} >
