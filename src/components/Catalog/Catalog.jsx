@@ -10,7 +10,7 @@ import Pagination from "../../util/Pagination/Pagination.jsx"
 const Catalog = () => {
 
     const {ntk, autenticado} = useContext(UserContext)
-    const {setPublicaciones, publicaciones} = useContext(ProductContext)
+    const {setPublicaciones, publicaciones, estadoFiltro} = useContext(ProductContext)
 
     const [currentPage, setCurrentPage] = useState(1)
     const [itemsPerPage] = useState(4)
@@ -65,34 +65,57 @@ const Catalog = () => {
         }
     }
 
-    const handlePaginate = pageNumber => setCurrentPage(pageNumber);
+    const handlePaginate = pageNumber => setCurrentPage(pageNumber)
+
+    const renderizarPublicaciones= () => {
+        if ( publicaciones.length === 0 && !estadoFiltro ) {
+            return (
+                <div className="text-center text-warning mt-2">
+                    <p>No hay publicaciones en nuestros registros</p>
+                </div>
+            )
+        }
+        else if ( publicaciones.length === 0 && estadoFiltro ) {
+            return (
+                <div className="text-center text-warning mt-2">
+                    <p>No se encontraron coincidencias</p>
+                </div>
+            )
+        }
+        else {
+            return (
+                <>
+                    {
+                        publicacionesActuales.map(publicacion => (
+                            <React.Fragment key={publicacion.id}>
+                                <GameCard estadoAutenticacion={autenticado}
+                                          juego={publicacion.juego}
+                                          plataforma={publicacion.plataforma}
+                                          formato={publicacion.formato}
+                                          rating={publicacion.rating}
+                                          precio={publicacion.precio}
+                                          imagen={publicacion.imagen}
+                                          idPublicacion={publicacion.id}
+                                          actualizar={asignarPublicaciones}
+                                />
+                            </React.Fragment>
+                        ))
+                    }
+                    <div className="d-flex justify-content-center">
+                        <Pagination itemsPerPage={itemsPerPage} totalItems={publicaciones.length} paginate={handlePaginate} actual={currentPage} />
+                    </div>
+                </>
+            )
+        }
+    }
+
 
     useEffect( () => {
         asignarPublicaciones()
     }, [])
 
     return (
-        <>
-            {
-                publicacionesActuales.map(publicacion => (
-                    <React.Fragment key={publicacion.id}>
-                        <GameCard estadoAutenticacion={autenticado}
-                                  juego={publicacion.juego}
-                                  plataforma={publicacion.plataforma}
-                                  formato={publicacion.formato}
-                                  rating={publicacion.rating}
-                                  precio={publicacion.precio}
-                                  imagen={publicacion.imagen}
-                                  idPublicacion={publicacion.id}
-                                  actualizar={asignarPublicaciones}
-                        />
-                    </React.Fragment>
-                ))
-            }
-            <div className="d-flex justify-content-center">
-                <Pagination itemsPerPage={itemsPerPage} totalItems={publicaciones.length} paginate={handlePaginate} actual={currentPage} />
-            </div>
-        </>
+        renderizarPublicaciones()
     )
 }
 
