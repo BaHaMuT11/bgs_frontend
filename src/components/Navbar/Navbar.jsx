@@ -1,7 +1,6 @@
-import React, {useContext, useEffect, useState} from "react"
+import React, {useContext, useEffect} from "react"
 import "./navbar.scss"
 import BahaLogo from "../../assets/img/baha_logo.png"
-import {Button, Form} from "react-bootstrap"
 import {NavLink, useLocation} from "react-router-dom"
 import {UserContext} from "../../context/UserProvider.jsx"
 import BusquedaPrincipal from "../BusquedaPrincipal/BusquedaPrincipal.jsx"

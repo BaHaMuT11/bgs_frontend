@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react"
 import "./nav_profile.scss"
-import {Col, Row} from "react-bootstrap";
-import {NavLink} from "react-router-dom";
+import {Col, Row} from "react-bootstrap"
+import {NavLink} from "react-router-dom"
 
 const NavProfile = () => {
     return (

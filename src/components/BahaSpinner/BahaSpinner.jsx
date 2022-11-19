@@ -1,4 +1,5 @@
 import React from "react"
+import "./baha_spinner.scss"
 import {RingLoader} from "react-spinners"
 
 const BahaSpinner = () => {

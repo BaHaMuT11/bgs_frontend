@@ -1,10 +1,10 @@
-import React, {useContext, useEffect, useState} from "react"
+import React, {useContext, useEffect} from "react"
 import GameCard from "../GameCard/GameCard.jsx"
 import {UserContext} from "../../context/UserProvider.jsx"
 import axios from "axios"
 import {URL_OBTENER_PUBLICACIONES} from "../../services/publicaciones.js"
 import Swal from "sweetalert2"
-import {ProductContext} from "../../context/ProductProvider.jsx";
+import {ProductContext} from "../../context/ProductProvider.jsx"
 
 const MostVoted = () => {
 

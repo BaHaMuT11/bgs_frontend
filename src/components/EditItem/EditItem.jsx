@@ -5,7 +5,7 @@ import {ProductContext} from "../../context/ProductProvider.jsx"
 import {UserContext} from "../../context/UserProvider.jsx"
 import axios from "axios"
 import {URL_MODIFICAR_PUBLICACION} from "../../services/publicaciones.js"
-import Swal from "sweetalert2";
+import Swal from "sweetalert2"
 
 const EditItem = (props) => {
     const { mostrarEditItem, setMostrarEditItem, modPlataforma, setModPlataforma,

@@ -5,9 +5,9 @@ import {Button, Image, Modal} from "react-bootstrap"
 import {UserContext} from "../../context/UserProvider.jsx"
 import EditUser from "../../components/EditUser/EditUser.jsx"
 import EditPersonalInfo from "../../components/EditPersonalInfo/EditPersonalInfo.jsx"
-import axios from "axios";
+import axios from "axios"
 import {URL_OBTENER_INFO_GEOGRAFICA} from "../../services/auth.js"
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom"
 
 const ProfileInfo = () => {
 

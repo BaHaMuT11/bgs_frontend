@@ -1,5 +1,5 @@
 import React from "react"
-import {Col, Row} from "react-bootstrap";
+import {Col, Row} from "react-bootstrap"
 import ItemAccordion from "../../components/ItemAccordion/ItemAccordion.jsx"
 import "./product_detail.scss"
 

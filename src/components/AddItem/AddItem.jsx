@@ -7,7 +7,7 @@ import Swal from "sweetalert2"
 import axios from "axios"
 import {URL_AGREGAR_PUBLICACION} from "../../services/publicaciones.js"
 import {useNavigate} from "react-router-dom"
-import JoditEditor from "jodit-react";
+import JoditEditor from "jodit-react"
 
 const AddItem = () => {
 

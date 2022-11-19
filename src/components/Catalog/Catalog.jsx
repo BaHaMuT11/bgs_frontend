@@ -1,4 +1,5 @@
 import React, {useContext, useEffect, useState} from "react"
+import "./catalog.scss"
 import {UserContext} from "../../context/UserProvider.jsx"
 import {ProductContext} from "../../context/ProductProvider.jsx"
 import axios from "axios"
