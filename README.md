@@ -1,4 +1,4 @@
-# baha-games (Hito 2)
+# BaHaGames
 Aplicación tipo marketplace con temática gamer
 
 ## Instalación y despliegue
@@ -20,15 +20,46 @@ Para desplegar:
   yarn dev
 ```
 
-## Consideraciones
+## Objetivo
 
-### Revisión de vistas del perfil de usuario:
+El objetivo de este proyecto es crear una página con diseño simple y atractivo, que facilite la interacción
+entre compradores y vendedores.
 
-Pagina principal > Login (parte superior derecha) > Apretar botón "Ingresar"
+A nivel personal, demostrar mis conocimientos adquiridos durante el bootcamp y fortalcer el desarrollo con
+investigaciones propias.
 
-### Revisión de vista de detalle de producto:
+## Tecnologías empleadas
 
-En la página principal hacer click en botón con precio del producto.
+[<img src="https://img.shields.io/badge/18.7.0-Node-black">]()
+
+[<img src="https://img.shields.io/badge/1.1.3-Axios-black">]()
+
+[<img src="https://img.shields.io/badge/8.15.0-npm-blueviolet">]()
+
+[<img src="https://img.shields.io/badge/5.2.2-Bootstrap-blueviolet">]()
+
+[<img src="https://img.shields.io/badge/2.5.0-React Boostrap-blueviolet">]()
+
+[<img src="https://img.shields.io/badge/18.2.0-React-blue">]()
+
+[<img src="https://img.shields.io/badge/6.3.0-React Router-red">]()
+
+[<img src="https://img.shields.io/badge/1.55.0-SASS-pink">]()
+
+[<img src="https://img.shields.io/badge/0.13.6-React Spinners-lightgreen">]()
+
+
+## Producción
+http://bahagames.bahatech.cl
+
+## Video
+
+
+## Contacto
+
+**Correo:** bahamut@bahatech.cl
+
+**Nombre de alumno Slack:** BaHaMuT (Raúl Pardo)
 
 
 

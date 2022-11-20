@@ -25,7 +25,8 @@ const ProfileWishlist = () => {
             const {data} =  await axios.get(URL_OBTENER_FAVORITOS_USUARIO + usuarioActivo.id, configObtFavs)
 
             if (data.estado.codigo == "200") {
-                setFavoritos(data.favoritos.filter(fav => fav.estado !== "VENDIDO"))
+                console.log(data.favoritos)
+                setFavoritos(data.favoritos.filter(fav => (fav.estado !== "VENDIDO" && fav.estado !== "DESACTIVADO")))
             } else {
                 Swal.fire(
                     'Whooooops',
